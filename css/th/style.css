@@ -1,0 +1,40 @@
+/*
+@font-face {
+    font-family: 'Thaisanlite';
+    src: url('thaisanslite_r1-webfont.eot');
+    src: url('thaisanslite_r1-webfont.eot?#iefix') format('embedded-opentype'),
+         url('thaisanslite_r1-webfont.woff') format('woff'),
+         url('thaisanslite_r1-webfont.ttf') format('truetype'),
+         url('thaisanslite_r1-webfont.svg#thai_sans_literegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+body{
+	margin:0px; padding:0px;
+}
+a { outline: 0; color:#231F20; text-decoration:none; }
+img { border:none; }
+
+* { font-family: /*'thaisans_neueregular',*/ Tahoma, Arial, Helvetica, sans-serif; font-size:14px; }
+
+form input { font: 12px; }
+
+/* common/global */
+
+#container {
+	margin:0 auto;
+	width:1000px;
+	position:relative;
+	min-height: 750px;
+}
+
+#content-body {
+	min-height: 750px;
+}
+
+/* end common/global */
+
+.page-index {
+	background:transparent url('../../images/th/home/bg.jpg') no-repeat center 100px;
+}

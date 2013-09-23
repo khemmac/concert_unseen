@@ -1,0 +1,164 @@
+/* register */
+
+.page-register { height:750px; }
+
+.page-register #form {
+	position:absolute; top:77px; left:265px;
+	width:477px; height:601px; background:transparent url("../images/register/form.gif") no-repeat;
+}
+.page-register #form .username { position:absolute; top:59px; left:143px; width:220px; }
+.page-register #form .password { position:absolute; top:92px; left:143px; width:220px; }
+.page-register #form .password-confirm { position:absolute; top:120px; left:143px; width:220px; }
+.page-register #form .answer { position:absolute; top:176px; left:143px; width:220px; }
+.page-register #form .code { position:absolute; top:214px; left:143px; width:220px; }
+.page-register #form .thName { position:absolute; top:247px; left:143px; width:220px; }
+.page-register #form .enName { position:absolute; top:289px; left:143px; width:220px; }
+.page-register #form .nickName { position:absolute; top:332px; left:143px; width:118px; }
+
+.page-register #form .sexy-combo-question { position:absolute; top:147px; left:141px; }
+.page-register #form .sexy-combo-question input { width:203px; padding-left:3px; }
+.page-register #form .sexy-combo-question .icon { left:204px; }
+.page-register #form .sexy-combo-question div.list-wrapper { width:222px; }
+
+.page-register #form .sexy-combo-sex { position:absolute; top:331px; left:310px; }
+.page-register #form .sexy-combo-sex input { width:47px; padding-left:3px; }
+.page-register #form .sexy-combo-sex .icon { left:32px; }
+.page-register #form .sexy-combo-sex div.list-wrapper { width:50px; }
+
+.page-register #form .sexy-combo-birth_date { position:absolute; top:362px; left:142px; width:51px; }
+.page-register #form .sexy-combo-birth_date input { width:45px; padding-left:5px; }
+.page-register #form .sexy-combo-birth_date .icon { left:31px; }
+.page-register #form .sexy-combo-birth_date div.list-wrapper { width:50px; }
+
+.page-register #form .sexy-combo-birth_month { position:absolute; top:362px; left:207px; width:99px; }
+.page-register #form .sexy-combo-birth_month input { width:76px; padding-left:5px; }
+.page-register #form .sexy-combo-birth_month .icon { left:82px; }
+.page-register #form .sexy-combo-birth_month div.list-wrapper { width:99px; }
+
+.page-register #form .sexy-combo-birth_year { position:absolute; top:362px; left:324px; width:99px; }
+.page-register #form .sexy-combo-birth_year input { width:51px; padding-left:5px; }
+.page-register #form .sexy-combo-birth_year .icon { left:57px; }
+.page-register #form .sexy-combo-birth_year div.list-wrapper { width:75px; }
+
+.page-register #form .address { position:absolute; top:410px; left:143px; width:220px; }
+.page-register #form .tel { position:absolute; top:442px; left:143px; width:220px; }
+.page-register #form .email { position:absolute; top:474px; left:143px; width:220px; }
+.page-register #form .job { position:absolute; top:505px; left:143px; width:220px; }
+.page-register #form .job_area { position:absolute; top:537px; left:143px; width:220px; }
+.page-register #form .favorite_artist { position:absolute; top:581px; left:143px; width:220px; }
+
+.page-register #form .req { color:red; position:absolute; font-size:11px; }
+.page-register #form .req-username { top:64px; left:129px; }
+.page-register #form .req-password { position:absolute; top:97px; left:129px; }
+.page-register #form .req-password_old { display:none; }
+.page-register #form .req-passwordConf { position:absolute; top:125px; left:129px; }
+.page-register #form .req-password_new { display:none; }
+.page-register #form .req-answer { position:absolute; top:181px; left:129px; }
+.page-register #form .req-code { position:absolute; top:219px; left:129px; }
+.page-register #form .req-thName { position:absolute; top:252px; left:129px; }
+.page-register #form .req-enName { position:absolute; top:294px; left:129px; }
+.page-register #form .req-nickName { position:absolute; top:337px; left:129px; }
+
+.page-register #form .req-question { display:none; }
+.page-register #form .req-sex { display:none; }
+.page-register #form .req-birth_date { display:none; }
+.page-register #form .req-birth_month { display:none; }
+.page-register #form .req-birth_year { display:none; }
+
+.page-register #form .req-address { position:absolute; top:415px; left:129px; }
+.page-register #form .req-tel { position:absolute; top:447px; left:129px; }
+.page-register #form .req-email { position:absolute; top:479px; left:129px; }
+.page-register #form .req-job { display:none; }
+.page-register #form .req-job_area { display:none; }
+.page-register #form .req-favorite_artist { position:absolute; top:586px; left:129px; }
+
+.page-register #form #form-button {
+	position:absolute; top:616px; left:82px; width:285px; height:57px;
+	background:transparent url("../images/register/button-form.gif") no-repeat 0px 0px;
+	margin:0px; padding:0px; list-style:none;
+}
+.page-register #form #form-button li,
+.page-register #form #form-button li a,
+.page-register #form #form-button li .submit { float:left; height:41px; text-indent:-2000px; }
+
+.page-register #form #form-button li .submit {
+	position:absolute; top:0px; left:0px; width:132px;
+	background:transparent url("../images/register/button-form.gif") no-repeat 0px 0px; cursor:pointer;
+}
+.page-register #form #form-button .submit:hover { background-position:0px -57px; }
+
+.page-register #form #form-button li a {
+	position:absolute; top:0px; left:155px; width:130px;
+	background:transparent url("../images/register/button-form.gif") no-repeat -155px 0px; cursor:pointer;
+}
+.page-register #form #form-button li a:hover { background-position:-155px -57px; }
+/* end register */
+
+/* register-success */
+.page-register-success { height:750px; }
+
+.page-register-success #dialog {
+	width:439px; height:280px; background:transparent url("../images/register/register-success-bg.png") no-repeat 0px 0px;
+	position:absolute; top:228px; left:280px;
+}
+.page-register-success #dialog .submit {
+	position:absolute; top:145px; left:179px; width:85px; height:30px; text-indent:-2000px;
+	background:transparent url("../images/register/button-ok.png") no-repeat 0px 0px; cursor:pointer;
+}
+.page-register-success #dialog .submit:hover { background-position:0px -30px; }
+/* end register-success */
+
+/* profile */
+.page-profile #form {
+	width:477px; height:603px; background:transparent url("../images/register/profile.png") no-repeat;
+}
+.page-profile #form input.disabled { color:#808080; }
+.page-profile #form .password_old { position:absolute; top:92px; left:143px; width:220px; }
+.page-profile #form .password_new { position:absolute; top:120px; left:143px; width:220px; }
+
+.page-profile #form #form-button,
+.page-register #form #form-button li .submit,
+.page-register #form #form-button li a {
+	background-image:url("../images/register/button-profile.png");
+}
+/* end profile */
+
+/* profile-success */
+.page-profile-success #dialog {
+	width:439px; height:280px; background:transparent url("../images/register/profile-success-bg.png") no-repeat 0px 0px;
+	position:absolute; top:228px; left:280px;
+}
+/* end profile-success */
+
+
+
+/* forgot password */
+.page-forgot { height:750px; }
+
+.page-forgot #dialog {
+	width:438px; height:322px; background:transparent url("../images/forgot/bg.png") no-repeat 0px 0px;
+	position:absolute; top:236px; left:302px;
+}
+.page-forgot #dialog .username { position:absolute; top:52px; left:144px; width:225px; background:transparent; }
+.page-forgot #dialog .question { position:absolute; top:81px; left:144px; width:225px; background:transparent; }
+.page-forgot #dialog .answer { position:absolute; top:108px; left:144px; width:225px; background:transparent; }
+.page-forgot #dialog .password { position:absolute; top:137px; left:144px; width:225px; background:transparent; }
+.page-forgot #dialog .submit {
+	display:none;
+	position:absolute; top:173px; left:184px; width:84px; height:31px; text-indent:-2000px;
+	background:transparent url("../images/forgot/b-submit.png") no-repeat 0px 0px; cursor:pointer;
+}
+.page-forgot #dialog .submit:hover { background-position:0px -31px; }
+
+.page-forgot .b-next {
+	position:absolute; top:173px; left:184px; width:84px; height:31px; text-indent:-2000px; z-index:1501;
+	background:transparent url("../images/forgot/b-next.png") no-repeat 0px 0px; cursor:pointer;
+}
+.page-forgot .b-next:hover { background-position:0px -31px; }
+
+.page-forgot .step1 .b-next { top:123px; }
+.page-forgot .step1 #step-mask {
+	width:363px; height:90px; position:absolute; bottom: 153px; left:40px; z-index:1500;
+	display:block; border:0px solid #ff0000; background-color:#16161a;
+}
+/* end login */

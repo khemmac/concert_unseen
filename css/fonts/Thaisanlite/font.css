@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Thaisanlite';
+    src: url('thaisanslite_r1-webfont.eot');
+    src: url('thaisanslite_r1-webfont.eot?#iefix') format('embedded-opentype'),
+         url('thaisanslite_r1-webfont.woff') format('woff'),
+         url('thaisanslite_r1-webfont.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+
+}
+
+
+
+.thaisanlite{
+   font-family: 'Thaisanlite', sans-serif;
+}

@@ -1,0 +1,113 @@
+/* common menu */
+ul.menu-main {
+	width:963px; height:59px; position:absolute; top:12px; left:23px;
+	margin:0px; padding:0px; list-style:none;
+}
+ul.menu-main li { display:block; float:left; }
+ul.menu-main a { text-indent:-5000px; display: block; float:left; }
+/* end common menu */
+
+/* menu 1 */
+#menu-1 li a {
+	height:59px; background:transparent url('../../images/th/common/menu.gif') no-repeat 0px 0px;
+}
+
+#menu-1 li a.menu-boost { background-position: 0px 0px; width:152px; }
+#menu-1 li a.menu-boost:hover,
+#menu-1 li.active a.menu-boost { background-position: 0px -59px; }
+
+#menu-1 li a.menu-facebook { background-position: -152px 0px; width:88px; }
+#menu-1 li a.menu-facebook:hover,
+#menu-1 li.active a.menu-facebook { background-position: -152px -59px; }
+
+#menu-1 li a.menu-1 { background-position: -240px 0px; width:240px; }
+#menu-1 li a.menu-1:hover,
+#menu-1 li.active a.menu-1 { background-position: -240px -59px; }
+
+#menu-1 li a.menu-2 { background-position: -480px 0px; width:213px; }
+#menu-1 li a.menu-2:hover,
+#menu-1 li.active a.menu-2 { background-position: -480px -59px; }
+
+#menu-1 li a.menu-3 { background-position: -693px 0px; width:270px; }
+#menu-1 li a.menu-3:hover,
+#menu-1 li.active a.menu-3 { background-position: -693px -59px; }
+/* end menu 1 */
+
+/* menu 2 */
+#menu-2 li a {
+	height:59px; background:transparent url('../../images/th/common/menu-logged-in.gif') no-repeat 0px 0px;
+}
+
+#menu-2 li a.menu-boost { background-position: 0px 0px; width:152px; }
+#menu-2 li a.menu-boost:hover,
+#menu-2 li.active a.menu-boost { background-position: 0px -59px; }
+
+#menu-2 li a.menu-facebook { background-position: -152px 0px; width:88px; }
+#menu-2 li a.menu-facebook:hover,
+#menu-2 li.active a.menu-facebook { background-position: -152px -59px; }
+
+#menu-2 li a.menu-1 { background-position: -240px 0px; width:162px; }
+#menu-2 li a.menu-1:hover,
+#menu-2 li.active a.menu-1 { background-position: -240px -59px; }
+
+#menu-2 li a.menu-2 { background-position: -402px 0px; width:241px; }
+#menu-2 li a.menu-2:hover,
+#menu-2 li.active a.menu-2 { background-position: -402px -59px; }
+
+#menu-2 li a.menu-3 { background-position: -643px 0px; width:161px; }
+#menu-2 li a.menu-3:hover,
+#menu-2 li.active a.menu-3 { background-position: -643px -59px; }
+
+#menu-2 li a.menu-4 { background-position: -804px 0px; width:159px; }
+#menu-2 li a.menu-4:hover,
+#menu-2 li.active a.menu-4 { background-position: -804px -59px; }
+/* end menu 2 */
+
+/* menu 3 */
+#menu-3,
+#menu-3 li,
+#menu-3 li a { height:58px; }
+#menu-3 { width:962px; position:absolute; top:19px; left:23px; margin:0px; padding:0px; list-style:none; }
+#menu-3 li,
+#menu-3 li a { float:left; background:transparent url('../images/common/menu-3.gif') no-repeat 0px 0px; }
+#menu-3 li a { display:block; text-indent:-3000px; }
+
+#menu-3 li a.menu-boost { background-position: 0px 0px; width:152px; }
+#menu-3 li a.menu-boost:hover,
+#menu-3 li.active a.menu-boost { background-position: 0px -58px; }
+
+#menu-3 li.menu-register { background-position: -152px 0px; width:810px; }
+/* end menu 3 */
+
+/* member sub menu */
+#member-sub-menu {
+	margin:0px; padding:0px; list-style:none;
+	position:absolute; top:75px; right:20px;
+	width: 500px; z-index:999;
+}
+#member-sub-menu li { float:right; }
+#member-sub-menu a { display:block; height:23px; float:left;  text-align: center; }
+#member-sub-menu a:hover { text-decoration:underline; }
+#member-sub-menu .menu-name { width:308px; font-size:12px; text-align:right; display: inline-block; vertical-align: middle; }
+#member-sub-menu .menu-sep { width:24px; text-align:center; }
+
+#member-sub-menu a.menu-logout { width:50px; }
+#member-sub-menu a.menu-profile { width:75px; }
+#member-sub-menu a.menu-login { width:36px; }
+#member-sub-menu a.menu-register { width:53px; }
+/* end member sub menu */
+
+/* language menu */
+#menu-language {
+	margin:0px; padding:0px; list-style:none;
+	position:absolute; top:80px; left:44px;
+	width: 200px; height:23px; z-index:999;
+}
+#menu-language li { float:left; }
+#menu-language a { width:50px; text-align:center; }
+#menu-language a:hover { text-decoration:underline; }
+#menu-language a.active { text-decoration:underline; font-weight:bold; }
+#menu-language a.menu-th {  }
+#menu-language .menu-sep { width:24px; text-align:center; }
+#menu-language a.menu-en {  }
+/* end language menu */

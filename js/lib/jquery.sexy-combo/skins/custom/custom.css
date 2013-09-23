@@ -1,0 +1,90 @@
+div.custom {
+	border-top-width: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	border-left-width: 0px;
+	border-bottom-width: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	width: 80px;
+	padding-top: 0px;
+	white-space: nowrap;
+	height: 20px;
+	border-right-width: 0px
+}
+div.custom input {
+	border:none;
+	padding: 0px;
+	padding-top: 1px;
+	background: transparent;
+	left: 0px;
+	margin: 0px;
+	font: 12px/19px tahoma, arial, helvetica, sans-serif;
+	vertical-align: middle;
+	width: 80px;
+	top: 1px;
+	/*
+	height: 18px;
+	*/
+}
+div.custom div.icon {
+	border-top-width: 0px;
+	border-left-width: 0px;
+	background: url(arrow.gif) no-repeat 0px 0px;
+	left: 80px;
+	border-bottom-width: 0px;
+	width:21px; height:23px;
+	cursor: pointer;
+	top: 0px;
+	border-right-width: 0px
+}
+div.custom div.list-wrapper {
+	border-right: #3a3c6c 1px solid;
+	padding-right: 0px;
+	border-top: #3a3c6c 0px solid;
+	padding-left: 0px;
+	left: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	border-left: #3a3c6c 1px solid;
+	width: 99px;
+	bottom: auto;
+	padding-top: 0px;
+	border-bottom: #3a3c6c 1px solid;
+	top: 23px;
+	background-color: #ffffff
+}
+div.custom div.list-wrapper-up {
+	border-right: #3a3c6c 1px solid;
+	border-top: #3a3c6c 1px solid;
+	border-left: #3a3c6c 1px solid;
+	bottom: 21px;
+	border-bottom: #3a3c6c 0px solid;
+	top: auto
+}
+div.custom ul {
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	padding-top: 0px;
+	list-style-type: none;
+	height: 200px;
+	text-align: left;
+}
+div.custom li {
+	padding-right: 0px;
+	padding-left: 5px;
+	padding-bottom: 0px;
+	margin: 0px;
+	font: 11px tahoma, arial, helvetica, sans-serif;
+	cursor: pointer;
+	padding-top: 4px;
+	background-color: #ffffff
+}
+div.custom li.active {
+	background-color: rgb(160,169,194)
+}
+div.custom input.empty {
+	color: gray;
+}
