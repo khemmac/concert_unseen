@@ -55,9 +55,7 @@ class Member extends CI_Controller {
 			// fix fanzone only
 			$user_obj = get_user_session($this);
 
-			$is_early = $user_obj['type']==1 && period_helper_early();
-			$is_presale = $user_obj['type']==1 && period_helper_presale();
-			$is_fanzone = $user_obj['type']==2 && period_helper_fanzone();
+			$is_open = !period_helper_close_system();
 
 			if(($user_obj['username']=='testsbs1' || $user_obj['username']=='testsbs2'
 			|| $user_obj['username']=='testsbs3' || $user_obj['username']=='testsbs4'
@@ -145,6 +143,7 @@ class Member extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
+			$this->db->set_dbprefix('');
 			$this->db->where('id', $user_id);
 			$query = $this->db->get('person');
 
@@ -184,6 +183,7 @@ class Member extends CI_Controller {
 	// http://ellislab.com/codeigniter/user-guide/libraries/form_validation.html#callbacks
 	public function check_register_username($username)
 	{
+		$this->db->set_dbprefix('');
 		$this->db->select('id');
 		$this->db->where('username', $username);
 		$this->db->limit(1);
@@ -220,6 +220,7 @@ class Member extends CI_Controller {
 		$user_id = get_user_session_id($this);
 
 		//query the database
+		$this->db->set_dbprefix('');
 		$this->db->select('id');
 		$this->db->where('id', $user_id);
 		$this->db->where('password', $password);
@@ -255,29 +256,6 @@ class Member extends CI_Controller {
 
 	function forgot(){
 		redirect('forgot');
-	}
-
-	function generate_fanzone(){
-		function generate_code(){
-			$cde = '';
-			for($i=0;$i<6;$i++)
-				$cde.=substr(str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789"), 0, 1);
-			return $cde;
-		}
-		for($i=1;$i<=999;$i++){
-			$username = 'fanzone'.str_pad($i,3,'0', STR_PAD_LEFT);
-			$cde = generate_code();
-			$password = md5($cde);
-			$this->db->insert('person', array(
-				'username' => 'fanzone'.str_pad($i,3,'0', STR_PAD_LEFT),
-				'password' => $password,
-				'thName'	=> $username,
-				'enName'	=> $username,
-				'type'=>2
-			));
-			echo 'username : '.$username.'<br />password : '.$cde;
-			echo '<hr />';
-		}
 	}
 
 

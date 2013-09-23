@@ -10,15 +10,16 @@
 	<li><a href="<?= site_url('booking/check') ?>" class="menu-3">ตรวจสอบสถานะ</a></li>
 	<li><a href="#common-popup" class="menu-4 show-boxes">เงื่อนไข</a></li>
 </ul>
-<?php elseif($p=='member/registerx' || $p=='member/register_success'): ?>
+<?php elseif($p=='member/register' || $p=='member/register_success'): ?>
 <ul id="menu-3" class="menu-main">
-	<li><a href="<?= site_url('index/index2') ?>" class="menu-boost"></a></li>
+	<li><a href="<?= site_url('index') ?>" class="menu-boost"></a></li>
+	<li><a href="https://www.facebook.com/boostplus" target="_blank" class="menu-facebook">FACEBOOK</a></li>
 	<li class="menu-register"></li>
 </ul>
 <?php else: ?>
 <ul id="menu-1" class="menu-main">
 	<li><a href="<?= site_url('index') ?>" class="menu-boost"></a></li>
-	<li><a href="https://www.facebook.com/boostplus" target="_blank" class="menu-facebook"></a></li>
+	<li><a href="https://www.facebook.com/boostplus" target="_blank" class="menu-facebook">FACEBOOK</a></li>
 	<li><a href="<?= site_url('condition') ?>" class="menu-1"></a></li>
 	<li><a href="<?= site_url('plan') ?>" class="menu-2"></a></li>
 	<li><a href="<?= site_url('contact') ?>" class="menu-3"></a></li>

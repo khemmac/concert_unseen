@@ -66,17 +66,19 @@ ul.menu-main a { text-indent:-5000px; display: block; float:left; }
 /* menu 3 */
 #menu-3,
 #menu-3 li,
-#menu-3 li a { height:58px; }
-#menu-3 { width:962px; position:absolute; top:19px; left:23px; margin:0px; padding:0px; list-style:none; }
+#menu-3 li a { height:59px; }
 #menu-3 li,
-#menu-3 li a { float:left; background:transparent url('../images/common/menu-3.gif') no-repeat 0px 0px; }
-#menu-3 li a { display:block; text-indent:-3000px; }
+#menu-3 li a { background:transparent url('../../images/th/common/menu-register.gif') no-repeat 0px 0px; }
 
 #menu-3 li a.menu-boost { background-position: 0px 0px; width:152px; }
 #menu-3 li a.menu-boost:hover,
-#menu-3 li.active a.menu-boost { background-position: 0px -58px; }
+#menu-3 li.active a.menu-boost { background-position: 0px -59px; }
 
-#menu-3 li.menu-register { background-position: -152px 0px; width:810px; }
+#menu-3 li a.menu-facebook { background-position: -152px 0px; width:88px; }
+#menu-3 li a.menu-facebook:hover,
+#menu-3 li.active a.menu-facebook { background-position: -152px -59px; }
+
+#menu-3 li.menu-register { background-position: -240px 0px; width:723px; }
 /* end menu 3 */
 
 /* member sub menu */

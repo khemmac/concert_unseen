@@ -9,6 +9,8 @@ Class Person_model extends CI_Model
 
 
 	function login($username, $password){
+		$this->db->set_dbprefix('');
+
 		$this->db->select('id, username, thName, enName, type');
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
