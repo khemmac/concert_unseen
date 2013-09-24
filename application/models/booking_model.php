@@ -69,21 +69,19 @@ Class Booking_model extends CI_Model
 		return $query->first_row()->cnt;
 	}
 
-	function do_book($user_id, $booking_id, $zone_id, $seat_id){
-		// call sp
-		$sql = "CALL sp_booking (?,?,?,?)";
-		$parameters = array($user_id, $booking_id, $zone_id, $seat_id);
-		$query = $this->db->query($sql, $parameters);
-
-		return $query->result_array();
-//		echo $this->db->last_query();
-
-//		print_r($query->result_array());
+	function do_book($user_id, $booking_id, $seat_id){
+		$tb_seat = $this->db->dbprefix('seat');
+		$tb_booking = $this->db->dbprefix('seat');
+		$sql = "UPDATE ".$tb_seat." SET booking_id=?, is_booked=1 WHERE id=?";
+		$query = $this->db->query($sql, array($booking_id, $seat_id));
+		return $this->db->affected_rows();
 	}
 
-	function undo_book($user_id, $booking_id, $zone_id, $seat_id){
-		$sql = "UPDATE seat SET booking_id=NULL, is_booked=0
-WHERE id=? AND booking_id=(SELECT b.id FROM booking b WHERE b.person_id=? AND b.status=1 AND b.id=? LIMIT 1)";
+	function undo_book($user_id, $booking_id, $seat_id){
+		$tb_seat = $this->db->dbprefix('seat');
+		$tb_booking = $this->db->dbprefix('seat');
+		$sql = "UPDATE ".$tb_seat." SET booking_id=NULL, is_booked=0
+WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=? AND b.status=1 AND b.id=? LIMIT 1)";
 		$query = $this->db->query($sql, array($seat_id, $user_id, $booking_id));
 		return $this->db->affected_rows();
 	}

@@ -156,7 +156,7 @@ Seat.prototype = {
 
 		});
 
-		$('#submit').bind('click', function(e){
+		$('#b-continue').bind('click', function(e){
 			if(_this.el.seatContainer.find('input[name="seat\[\]"]:checked').length<=0){
 				e.preventDefault();
 				common.popup.show(null, '#seat-no-select-popup');

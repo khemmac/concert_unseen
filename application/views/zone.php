@@ -122,7 +122,7 @@
 						<li><?= form_submit(array(
 							'id'		=> 'submit',
 							'value'		=> 'ซื้อบัตร',
-							'class'		=> 'submit btn btn-large btn-primary'
+							'class'		=> 'submit btn btn-large btn-primary btn-block'
 						)); ?></li>
 					</ul>
 					<?= form_close() ?>
@@ -134,7 +134,7 @@
 						<li><?= form_submit(array(
 							'id'		=> 'submit-clear',
 							'value'		=> 'ล้างการจอง',
-							'class'		=> 'submit-clear btn'
+							'class'		=> 'submit-clear btn btn-block'
 						)); ?></li>
 					</ul>
 					<?= form_close() ?>
@@ -152,16 +152,6 @@
 				if(result)
 					$('form#form-clear').submit();
 			});
-/*
-			var popId = '#zone-confirm-clear-popup';
-			common.popup.show(null, popId);
-			$(popId).find('a.ok').unbind('click').bind('click', function(e){
-				e.preventDefault();
-				$('form#form-clear').submit();
-				return false;
-			});
-			return false;
-*/
 		});
 	});
 </script>

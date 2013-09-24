@@ -144,12 +144,12 @@ class Zone extends CI_Controller {
 
 		redirect($r_url);
 	}
-/* // development only
+	// development only
 	function generate(){
 		function split_seat($s){
 			$result = array();
-			$pitted_seat = explode(',', $s);
-			foreach($pitted_seat as $value){
+			$spitted_seat = explode(',', $s);
+			foreach($spitted_seat as $value){
 				$ordered_seat = explode('-', $value);
 				$ordered_start = $ordered_seat[0];
 				if(!empty($ordered_seat[1])){
@@ -165,28 +165,16 @@ class Zone extends CI_Controller {
 		}
 
 		$this->db->trans_start();
-		$this->db->query('alter table seat DROP FOREIGN KEY r_zone_seart_1_M');
-		$this->db->query('TRUNCATE TABLE zone');
-		$this->db->query('TRUNCATE TABLE seat');
-		$this->db->query('Alter table seat add Constraint r_zone_seart_1_M Foreign Key (zone_id) references zone (id) on delete  restrict on update  restrict;');
+		$tb_zone = $this->db->dbprefix('zone');
+		$tb_seat = $this->db->dbprefix('seat');
+		$this->db->query('alter table '.$tb_seat.' DROP FOREIGN KEY r_unseen_zone_seat_1_M');
+		$this->db->query('TRUNCATE TABLE '.$tb_zone);
+		$this->db->query('TRUNCATE TABLE '.$tb_seat);
+		$this->db->query('Alter table '.$tb_seat.' add Constraint r_unseen_zone_seat_1_M'
+						.' Foreign Key (zone_id) references '.$tb_zone.' (id) on delete  restrict on update  restrict;');
 
 		// price array
-		$price_1 = array('a3');
-		$price_2 = array('a2','a4');
-		$price_3 = array('b2','b3','b4');
-		$price_4 = array('b1','b5','c1','c2','c3',
-					'e1f','e1g','e1h','e1i','e1j','e1k','e1l','e1m','e1n');
-		$price_5 = array('a1','a5','d1','d2',
-					'e1d','e1e','e1o','e1p',
-					'e1a','e1b','e1c','e1q','e1r','e1s',
-					'e2h','e2i','e2j','e2k','e2l','e2m','e2n','e2o');
-		$price_6 = array('n1f','n1g','n1h','n1i','n1j','n1k','n1l',
-					'e2e','e2f','e2g','e2p','e2q','e2r',
-					's1a','s1b','s1c','s1d','s1e','s1f','s1g',
-					'e2a','e2b','e2c','e2d','e2s','e2t','e2u','e2v');
-		$price_7 = array('n2h','n2i','n2j','n2k','n2l',
-					's2a','s2b','s2c','s2d','s2e',
-					'e3a','e3b','e3c','e3d','e3e','e3f','e3g','e3h','e3i','e3j','e3k','e3l','e3m','e3n','e3o','e3p','e3q','e3r');
+		$price_1 = array('a1','a2','a3');
 
 		$zones = zone_helper_get_zone();
 		foreach($zones AS $zone){
@@ -194,55 +182,39 @@ class Zone extends CI_Controller {
 
 			$price = 0;
 			if(in_array($zone_name, $price_1))
-				$price = 6000;
+				$price = 2200;
 			else if(in_array($zone_name, $price_2))
-				$price = 5000;
+				$price = 1800;
 			else if(in_array($zone_name, $price_3))
-				$price = 4500;
-			else if(in_array($zone_name, $price_4))
-				$price = 3500;
-			else if(in_array($zone_name, $price_5))
-				$price = 2500;
-			else if(in_array($zone_name, $price_6))
 				$price = 1500;
-			else if(in_array($zone_name, $price_7))
-				$price = 900;
+			else if(in_array($zone_name, $price_4))
+				$price = 1000;
+			else if(in_array($zone_name, $price_5))
+				$price = 800;
 			$this->db->set('name', $zone_name);
 			$this->db->set('price', $price);
-			$this->db->set('type', $zone['type']);
 			$this->db->set('createDate', 'NOW()', false);
 			$this->db->insert('zone');
 
 			$zone_id = $this->db->insert_id();
-			echo '<h3>'.$zone_id.'</h3>';
+			echo '<h3>ZONE ID : '.$zone_id.'</h3>';
 
 			echo $zone_name.'<hr />';
-			foreach($zone['seat'] AS $row_name => $row_seat){
-				//$zone_data['seats'][$row_name] = array();
-				foreach ($zone['position'] as $p_row_name => $position_seat) {
-					// check row is match
-					if($row_name==$p_row_name){
-						$row_seat = split_seat($row_seat);
-						$pos_seat = split_seat($position_seat);
-						foreach($row_seat AS $row_seat_key => $row_seat_value)
-						{
-							if($zone['type']=='u')
-								$seat_name = $row_seat_value;
-							else
-								$seat_name = $row_name.$row_seat_value;
-							echo $seat_name.'<hr />';
-							$this->db->set('zone_id', $zone_id);
-							$this->db->set('name', $seat_name);
-							$this->db->set('is_booked', 0);
-							$this->db->set('is_soldout', 0);
-							$this->db->set('createDate', 'NOW()', false);
-							$this->db->insert('seat');
-							//array_push($zone_data['seats'][$row_name], array(
-							//	'no'=>$row_seat_value,
-							//	'position'=>$pos_seat[$row_seat_key]
-							//));
-						}
-						break;
+			for($i=1;$i<=2;$i++){
+				echo '------- ROUND '.$i.'<hr />';
+				foreach($zone['seat'] AS $row_name => $row_seat_list){
+					$row_seat = split_seat($row_seat_list);
+					foreach($row_seat AS $row_seat_key => $row_seat_value)
+					{
+						$seat_name = $row_name.$row_seat_value;
+						echo $seat_name.'<hr />';
+						$this->db->set('zone_id', $zone_id);
+						$this->db->set('round', $i);
+						$this->db->set('name', $seat_name);
+						$this->db->set('is_booked', 0);
+						$this->db->set('is_soldout', 0);
+						$this->db->set('createDate', 'NOW()', false);
+						$this->db->insert('seat');
 					}
 				}
 			}
@@ -251,7 +223,7 @@ class Zone extends CI_Controller {
 
 		$this->db->trans_complete();
 	}
-*/
+
 
 
 }

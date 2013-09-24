@@ -5,7 +5,7 @@ Class Cache_model extends CI_Model
 		return set_realpath(APPPATH.'cache/zone');
 	}
 
-	function is_available($zone_id, $seat_id){
+	function is_available($seat_id){
 		/*
 		$cache_path = $this->get_cache_path();
 		$files = scandir($base_path);

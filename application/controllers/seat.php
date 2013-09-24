@@ -21,6 +21,24 @@ class Seat extends CI_Controller {
 	}
 
 	function index(){
+
+		if(!is_user_session_exist($this))
+			redirect('member/login?rurl='.uri_string());
+
+		$user_id = get_user_session_id($this);
+		$user_obj = get_user_session($this);
+
+		$has_booked = $this->booking_model->has_booked($user_id);
+		if($has_booked){
+			redirect('home?popup=zone-booked-limit-popup');
+			return;
+		}
+
+		$booking_round = $this->input->post('round');
+		if(empty($booking_round)) $booking_round = 1;
+
+		// prepare booking data
+		$booking_id = $this->booking_model->prepare($user_id);
 		/*
 		$booking_type = 3;
 
@@ -207,7 +225,8 @@ class Seat extends CI_Controller {
 		}
 */
 		$this->phxview->RenderView('seat', array(
-			//'booking_id'=>$booking_id,
+			'booking_round'=>$booking_round,
+			'booking_id'=>$booking_id//,
 			//'zone'=>$zone_data
 		));
 		$this->phxview->RenderLayout('default');
@@ -225,23 +244,24 @@ class Seat extends CI_Controller {
 
 		$user_id = get_user_session_id($this);
 		$booking_id = $this->input->post('booking_id');
-		$zone_id= $this->input->post('zone_id');
 		$seat_id = $this->input->post('seat_id');
 
-		if(empty($zone_id) || empty($seat_id)){
+		if(empty($seat_id)){
 			echo json_encode(array( 'success'=>false, 'error_code'=>99 )); // parameter ไม่ครบ
 			return;
 		}
 
 		// is seat available
-		if($this->cache_model->is_available($zone_id, $seat_id)){
+		if($this->cache_model->is_available($seat_id)){
 
-			$this->booking_model->do_book($user_id, $booking_id, $zone_id, $seat_id);
+			$affect_row = $this->booking_model->do_book($user_id, $booking_id, $seat_id);
 
-			// UPDATE CACHE
-			$this->cache_model->update_seat($zone_id);
-
-			echo json_encode(array( 'success'=>true ));
+			if($affect_row==1){
+				// UPDATE CACHE
+				//$this->cache_model->update_seat($zone_id);
+				echo json_encode(array( 'success'=>true ));
+			}else
+				echo json_encode(array( 'success'=>false, 'error_code'=>999 )); // ไม่สามารถ update ได้
 		}else{
 			echo json_encode(array( 'success'=>false, 'error_code'=>2 )); // ที่นั่งไม่ว่าง
 			return;
@@ -256,19 +276,21 @@ class Seat extends CI_Controller {
 
 		$user_id = get_user_session_id($this);
 		$booking_id = $this->input->post('booking_id');
-		$zone_id= $this->input->post('zone_id');
 		$seat_id = $this->input->post('seat_id');
 
-		if(empty($zone_id) || empty($seat_id)){
+		if(empty($seat_id)){
 			echo json_encode(array( 'success'=>false, 'error_code'=>99 )); // parameter ไม่ครบ
 			return;
 		}
 
-		$this->booking_model->undo_book($user_id, $booking_id, $zone_id, $seat_id);
-		// UPDATE CACHE
-		$this->cache_model->update_seat($zone_id);
+		$affect_row = $this->booking_model->undo_book($user_id, $booking_id, $seat_id);
 
-		echo json_encode(array( 'success'=>true ));
+		if($affect_row==1){
+			// UPDATE CACHE
+			//$this->cache_model->update_seat($zone_id);
+			echo json_encode(array( 'success'=>true ));
+		}else
+			echo json_encode(array( 'success'=>false, 'error_code'=>999 )); // ไม่สามารถ update ได้
 	}
 
 	function submit(){
@@ -311,16 +333,8 @@ class Seat extends CI_Controller {
 			echo '<script type="text/javascript">self.location.href="'.site_url('member/login').'";</script>';
 			return;
 		}
-
 		$user_id = get_user_session_id($this);
 		$user_obj = get_user_session($this);
-
-		// check booking type
-		$booking_type = 1;
-		if($user_obj['type']==2)
-			$booking_type = 3;
-		else if(period_helper_presale())
-			$booking_type = 2;
 
 		$zone_name = $this->input->post('zone_name');
 
@@ -343,14 +357,14 @@ class Seat extends CI_Controller {
 			));
 			if($query->num_rows()<=0){
 				// prepare booking data
-				$booking_id = $this->booking_model->prepare($user_id, $booking_type);
-				echo '<script type="text/javascript">self.location.href="'.site_url('seat/'.$zone_name.'/'.$booking_id).'";</script>';
+				$booking_id = $this->booking_model->prepare($user_id);
+				echo '<script type="text/javascript">self.location.href="'.site_url('seat/'.$zone_name).'";</script>';
 				return;
 			}
 		}else{
 			// prepare booking data
-			$booking_id = $this->booking_model->prepare($user_id, $booking_type);
-			echo '<script type="text/javascript">self.location.href="'.site_url('seat/'.$zone_name.'/'.$booking_id).'";</script>';
+			$booking_id = $this->booking_model->prepare($user_id);
+			echo '<script type="text/javascript">self.location.href="'.site_url('seat/'.$zone_name).'";</script>';
 			return;
 		}
 
