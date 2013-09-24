@@ -30,16 +30,14 @@ class Zone extends CI_Controller {
 			return;
 		}
 
-		$booking_type = 3;
-
 		if(!is_user_session_exist($this))
 			redirect('member/login?rurl='.uri_string());
 		$user_id = get_user_session_id($this);
 		$user_obj = get_user_session($this);
 
-		$has_booked = $this->booking_model->has_booked($user_id, $booking_type);
+		$has_booked = $this->booking_model->has_booked($user_id);
 		if($has_booked){
-			redirect('sbs2013?popup=zone-booked-limit-popup');
+			redirect('home?popup=zone-booked-limit-popup');
 			return;
 		}
 
@@ -49,27 +47,8 @@ class Zone extends CI_Controller {
 			return;
 		}
 
-		// check condition
-		$booking_id = $id = end($this->uri->segments);
-		if(is_numeric($booking_id)){
-			// load booking
-			$this->db->limit(1);
-			$query = $this->db->get_where('booking', array(
-				'id'=>$booking_id,
-				'status'=>1
-			));
-			if($query->num_rows()<=0){
-				// prepare booking data
-				$booking_id = $this->booking_model->prepare($user_id, $booking_type);
-				redirect('zone/'.$booking_id);
-				return;
-			}
-		}else{
-			// prepare booking data
-			$booking_id = $this->booking_model->prepare($user_id, $booking_type);
-			redirect('zone/'.$booking_id);
-			return;
-		}
+		// prepare booking data
+		$booking_id = $this->booking_model->prepare($user_id);
 
 
 		$booking_data = $this->seat_model->load_booking_seat($booking_id);
@@ -95,11 +74,7 @@ class Zone extends CI_Controller {
 			$result['price']+=$b_data['price'];
 		}
 
-		if($user_obj['type']==2){
-			$this->phxview->RenderView('zone-fanzone', $result);
-		}else{
-			$this->phxview->RenderView('zone', $result);
-		}
+		$this->phxview->RenderView('zone', $result);
 		$this->phxview->RenderLayout('default');
 	}
 
@@ -160,15 +135,14 @@ class Zone extends CI_Controller {
 			redirect($r_url);
 
 		$this->db->where('booking_id', $booking_id);
+		$this->db->where('booking_id=(SELECT id FROM '.$this->db->dbprefix('booking')
+									.' WHERE person_id='.$this->db->escape($user_id).' LIMIT 1)');
 		$this->db->update('seat', array(
 			'booking_id'=>NULL,
 			'is_booked'=>0
 		));
 
-		if($r_url=='zone_presale')
-			redirect($r_url);
-		else
-			redirect($r_url.'/'.$booking_id);
+		redirect($r_url);
 	}
 /* // development only
 	function generate(){

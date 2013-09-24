@@ -1,6 +1,6 @@
 /* common menu */
 ul.menu-main {
-	width:963px; height:59px; position:absolute; top:12px; left:23px;
+	width:963px; height:59px; position:absolute; top:12px; left:18px;
 	margin:0px; padding:0px; list-style:none;
 }
 ul.menu-main li { display:block; float:left; }
@@ -84,7 +84,7 @@ ul.menu-main a { text-indent:-5000px; display: block; float:left; }
 /* member sub menu */
 #member-sub-menu {
 	margin:0px; padding:0px; list-style:none;
-	position:absolute; top:75px; right:20px;
+	position:absolute; top:75px; right:24px;
 	width: 500px; z-index:999;
 }
 #member-sub-menu li { float:right; }

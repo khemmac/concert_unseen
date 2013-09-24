@@ -32,6 +32,7 @@
 	<!-- boostrap -->
 	<link href="<?= base_url('/css/bootstrap/css/bootstrap.min.css'.$sv) ?>" type="text/css" charset="utf-8" rel="stylesheet" />
 	<script type="text/javascript" src="<?= base_url('/css/bootstrap/js/bootstrap.js') ?>"></script>
+	<script type="text/javascript" src="<?= base_url('/css/bootstrap/js/bootbox.min.js') ?>"></script>
 	<!-- end boostrap -->
 
 	<script type="text/javascript" src="<?= base_url('/js/common.js'.$sv) ?>"></script>

@@ -27,11 +27,10 @@ Class Booking_model extends CI_Model
 			return true;
 	}
 
-	function has_booked($user_id, $booking_type){
+	function has_booked($user_id){
 		$this->db->select('count(id) AS cnt');
 		$this->db->where('person_id', $user_id);
 		$this->db->where('status >', 1);
-		$this->db->where('type', $booking_type);
 		$query = $this->db->get('booking');
 
 		$cnt = $query->first_row()->cnt;
@@ -89,20 +88,19 @@ WHERE id=? AND booking_id=(SELECT b.id FROM booking b WHERE b.person_id=? AND b.
 		return $this->db->affected_rows();
 	}
 
-	function prepare($user_id, $booking_type){
+	function prepare($user_id){
 		$this->db->select('id');
 		$this->db->limit(1);
 		$this->db->order_by('id', 'desc');
 		$query = $this->db->get_where('booking', array(
 			'person_id'=>$user_id,
-			'status'=>1,
-			'type'=>$booking_type
+			'status'=>1
 		));
 		if($query->num_rows()>0){
 			$res = $query->first_row('array');
 			return $res['id'];
 		}
-
+/*
 		function generate_code($booking_id){
 			$round_code = 'E';
 			if($booking_type==1)
@@ -121,16 +119,14 @@ WHERE id=? AND booking_id=(SELECT b.id FROM booking b WHERE b.person_id=? AND b.
 		$code_result = '';
 		while(empty($code_result)){
 			$code_result = generate_code($booking_type);
-			$sql = "SELECT id FROM booking WHERE code=?";
-			$query = $this->db->query($sql, array($code_result));
+			$query = $this->db->get_where('booking', array('code'=>$code_result));
 
 			if($query->num_rows()>0)
 				$code_result = '';
 		}
-
+*/
 		$this->db->set('createDate', 'NOW()', false);
 		$this->db->insert('booking', array(
-			'type'=>$booking_type,
 			'person_id'=>$user_id,
 			//'code'=> $code_result,
 			'total_money'=>0,

@@ -64,21 +64,13 @@ class Member extends CI_Controller {
 				// ปล่อยผ่านได้
 				redirect($r_url);
 			}
-			if($is_early){
-				// ปล่อยผ่านได้
-				redirect($r_url);
-			}
-			if($is_presale){
-				// ปล่อยผ่านได้
-				redirect($r_url);
-			}
-			if($is_fanzone){
+			if($is_open){
 				// ปล่อยผ่านได้
 				redirect($r_url);
 			}
 
 			delete_user_session($this);
-			redirect('sbs2013?popup=login-fanzone-only-popup');
+			redirect('home?popup=login-fanzone-only-popup');
 			return;
 		}
 	}

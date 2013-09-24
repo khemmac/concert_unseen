@@ -12,6 +12,7 @@
 */
 body{
 	margin:0px; padding:0px;
+	background:#cccccc url("../../images/th/common/body-bg.jpg") repeat-y center;
 }
 a { outline: 0; color:#231F20; text-decoration:none; }
 img { border:none; }
@@ -23,6 +24,7 @@ form input { font: 12px; }
 /* common/global */
 
 #container {
+	background-color:#FFFFFF;
 	margin:0 auto;
 	width:1000px;
 	position:relative;
