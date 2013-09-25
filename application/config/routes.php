@@ -73,9 +73,8 @@ $route['zone/(:num)'] = 'zone/index/$1';
 // add route for booking segment
 $route['booking/(:num)'] = 'booking/index/$1';
 
-// landing / home page
-$route['sbsmtv2013'] = 'index/sbsmtv2013';
-$route['sbs2013'] = 'index/sbs2013';
+// add route for booking_discount segment
+$route['booking_discount/(:num)'] = 'booking_discount/index/$1';
 
 $route['default_controller'] = "index";
 $route['404_override'] = '';

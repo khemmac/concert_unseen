@@ -70,7 +70,6 @@ class Member extends CI_Controller {
 			}
 
 			delete_user_session($this);
-			redirect('home?popup=login-fanzone-only-popup');
 			return;
 		}
 	}

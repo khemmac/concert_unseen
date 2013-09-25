@@ -80,12 +80,14 @@ WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=
 	// data
 	function prepare_print_data($user_id, $booking_id){
 		// load profile data
+		$this->db->set_dbprefix('');
 		$this->db->select('thName,code,email,tel');
 		$this->db->where('id', $user_id);
 		$this->db->limit(1);
 		$query = $this->db->get('person');
 		$person_data = $query->first_row('array');
 
+		$this->db->set_dbprefix('unseen_');
 		// load booking data
 		$this->db->where('id', $booking_id);
 		$this->db->limit(1);
@@ -100,6 +102,7 @@ WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=
 		$tb_booking = $this->db->dbprefix('booking');
 		$sql = "SELECT
 s.zone_id, z.name AS zone_name
+, s.round
 , s.id AS seat_id, s.name AS seat_name
 , s.booking_id, b.person_id, b.status
 , z.price
@@ -128,6 +131,101 @@ ORDER BY seat_id ASC";
 			'booking_data'=>$booking_data,
 			'booking_list'=>$booking_list
 		);
+	}
+
+	function confirm_booking($user_id, $booking_id, $discount_code = null){
+		$data = $this->prepare_print_data($user_id, $booking_id);
+
+		// check round count
+		$rounds = array();
+		foreach($data['booking_list'] AS $seat){
+			if(!in_array($seat['round'], $rounds))
+				array_push($rounds, $seat['round']);
+		}
+
+		function generate_code($booking_id, $rounds){
+			$round_code = 'A';
+			if(count($rounds)==2)
+				$round_code = 'C';
+			else{
+				if(count($rounds)==1){
+					if($rounds[0]==1)
+						$round_code = 'A';
+					else if($round_code[0]==2)
+						$round_code = 'B';
+				}
+			}
+			$trail_code = '';
+			for($i=0;$i<4;$i++)
+				$trail_code.=substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 1);
+
+			return date('d') . $round_code . $trail_code;
+		}
+
+		$code_result = '';
+		while(empty($code_result)){
+			$code_result = generate_code($booking_id, $rounds);
+			$sql = "SELECT id FROM ".$this->db->dbprefix('booking')." WHERE code=?";
+			$query = $this->db->query($sql, array($code_result));
+
+			if($query->num_rows()>0)
+				$code_result = '';
+		}
+
+		if(count($data['booking_data'])>0){
+
+			$has_discount = cal_helper_valid_discount_code($discount_code);
+
+			$card_fee = cal_helper_get_card_fee($data['booking_list']);
+			$discount = cal_helper_get_discount($data['booking_list'], $has_discount);
+			$total = cal_helper_get_total_price($data['booking_list'], $has_discount);
+
+			// check limit
+			$booking_id=$this->input->post('booking_id');
+			$this->db->where('id', $booking_id);
+			$this->db->where('person_id', $user_id);
+			$this->db->set('code',$code_result);
+			$this->db->set('booking_date','NOW()',false);
+			$this->db->set('updateDate','NOW()',false);
+			if($has_discount)
+				$this->db->set('discount_code',$discount_code);
+			else
+				$this->db->set('discount_code','NULL',false);
+			$this->db->set('total_money',$total.'.'.str_pad(substr($booking_id, -2), 2, '0', STR_PAD_LEFT));
+			$this->db->update('booking', array(
+				'status'=>2
+			));
+
+			// write booking log
+			$this->load->helper('path');
+			$cache_path = set_realpath(APPPATH.'logs/booking');
+
+			try {
+				$fname =  date('m-d').'.txt';
+				$fh = fopen($cache_path . $fname, 'a+');
+				$log_str = '------ BOOKING SUBMIT ------'.PHP_EOL;
+				$time_str = date('H-i-s');
+				$log_str .= $time_str.' - id : '.$booking_id.PHP_EOL;
+				$log_str .= $time_str.' - user : '.$user_id.PHP_EOL;
+				$log_str .= $time_str.' - sql : '.$this->db->last_query().PHP_EOL;
+				fwrite($fh, $log_str);
+				fclose($fh);
+			} catch (Exception $e) {}
+
+			$success = ($this->db->affected_rows()==1);
+
+			if($success){
+				$this->load->model('email_model','',TRUE);
+				// send mail
+				try {
+					$this->email_model->send_booking_submit($user_id, $booking_id);
+				} catch (Exception $e) {}
+			}
+
+			return $success;
+		}else
+			return false;
+
 	}
 
 }

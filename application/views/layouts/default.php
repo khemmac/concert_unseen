@@ -10,19 +10,12 @@
 	<script type="text/javascript"> var __base_url = '<?= base_url() ?>'; </script>
 	<script type="text/javascript"> var __site_url = '<?= site_url('/') ?>'; </script>
 
-	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.js') ?>"></script>
+	<script type="text/javascript" src="<?= base_url('/js/lib/jquery-1.8.3.min.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.bgiframe.min.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.numeric.js') ?>"></script>
 
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.qtip/jquery.qtip.min.js') ?>"></script>
 	<link href="<?= base_url('/js/lib/jquery.qtip/jquery.qtip.min.css') ?>" type="text/css" rel="stylesheet" />
-<!--
-	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.tipsy/jquery.tipsy.js') ?>"></script>
-	<link href="<?= base_url('/js/lib/jquery.tipsy/tipsy.css') ?>" type="text/css" rel="stylesheet" />
--->
-	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.sexy-combo/jquery.sexy-combo-2.1.2.pack.js') ?>"></script>
-	<link href="<?= base_url('/js/lib/jquery.sexy-combo/sexy-combo.css') ?>" type="text/css" rel="stylesheet" />
-	<link href="<?= base_url('/js/lib/jquery.sexy-combo/skins/custom/custom.css') ?>" type="text/css" rel="stylesheet" />
 
 	<link href="<?= base_url('/css/fonts/ThaiSansNeue/font.css'.$sv) ?>" type="text/css" charset="utf-8" rel="stylesheet" />
 	<link href="<?= base_url('/css/fonts/THKrub/font.css'.$sv) ?>" type="text/css" charset="utf-8" rel="stylesheet" />
@@ -52,8 +45,17 @@
 <?php
 	$popup = $this->input->get('popup');
 	if(!empty($popup)):
+		$msg = '';
+		$type = 'alert';
+		if($popup=='zone-booked-limit-popup')
+			$msg = 'ท่านสามารถจองบัตรได้เพียง 1 ครั้งเท่านั้น';
 ?>
-<script type="text/javascript"> $(function(){ common.popup.show(null, '#<?= $popup ?>'); }); </script>
+<script type="text/javascript"> $(function(){
+	<?php if($type=='alert'): ?>
+	bootbox.alert('<?= $msg ?>');
+	<?php endif; ?>
+	});
+</script>
 <?php endif; ?>
 </body>
 </html>

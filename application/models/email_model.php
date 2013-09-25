@@ -28,21 +28,21 @@ Class Email_model extends CI_Model
 
 	public function send_register_success($user_data){
 		$reciever = $user_data['email'];
-		$subject = 'ยินดีต้อนรับผู้จองบัตร Early Bird & Presale';
+		$subject = 'ยินดีต้อนรับผู้จองบัตรคอนเสิร์ตขโมยซีน';
 		$body = $this->load->view('email/register-success', $user_data, true);
 		$this->send_mailer($reciever, $subject, $body);
 	}
 
 	public function send_profile_success($user_data){
 		$reciever = $user_data['email'];
-		$subject = 'ข้อมูลการแก้ไขรหัสผ่าน SBS MTV 2013';
+		$subject = 'ข้อมูลการแก้ไขรหัสผ่าน ขโมยซีน CONCERT';
 		$body = $this->load->view('email/profile-success', $user_data, true);
 		$this->send_mailer($reciever, $subject, $body);
 	}
 
 	public function send_forgot_success($user_data){
 		$reciever = $user_data['email'];
-		$subject = 'ลืมรหัสผ่าน SBS MTV 2013';
+		$subject = 'ลืมรหัสผ่าน ขโมยซีน CONCERT';
 		$body = $this->load->view('email/forgot-success', $user_data, true);
 		$this->send_mailer($reciever, $subject, $body);
 	}
@@ -50,7 +50,7 @@ Class Email_model extends CI_Model
 	public function send_booking_submit($user_id, $booking_id){
 		$data = $this->booking_model->prepare_print_data($user_id, $booking_id);
 		$reciever = $data['person']['email'];
-		$subject = 'หลักฐานการจองบัตรคอนเสิร์ต SBS MTV 2013';
+		$subject = 'หลักฐานการจองบัตรคอนเสิร์ตขโมยซีน';
 		$body = $this->load->view('email/booking-submit-success', $data, true);
 		$this->send_mailer($reciever, $subject, $body);
 	}
@@ -79,7 +79,7 @@ Class Email_model extends CI_Model
 			$mail->ClearAddresses();
 		}
 	}
-	
+
 	public function approve_tranfer($user_data){
 		$reciever = $user_data['email'];
 		$subject = 'ยืนยันการแจ้งโอนเงิน';

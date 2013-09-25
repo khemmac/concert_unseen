@@ -37,7 +37,7 @@ class Zone extends CI_Controller {
 
 		$has_booked = $this->booking_model->has_booked($user_id);
 		if($has_booked){
-			redirect('home?popup=zone-booked-limit-popup');
+			redirect('index?popup=zone-booked-limit-popup');
 			return;
 		}
 
@@ -94,76 +94,14 @@ class Zone extends CI_Controller {
 		$booking_id = $this->input->post('booking_id');
 		$booking_data = $this->seat_model->load_booking_seat($booking_id);
 
-		function generate_code($booking_id){
-			$round_code = 'E';
-			if($booking_type==1)
-				$round_code = 'E';
-			else if($booking_type==2)
-				$round_code = 'P';
-			else if($booking_type==3)
-				$round_code = 'F';
-			$trail_code = '';
-			for($i=0;$i<4;$i++)
-				$trail_code.=substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 1);
-
-			return date('d') . $round_code . $trail_code;
-		}
-
-		$code_result = '';
-		while(empty($code_result)){
-			$code_result = generate_code($booking_type);
-			$sql = "SELECT id FROM ".$this->db->dbprefix('booking')." WHERE code=?";
-			$query = $this->db->query($sql, array($code_result));
-
-			if($query->num_rows()>0)
-				$code_result = '';
-		}
 
 		if(count($booking_data)>0){
-			$data = $this->booking_model->prepare_print_data($user_id, $booking_id);
-			$card_fee = cal_helper_get_card_fee($data['booking_list']);
-			$discount = cal_helper_get_discount($data['booking_data']['type'], $data['booking_list']);
-			$total = cal_helper_get_total_price($data['booking_data']['type'], $data['booking_list']);
-
-			// check limit
-			$booking_id=$this->input->post('booking_id');
-			$this->db->where('id', $booking_id);
-			$this->db->where('person_id', $user_id);
-			$this->db->set('code',$code_result);
-			$this->db->set('booking_date','NOW()',false);
-			$this->db->set('updateDate','NOW()',false);
-			$this->db->set('total_money',$total.'.'.str_pad(substr($booking_id, -2), 2, '0', STR_PAD_LEFT));
-			$this->db->update('booking', array(
-				'status'=>2
-			));
-
-			// write booking log
-			$this->load->helper('path');
-			$cache_path = set_realpath(APPPATH.'logs/booking');
-
-			try {
-				$fname =  date('m-d').'.txt';
-				$fh = fopen($cache_path . $fname, 'w');
-				$log_str = '------ BOOKING SUBMIT ------'.PHP_EOL;
-				$time_str = date('H-i-s');
-				$log_str .= $time_str.' - id : '.$booking_id.PHP_EOL;
-				$log_str .= $time_str.' - user : '.$user_id.PHP_EOL;
-				$log_str .= $time_str.' - sql : '.$this->db->last_query().PHP_EOL;
-				fwrite($fh, $log_str);
-				fclose($fh);
-			 } catch (Exception $e) {}
-
-			if($this->db->affected_rows()==1){
-				// send mail
-				try {
-					$this->email_model->send_booking_submit($user_id, $booking_id);
-				} catch (Exception $e) {}
-
+			// submit booking
+			$success = $this->booking_model->confirm_booking($user_id, $booking_id, null);
+			if($success)
 				redirect('booking/'.$booking_id);
-				//redirect('booking/check?popup=booking-submit-complete-popup');
-			}else{
+			else
 				redirect('zone');
-			}
 		}
 		else
 			redirect('zone/'.$booking_id.'?popup=zone-blank-seat-popup');

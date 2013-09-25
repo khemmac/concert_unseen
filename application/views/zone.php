@@ -80,11 +80,11 @@
 			</td></tr>
 			<tr>
 				<td style="text-align: center;">
-					<?= form_open('zone/submit'); ?>
+					<?= form_open('zone/submit', array('id'=>'form-zone')); ?>
 					<?= form_hidden('booking_id', $booking_id) ?>
 					<ul class="submit-container">
 						<li><?= form_submit(array(
-							'id'		=> 'submit',
+							'id'		=> 'submit-zone',
 							'value'		=> 'ซื้อบัตร',
 							'class'		=> 'submit btn btn-large btn-primary btn-block'
 						)); ?></li>
@@ -97,7 +97,7 @@
 					<ul class="submit-clear-container">
 						<li><?= form_submit(array(
 							'id'		=> 'submit-clear',
-							'value'		=> 'ล้างการจอง',
+							'value'		=> 'ยกเลิกการจอง',
 							'class'		=> 'submit-clear btn btn-block'
 						)); ?></li>
 					</ul>
@@ -149,8 +149,26 @@
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 	$(function(){
+		$('#submit-zone').click(function(e){
+			e.preventDefault();
+			bootbox.dialog('คุณมี PTT-Bluecard หรือไม่?', [{
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;มี&nbsp;&nbsp;&nbsp;&nbsp;",
+				class: "btn-success btn-large",
+				callback: function() {
+					window.location.href = '<?= site_url('booking_discount/'.$booking_id) ?>';
+				}
+			},{
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไม่มี&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+				class: "btn",
+				callback: function() {
+					$('form#form-zone').submit();
+				}
+			}]);
+		});
+
 		$('#submit-clear').click(function(e){
 			e.preventDefault();
 			bootbox.confirm("ท่านต้องการยกเลิกการจองหรือไม่", function(result) {

@@ -30,7 +30,7 @@ class Seat extends CI_Controller {
 
 		$has_booked = $this->booking_model->has_booked($user_id);
 		if($has_booked){
-			redirect('home?popup=zone-booked-limit-popup');
+			redirect('index?popup=zone-booked-limit-popup');
 			return;
 		}
 
