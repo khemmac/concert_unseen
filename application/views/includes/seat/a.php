@@ -10,8 +10,6 @@
 	$rows_a1 = seat_helper_get_all_rows($seat_db_list, 'a1');
 	$rows_a2 = seat_helper_get_all_rows($seat_db_list, 'a2');
 	$rows_a3 = seat_helper_get_all_rows($seat_db_list, 'a3');
-
-	//print_r($result);
 ?>
 <table cellpadding="2" cellspacing="0" border="0" style="width:960px; margin: 0 auto;">
 	<tr>

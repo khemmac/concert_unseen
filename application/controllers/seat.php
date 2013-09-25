@@ -53,7 +53,7 @@ class Seat extends CI_Controller {
 		));
 		$this->phxview->RenderLayout('default');
 
-		$this->benchmark->mark('overall_end');
+		//$this->benchmark->mark('overall_end');
 
 		/////////////////// echo 'overall : '.$this->benchmark->elapsed_time('overall_start', 'overall_end').'<hr />';
 	}

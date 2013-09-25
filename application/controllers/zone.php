@@ -197,7 +197,6 @@ class Zone extends CI_Controller {
 						$this->db->set('round', $i);
 						$this->db->set('name', $seat_name);
 						$this->db->set('is_booked', 0);
-						$this->db->set('is_soldout', 0);
 						$this->db->set('createDate', 'NOW()', false);
 						$this->db->insert('seat');
 					}
