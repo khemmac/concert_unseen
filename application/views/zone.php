@@ -1,11 +1,12 @@
 <style type="text/css">
 	#content-body { padding:0px 0px 50px 0px; }
 
-	#remark-info { position:absolute; top:133px; left:50px; width: 250px; }
-	.page-zone h4 { text-align:center; font-family:'thaisans_neuebold'; margin:0px; }
+	#remark-info { position:absolute; top:133px; right:50px; width:260px; }
+	.page-zone h4,
+	.page-zone h5 { text-align:center; font-family:'thaisans_neuebold'; margin:0px; }
 
 	#booking-info { border:0px solid #f00;
-		position:absolute; top:133px; right:50px; width:260px;
+		position:absolute; top:133px; left:50px; width: 250px;
 	}
 
 	a.link-zone {
@@ -40,12 +41,12 @@
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b1">B1</a>
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b2">B2</a>
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b3">B3</a>
-		<map name="zone-map">
+		<!--map name="zone-map">
 			<area shape="polygon" coords="165,234,217,234,217,286,166,285" href="<?= site_url('seat_a') ?>" title="A">
-		</map>
+		</map-->
 
 		<div id="remark-info">
-
+			<table cellpadding="2" cellspacing="0" border="0" width="100%"><tr><td>
 			<table cellpadding="2" cellspacing="0" class="table table-bordered" width="100%">
 				<tr>
 					<td colspan="3"><h4>Remark</h4></td>
@@ -76,43 +77,6 @@
 					<td>800 Baht</td>
 				</tr>
 			</table>
-		</div>
-
-		<div id="booking-info">
-			<table cellpadding="2" cellspacing="0" border="0" width="100%"><tr><td>
-			<table cellpadding="2" cellspacing="0" width="100%" class="table table-bordered">
-				<tr>
-					<td colspan="2"><h4>รายละเอียดการจอง</h4></td>
-				</tr>
-				<tr>
-					<td style="width:80px; text-align:right;">โซน :</td>
-					<td>
-<?php
-	if(count($zones)>0):
-		$zones_arr = array();
-		foreach($zones AS $z):
-			$zone_data = zone_helper_get_zone($z);
-			if($z=='a3')
-				array_push($zones_arr, anchor('seat_early/'.$booking_id, strtoupper($z), 'title="'.$z.'"'));
-			else if($zone_data['type']=='u')
-				array_push($zones_arr, anchor('seat_u/'.$z.'/'.$booking_id, strtoupper($z), 'title="'.$z.'"'));
-			else
-				array_push($zones_arr, anchor('seat/'.$z.'/'.$booking_id, strtoupper($z), 'title="'.$z.'"'));
-		endforeach;
-		echo implode(', ', $zones_arr);
-	endif;
-?>
-					</td>
-				</tr>
-				<tr>
-					<td style="text-align:right;">ที่นั่ง :</td>
-					<td><?= (count($seats)>0)?strtoupper(implode(', ', $seats)):'-' ?></td>
-				</tr>
-				<tr>
-					<td style="text-align:right;">ราคารวม :</td>
-					<td><?= number_format($price) ?> B.-</td>
-				</tr>
-			</table>
 			</td></tr>
 			<tr>
 				<td style="text-align: center;">
@@ -140,6 +104,47 @@
 					<?= form_close() ?>
 				</td>
 			</tr>
+			</table>
+		</div>
+
+		<div id="booking-info">
+			<table cellpadding="2" cellspacing="0" width="100%" class="table table-bordered">
+				<tr>
+					<td colspan="2"><h4>รายละเอียดการจอง</h4></td>
+				</tr>
+<?php
+	if(count($rounds)>0):
+	foreach($rounds AS $r_key=>$r_value):
+		$zones = $r_value['zones'];
+		$seats = $r_value['seats'];
+?>
+				<tr><td colspan="2"><h5>รอบที่ <?= $r_key ?></h5></td></tr>
+				<tr>
+					<td style="width:80px; text-align:right;">โซน :</td>
+					<td>
+<?php
+	if(count($zones)>0):
+		$zones_arr = array();
+		foreach($zones AS $z):
+			array_push($zones_arr, anchor('seat/'.substr($z, 0, 1), strtoupper($z), 'title="'.$z.'"'));
+		endforeach;
+		echo implode(', ', $zones_arr);
+	endif;
+?>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">ที่นั่ง :</td>
+					<td><?= (count($seats)>0)?strtoupper(implode(', ', $seats)):'-' ?></td>
+				</tr>
+<?php
+	endforeach;
+	endif;
+?>
+				<tr>
+					<td style="text-align:right;">ราคารวม :</td>
+					<td><?= number_format($price) ?> B.-</td>
+				</tr>
 			</table>
 		</div>
 	</div>

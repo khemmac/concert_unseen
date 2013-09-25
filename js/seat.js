@@ -10,16 +10,7 @@ function Seat(cfg){
 	this.__initSeatEvent();
 
 	// fectch datas
-	var fetch_seat = function(){
-		_this.__fetchData(function(){
-			_this.__initEl();
-			_this.__initSeatEvent();
-			setTimeout(function(){
-				fetch_seat();
-			}, 5000);
-		});
-	};
-	setTimeout(fetch_seat, 5000);
+	this.__callFetchTimer();
 
 	return this;
 };
@@ -48,6 +39,7 @@ Seat.prototype = {
 		this.pending = false;
 		el.removeClass('loader');
 	},
+	__fetchTimer: null,
 	__fetchData: function(cb){
 		var _this=this;
 
@@ -55,19 +47,36 @@ Seat.prototype = {
 			type: 'POST',
 			data: {
 				booking_id: $('input[name=booking_id]').val(),
-				zone_id: $('input[name=zone_id]').val(),
+				booking_round: $('input[name=booking_round]').val(),
 				zone_name: $('input[name=zone_name]').val()
 			},
 			url: __site_url+'seat/fetch',
 			dataType: 'html',
 			success: function(result){
-				$('#chair-container').empty().html(result);
+				$('#seat-container').empty().html(result);
 				if(typeof(cb)=='function') cb();
 			},
 			error: function(){
 				if(typeof(cb)=='function') cb();
 			}
 		});
+	},
+	__callFetchTimer: function(time){
+		time = time||5000;
+		var _this=this;
+		var fetch_seat = function(){
+			_this.__fetchData(function(){
+				_this.__initEl();
+				_this.__initSeatEvent();
+				_this.fetchTimer = setTimeout(function(){
+					fetch_seat();
+				}, 5000);
+			});
+		};
+		_this.fetchTimer = setTimeout(fetch_seat, time);
+	},
+	__clearFetchTimer: function(){
+		clearTimeout(this.fetchTimer);
 	},
 	__initSeatEvent: function(){
 		var _this=this;
@@ -92,37 +101,43 @@ Seat.prototype = {
 				_this.cfg.current = (_this.cfg.current>0)?_this.cfg.current-1:0;
 				//console.log('after (checked) : '+_this.cfg.current);
 
+				// clear timer
+				_this.__clearFetchTimer();
 				$.ajax({
 					type: 'POST',
 					data: {
 						booking_id: $('input[name=booking_id]').val(),
-						zone_id: $('input[name=zone_id]').val(),
 						seat_id: chk_box.attr('value')
 					},
 					url: __site_url+'seat/remove',
 					dataType: 'json',
 					success: function(result){
 						if(result.success){
-							el.removeClass('active');
+							el.removeClass('active').html(el.attr('title').substring(1));
 							_this.__hideLoader(el);
 							chk_box.attr("checked", false);
 						}
 						_this.__hideLoader(el);
+
+						_this.__callFetchTimer(1);
 					},
 					error: function(){
-						alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+						bootbox.alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
 						_this.__hideLoader(el);
+
+						_this.__callFetchTimer(1);
 					}
 				});
 			}else{
 				// ถ้าเป็นการจองที่นั่งเพิ่มให้บวกค่าเข้าไป
 				_this.cfg.current++;
 
+				// clear timer
+				_this.__clearFetchTimer();
 				$.ajax({
 					type: 'POST',
 					data: {
 						booking_id: $('input[name=booking_id]').val(),
-						zone_id: $('input[name=zone_id]').val(),
 						seat_id: chk_box.attr('value')
 					},
 					url: __site_url+'seat/add',
@@ -130,26 +145,30 @@ Seat.prototype = {
 					success: function(result){
 						if(result.success){
 							chk_box.attr("checked", true);
-							el.addClass('active');
+							el.addClass('active').html('<span></span>');
 						}else{
 							if(result.error_code==1){
-								alert('กรุณาเข้าสู่ระบบใหม่อีกครั้ง');
+								bootbox.alert("กรุณาเข้าสู่ระบบใหม่อีกครั้ง", function(result) {
+									self.location.href(__site_url('member/login'));
+								});
 							}else if(result.error_code==2){
-								alert('ที่นั่งนี้มีผู้จองแล้ว กรุณาลองเลือกที่อื่น');
+								bootbox.alert("ที่นั่งนี้มีผู้จองแล้ว กรุณาลองเลือกที่อื่น");
 								// remove seat and fill booked seat
 								var cls = el.attr('class');
 								$('<div class="booked '+cls+'"></div>').insertBefore(el);
 								el.remove();
 								chk_box.attr("checked", true);
-							}else if(result.error_code==3){
-								common.popup.show(null, '#seat-limit-popup');
 							}
 						}
 						_this.__hideLoader(el);
+
+						_this.__callFetchTimer(1);
 					},
 					error: function(){
-						alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+						bootbox.alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
 						_this.__hideLoader(el);
+
+						_this.__callFetchTimer(1);
 					}
 				});
 			}

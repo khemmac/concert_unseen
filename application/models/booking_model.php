@@ -1,31 +1,6 @@
 <?php
 Class Booking_model extends CI_Model
 {
-	function get_booking_round(){
-		return 1;
-	}
-
-	function get_booking_limit(){
-		$round = $this->get_booking_round();
-		if($round==1)
-			return 6;
-		else if($round==2)
-			return 20;
-		else
-			return 0;
-	}
-
-	function can_book($user_id, $seat_id){
-		// ดึง config ที่บอกว่ารอบจองนี้จองได้สูงสุดกี่ที่นั่ง
-		$limit = $this->get_booking_limit();
-
-		$count_all = $this->count_book($user_id);
-
-		if($count_all + (!empty($seat_id)?1:0) > $limit)
-			return false;
-		else
-			return true;
-	}
 
 	function has_booked($user_id){
 		$this->db->select('count(id) AS cnt');
@@ -38,37 +13,6 @@ Class Booking_model extends CI_Model
 		return ($cnt>=1);
 	}
 
-	function reach_limit($user_id){
-		// config ที่บอกว่ารอบจองนี้เป็นรอบที่เท่าไหร่
-		$round = $this->get_booking_round();
-
-		// ดึง config ที่บอกว่ารอบจองนี้จองได้สูงสุดกี่ที่นั่ง
-		$limit = $this->get_booking_limit();
-
-		$this->db->select('count(id) AS cnt');
-		$this->db->where('booking_id IN (
-				SELECT b.id FROM booking b WHERE b.person_id='.$this->db->escape($user_id)
-				.' AND b.round='.$this->db->escape($round).' AND b.status>1)');
-		$query = $this->db->get('seat');
-
-		$cnt = $query->first_row()->cnt;
-
-		return ($cnt>=$limit);
-	}
-
-	function count_book($user_id){
-		// config ที่บอกว่ารอบจองนี้เป็นรอบที่เท่าไหร่
-		$round = $this->get_booking_round();
-
-		$this->db->select('count(id) AS cnt');
-		$this->db->where('booking_id IN (
-				SELECT b.id FROM booking b WHERE b.person_id='.$this->db->escape($user_id)
-				.' AND b.round='.$this->db->escape($round).')');
-		$query = $this->db->get('seat');
-		//echo $this->db->last_query();
-		return $query->first_row()->cnt;
-	}
-
 	function do_book($user_id, $booking_id, $seat_id){
 		$tb_seat = $this->db->dbprefix('seat');
 		$tb_booking = $this->db->dbprefix('seat');
@@ -79,7 +23,7 @@ Class Booking_model extends CI_Model
 
 	function undo_book($user_id, $booking_id, $seat_id){
 		$tb_seat = $this->db->dbprefix('seat');
-		$tb_booking = $this->db->dbprefix('seat');
+		$tb_booking = $this->db->dbprefix('booking');
 		$sql = "UPDATE ".$tb_seat." SET booking_id=NULL, is_booked=0
 WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=? AND b.status=1 AND b.id=? LIMIT 1)";
 		$query = $this->db->query($sql, array($seat_id, $user_id, $booking_id));
@@ -151,14 +95,17 @@ WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=
 		//print_r($booking_data);
 
 		// seat data
+		$tb_zone = $this->db->dbprefix('zone');
+		$tb_seat = $this->db->dbprefix('seat');
+		$tb_booking = $this->db->dbprefix('booking');
 		$sql = "SELECT
 s.zone_id, z.name AS zone_name
 , s.id AS seat_id, s.name AS seat_name
 , s.booking_id, b.person_id, b.status
 , z.price
-FROM seat s
-JOIN zone z ON s.zone_id=z.id
-JOIN booking b ON s.booking_id=b.id AND b.person_id=?
+FROM ".$tb_seat." s
+JOIN ".$tb_zone." z ON s.zone_id=z.id
+JOIN ".$tb_booking." b ON s.booking_id=b.id AND b.person_id=?
 WHERE  s.booking_id=?
 ORDER BY seat_id ASC";
 		$query = $this->db->query($sql, array($user_id, $booking_id));

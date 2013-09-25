@@ -69,6 +69,7 @@ $autoload['helper'] = array('url','date','file','cookie','form'
 			,'concert_form_helper'
 			,'concert_util_helper'
 			,'concert_zone_helper'
+			,'concert_seat_helper'
 			,'concert_language_helper'
 			,'concert_period_helper'
 			,'concert_cal_helper');

@@ -117,3 +117,7 @@
 		}
 		return $result;
 	}
+
+	function zone_helper_valid_zone_group($z){
+		return in_array($z, arrar('a','b','c','d','e'));
+	}

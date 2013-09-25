@@ -1,4 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+	// code 1
+	// 55558800 ลด 10%
+	// 55559900 ลด 10%
+
+
 	//secure your snippet from external access
 	function cal_helper_get_sum_price($seat_list){
 		$r = 0;

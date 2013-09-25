@@ -41,12 +41,6 @@ class Zone extends CI_Controller {
 			return;
 		}
 
-		$reach_limit = $this->booking_model->reach_limit($user_id);
-		if($reach_limit){
-			redirect('booking/check?popup=seat-limit-popup');
-			return;
-		}
-
 		// prepare booking data
 		$booking_id = $this->booking_model->prepare($user_id);
 
@@ -55,25 +49,39 @@ class Zone extends CI_Controller {
 		// populate data
 		$result = array(
 			'booking_id'=>$booking_id,
-			'zones'=>array(),
-			'seats'=>array(),
+			'rounds'=>array(),
 			'price'=>0
 		);
 		foreach($booking_data AS $b_data){
+			$cur_round = $b_data['round'];
+
+			$exist_round = false;
+			foreach($result['rounds'] AS $r_key => $r_value){
+				if($cur_round==$r_key){
+					$exist_round = true; break;
+				}
+			}
+			if(!$exist_round)
+				$result['rounds'][$cur_round] = array(
+					'zones'=>array(),
+					'seats'=>array()
+				);
+
+
+
 			$exist = false;
-			foreach($result['zones'] AS $r_zone){
+			foreach($result['rounds'][$cur_round]['zones'] AS $r_zone){
 				if($b_data['zone_name']==$r_zone){
 					$exist = true; break;
 				}
 			}
 			if(!$exist)
-				array_push($result['zones'], $b_data['zone_name']);
+				array_push($result['rounds'][$cur_round]['zones'], $b_data['zone_name']);
 
-			array_push($result['seats'], $b_data['seat_name']);
+			array_push($result['rounds'][$cur_round]['seats'], $b_data['seat_name']);
 
 			$result['price']+=$b_data['price'];
 		}
-
 		$this->phxview->RenderView('zone', $result);
 		$this->phxview->RenderLayout('default');
 	}
@@ -85,8 +93,6 @@ class Zone extends CI_Controller {
 
 		$booking_id = $this->input->post('booking_id');
 		$booking_data = $this->seat_model->load_booking_seat($booking_id);
-
-
 
 		function generate_code($booking_id){
 			$round_code = 'E';
@@ -106,18 +112,59 @@ class Zone extends CI_Controller {
 		$code_result = '';
 		while(empty($code_result)){
 			$code_result = generate_code($booking_type);
-			$sql = "SELECT id FROM booking WHERE code=?";
+			$sql = "SELECT id FROM ".$this->db->dbprefix('booking')." WHERE code=?";
 			$query = $this->db->query($sql, array($code_result));
 
 			if($query->num_rows()>0)
 				$code_result = '';
 		}
 
+		if(count($booking_data)>0){
+			$data = $this->booking_model->prepare_print_data($user_id, $booking_id);
+			$card_fee = cal_helper_get_card_fee($data['booking_list']);
+			$discount = cal_helper_get_discount($data['booking_data']['type'], $data['booking_list']);
+			$total = cal_helper_get_total_price($data['booking_data']['type'], $data['booking_list']);
 
-		if(count($booking_data)<30)
-			redirect('zone/'.$booking_id.'?popup=zone-fanzone-minimum-popup');
-		if(count($booking_data)>0)
-			redirect('booking/'.$booking_id);
+			// check limit
+			$booking_id=$this->input->post('booking_id');
+			$this->db->where('id', $booking_id);
+			$this->db->where('person_id', $user_id);
+			$this->db->set('code',$code_result);
+			$this->db->set('booking_date','NOW()',false);
+			$this->db->set('updateDate','NOW()',false);
+			$this->db->set('total_money',$total.'.'.str_pad(substr($booking_id, -2), 2, '0', STR_PAD_LEFT));
+			$this->db->update('booking', array(
+				'status'=>2
+			));
+
+			// write booking log
+			$this->load->helper('path');
+			$cache_path = set_realpath(APPPATH.'logs/booking');
+
+			try {
+				$fname =  date('m-d').'.txt';
+				$fh = fopen($cache_path . $fname, 'w');
+				$log_str = '------ BOOKING SUBMIT ------'.PHP_EOL;
+				$time_str = date('H-i-s');
+				$log_str .= $time_str.' - id : '.$booking_id.PHP_EOL;
+				$log_str .= $time_str.' - user : '.$user_id.PHP_EOL;
+				$log_str .= $time_str.' - sql : '.$this->db->last_query().PHP_EOL;
+				fwrite($fh, $log_str);
+				fclose($fh);
+			 } catch (Exception $e) {}
+
+			if($this->db->affected_rows()==1){
+				// send mail
+				try {
+					$this->email_model->send_booking_submit($user_id, $booking_id);
+				} catch (Exception $e) {}
+
+				redirect('booking/'.$booking_id);
+				//redirect('booking/check?popup=booking-submit-complete-popup');
+			}else{
+				redirect('zone');
+			}
+		}
 		else
 			redirect('zone/'.$booking_id.'?popup=zone-blank-seat-popup');
 	}
