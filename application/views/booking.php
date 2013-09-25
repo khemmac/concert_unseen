@@ -1,7 +1,5 @@
-
 <style type="text/css">
 	#content-body { padding:220px 0px 50px 0px; min-height:400px; }
-
 </style>
 
 <div id="content-body" class="page-booking">
@@ -105,7 +103,7 @@
 							<table cellpadding="2" cellspacing="0" border="0">
 								<tr>
 									<td valign="middle">
-										&nbsp;<img src="<?= base_url('images/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/booking/bank-logo.gif') ?>') no-repeat 0px 0px;" />&nbsp;
+										&nbsp;<img src="<?= base_url('images/th/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/th/booking/bank-logo.gif') ?>') no-repeat 0px 0px;" />&nbsp;
 									</td>
 									<td><?= language_helper_is_th($this)?'
 										ธนาคารกรุงเทพ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -124,7 +122,7 @@
 								</tr>
 								<tr>
 									<td valign="middle">
-										&nbsp;<img src="<?= base_url('images/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/booking/bank-logo.gif') ?>') no-repeat 0px -17px;" />&nbsp;
+										&nbsp;<img src="<?= base_url('images/th/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/th/booking/bank-logo.gif') ?>') no-repeat 0px -17px;" />&nbsp;
 									</td>
 									<td><?= language_helper_is_th($this)?'
 										ธนาคารกสิกรไทย&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -143,7 +141,7 @@
 								</tr>
 								<tr>
 									<td valign="middle">
-										&nbsp;<img src="<?= base_url('images/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/booking/bank-logo.gif') ?>') no-repeat 0px -34px;" />&nbsp;
+										&nbsp;<img src="<?= base_url('images/th/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/th/booking/bank-logo.gif') ?>') no-repeat 0px -34px;" />&nbsp;
 									</td>
 									<td><?= language_helper_is_th($this)?'
 										ธนาคารไทยพาณิชย์&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
