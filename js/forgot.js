@@ -83,8 +83,7 @@ Forgot.prototype = {
 					_this.el.inputUsername.attr('readonly', 'readonly').attr('disabled', 'disabled');
 					_this.el.inputQuestion.val(result.data.question);
 
-					_this.el.stepMask.animate({ height:'33px' }, '300');
-					_this.el.bNext.animate({ top:'140px' }, '300');
+					_this.el.stepMask.animate({ height:'94px' }, '300');
 
 					_this.__state = 2;
 				}else{
@@ -127,8 +126,8 @@ Forgot.prototype = {
 				if(result && result.success){
 					_this.el.inputPassword.val(result.data.password_new);
 
-					_this.el.stepMask.fadeOut();
-					_this.el.bNext.fadeOut();
+					_this.el.stepMask.fadeOut(300, function(){ _this.el.stepMask.hide(); });
+					//_this.el.bNext.fadeOut();
 
 					_this.el.bSubmit.fadeIn();
 

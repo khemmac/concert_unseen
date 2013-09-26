@@ -1,19 +1,19 @@
 <style type="text/css">
 	#content-body { padding-top:130px; min-height:520px; }
 
-  .form-transfer {
-  	margin:0 auto;
-    width: 555px;
-    padding: 19px 29px 19px;
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-            border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  }
+	.form-transfer {
+	  	margin:0 auto;
+	    width: 555px;
+	    padding: 19px 29px 19px;
+	    background-color: #f5f5f5;
+	    border: 1px solid #e5e5e5;
+	    -webkit-border-radius: 5px;
+	       -moz-border-radius: 5px;
+	            border-radius: 5px;
+	    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	}
 
 	.form-horizontal .control-group {
 		margin-bottom: 10px;
