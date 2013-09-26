@@ -73,7 +73,7 @@ Class Tranfer_model extends CI_Model
 		$tb_booking = $this->db->dbprefix('booking');
 		$query = $this->db->Query("select b.*,p.thName person_name,p.email,p.tel
 from ".$tb_booking." b
-inner join person p on b.person_id=p.id where b.code in('".$ids."')");
+inner join person p on b.person_id=p.id where b.code in(".$this->db->escape($ids).")");
 		return $query->result_array();
 	}
 

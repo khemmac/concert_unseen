@@ -17,7 +17,21 @@ class Transfer extends CI_Controller {
 	}
 
 	function complete(){
-		$this->phxview->RenderView('transfer-complete');
+		if(!is_user_session_exist($this))
+			redirect('member/login?rurl='.uri_string());
+
+		$booking_code = $this->uri->segment(3);
+		if(empty($booking_code))
+			redirect('index');
+
+		$b_content = $this->tranfer_model->loadBookingContents($booking_code);
+
+		if(count($b_content)<=0)
+			redirect('index');
+
+		$this->phxview->RenderView('transfer-complete', array(
+			'booking_data'=>$b_content[0]
+		));
 		$this->phxview->RenderLayout('default');
 	}
 
@@ -74,7 +88,7 @@ class Transfer extends CI_Controller {
 			}
 
 			//redirect('transfer/complete/'.$list[0]['id']);
-			redirect('booking/complete');
+			redirect('transfer/complete/'.$ids);
 		}
 	}
 
