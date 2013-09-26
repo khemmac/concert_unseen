@@ -178,13 +178,11 @@ Seat.prototype = {
 		$('#b-continue').bind('click', function(e){
 			if(_this.el.seatContainer.find('input[name="seat\[\]"]:checked').length<=0){
 				e.preventDefault();
-				common.popup.show(null, '#seat-no-select-popup');
+				bootbox.confirm("ท่านยังไม่ได้เลือกที่นั่งใดๆ ต้องการกลับไปหน้า เลือกโซนที่นั่ง หรือไม่?", function(result) {
+					if(result)
+						window.location.href = __site_url+'zone';
+				});
 			}
-		});
-
-		$('#seat-no-select-popup .ok').bind('click', function(e){
-			e.preventDefault();
-			self.location.href=__site_url+'/zone';
 		});
 
 	}

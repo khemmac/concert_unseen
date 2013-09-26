@@ -59,7 +59,10 @@
 	}
 
 	function seat_helper_generate_seat_row($rows_data, $row_name){
-		foreach(seat_helper_find_seats_by_rowname($rows_data, $row_name) AS $seat):
-			seat_helper_generate_seat($row_name, $seat);
-		endforeach;
+		$seat_list = (seat_helper_find_seats_by_rowname($rows_data, $row_name));
+		if(count($seat_list)>0){
+			foreach(seat_helper_find_seats_by_rowname($rows_data, $row_name) AS $seat):
+				seat_helper_generate_seat($row_name, $seat);
+			endforeach;
+		}
 	}

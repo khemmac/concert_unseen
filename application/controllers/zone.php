@@ -160,6 +160,10 @@ class Zone extends CI_Controller {
 
 		// price array
 		$price_1 = array('a1','a2','a3');
+		$price_2 = array('b1','b2','b3');
+		$price_3 = array('c1','c2','c3');
+		$price_4 = array('d1','d2','d3');
+		$price_5 = array('e1','e2','e3');
 
 		$zones = zone_helper_get_zone();
 		foreach($zones AS $zone){

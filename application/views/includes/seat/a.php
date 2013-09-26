@@ -11,7 +11,7 @@
 	$rows_a2 = seat_helper_get_all_rows($seat_db_list, 'a2');
 	$rows_a3 = seat_helper_get_all_rows($seat_db_list, 'a3');
 ?>
-<table cellpadding="2" cellspacing="0" border="0" style="width:960px; margin: 0 auto;">
+<table cellpadding="2" cellspacing="0" border="0" style="width:960px; margin: 0 auto;" class="zone-a">
 	<tr>
 		<td></td>
 		<td><div class="text-center"><h5>A1</h5></div></td>
@@ -24,21 +24,21 @@
 	?>
 	<tr>
 		<td align="center" style="width:20px;"><?= $row_name ?></td>
-		<td class="row zone-a1">
+		<td class="row">
 			<div style="float:right;">
 			<?php
 				seat_helper_generate_seat_row($rows_a1, $row_name);
 			?>
 			</div>
 		</td>
-		<td class="row zone-a2">
+		<td class="row">
 			<div style="margin:0 auto; width:275px;">
 			<?php
 				seat_helper_generate_seat_row($rows_a2, $row_name);
 			?>
 			</div>
 		</td>
-		<td class="row zone-a3">
+		<td class="row">
 			<?php
 				seat_helper_generate_seat_row($rows_a3, $row_name);
 			?>

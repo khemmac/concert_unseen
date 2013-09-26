@@ -24,6 +24,18 @@
 	.link-zone-b2 { width:85px; height:115px; top:240px; left:447px; line-height:125px !important; }
 	.link-zone-b3 { width:90px; height:122px; top:235px; left:544px; line-height:125px !important; }
 
+	.link-zone-c1 { width:90px; height:122px; top:366px; left:345px; line-height:125px !important; }
+	.link-zone-c2 { width:85px; height:121px; top:371px; left:448px; line-height:125px !important; }
+	.link-zone-c3 { width:90px; height:122px; top:366px; left:546px; line-height:125px !important; }
+
+	.link-zone-d1 { width:65px; height:105px; top:528px; left:360px; line-height:108px !important; }
+	.link-zone-d2 { width:77px; height:97px; top:535px; left:452px; line-height:108px !important; }
+	.link-zone-d3 { width:65px; height:105px; top:528px; left:556px; line-height:108px !important; }
+
+	.link-zone-e1 { width:69px; height:60px; top:639px; left:362px; line-height:61px !important; }
+	.link-zone-e2 { width:92px; height:57px; top:643px; left:445px; line-height:61px !important; }
+	.link-zone-e3 { width:69px; height:60px; top:639px; left:551px; line-height:61px !important; }
+
 	ul.submit-container,
 	ul.submit-clear-container { margin:0px; padding:0px; list-style:none; }
 
@@ -41,6 +53,18 @@
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b1">B1</a>
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b2">B2</a>
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b3">B3</a>
+
+		<a href="<?= site_url('seat/c') ?>" class="link-zone link-zone-c1">C1</a>
+		<a href="<?= site_url('seat/c') ?>" class="link-zone link-zone-c2">C2</a>
+		<a href="<?= site_url('seat/c') ?>" class="link-zone link-zone-c3">C3</a>
+
+		<a href="<?= site_url('seat/d') ?>" class="link-zone link-zone-d1">D1</a>
+		<a href="<?= site_url('seat/d') ?>" class="link-zone link-zone-d2">D2</a>
+		<a href="<?= site_url('seat/d') ?>" class="link-zone link-zone-d3">D3</a>
+
+		<a href="<?= site_url('seat/e') ?>" class="link-zone link-zone-e1">E1</a>
+		<a href="<?= site_url('seat/e') ?>" class="link-zone link-zone-e2">E2</a>
+		<a href="<?= site_url('seat/e') ?>" class="link-zone link-zone-e3">E3</a>
 		<!--map name="zone-map">
 			<area shape="polygon" coords="165,234,217,234,217,286,166,285" href="<?= site_url('seat_a') ?>" title="A">
 		</map-->
