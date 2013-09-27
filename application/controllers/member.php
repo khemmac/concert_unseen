@@ -98,13 +98,7 @@ class Member extends CI_Controller {
 			// send email
 			$this->email_model->send_register_success($original_data);
 
-			//if(period_helper_pre_register()){
-				redirect('member/register_pre_success');
-			//}else{
-				// auto login
-			//	$this->person_model->login($this->input->post('username'), $this->input->post('password'));
-			//	redirect('member/register_success');
-			//}
+			redirect('member/register_success');
 		}
 	}
 
