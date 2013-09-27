@@ -26,7 +26,11 @@
 
 <h5 class="text-center">ติดต่อสอบถามโทร 02-938-5959 ต่อ 130 , 084-342-2230 และ 089-811-1901</h5>
 
-<div class="text-center"><img src="<?= base_url('images/th/common/condition-logo.gif') ?>" /></div>
+<div class="text-center">
+	<img src="<?= base_url('images/th/common/condition-logo.gif') ?>" />
+	<br />
+	<a href="<?= base_url('images/th/pdf/term-condition.pdf') ?>" target="_blank" style="margin-top:10px;">ดาวน์โหลดข้อกำหนดและเงื่อนไข</a>
+</div>
 </div>
 
 <script type="text/javascript">

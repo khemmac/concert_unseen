@@ -199,7 +199,8 @@ Common.prototype = {
 			});
 		bootbox.dialog($('#term-condition-content').html(), btns, {
 			header:'ข้อกำหนดและเงื่อนไข',
-			animate: false
+			animate: false,
+			classes: 'term-condition-modal'
 		});
 	}
 };
@@ -220,7 +221,8 @@ $(function(){
 		common.popup.show(this);
 	});
 
-	$('#menu-1 .menu-1').unbind('click').bind('click', function(){
+	$('#menu-1 .menu-1').unbind('click').bind('click', function(e){
+		e.preventDefault();
 		common.showConditionPopup();
 	});
 
