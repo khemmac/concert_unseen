@@ -56,17 +56,34 @@ class Transfer extends CI_Controller {
 						'rules'		=> 'trim|required|numeric|exact_length[2]'
 					)
 				);
-		if (empty($_FILES['slip']['name']))
+		if (empty($_FILES['userfile']['name']))
 		{
-			$this->form_validation->set_rules('slip', 'หลักฐานการโอนเงิน', 'required');
+			$this->form_validation->set_rules('userfile', 'หลักฐานการโอนเงิน', 'required');
 		}
 		$this->form_validation->set_rules($rules);
 		if($this->form_validation->run() == FALSE) {
 			$this->phxview->RenderView('transfer');
 			$this->phxview->RenderLayout('default');
 		} else {
-			$ids = $this->input->post('code');
+			//$ids = $this->input->post('code');
+			$code = $this->input->post('code');
+			$booking_id = 0;
+			$this->db->select('id');
+			$this->db->where('code IS NOT NULL');
+			$this->db->where('LENGTH(code)=7');
+			$this->db->limit(1);
+			$q = $this->db->get_where('booking', array('code'=>$code));
+
+			if($q->num_rows()<=0){
+				redirect('index');
+				return;
+			}else{
+				$r = $q->first_row('array');
+				$booking_id = $r['id'];
+			}
+
 			$img_name ="";
+/*
 			if(isset($_FILES['slip']['name'])){
 				$date = new DateTime();
 				$time = $date->getTimestamp();
@@ -76,8 +93,35 @@ class Transfer extends CI_Controller {
 				move_uploaded_file($_FILES['slip']['tmp_name'],$file_path.$img_name);
 				//$this->ReSizeImage($file_path.$img_name,1100,700,$_FILES['slip']);
 			}
-			$this->tranfer_model->money_tranfer($img_name);
-			$list = $this->tranfer_model->loadBookingContents($ids);
+*/
+			// new image method
+			$date = new DateTime();
+			$time = $date->getTimestamp();
+
+			$config['upload_path'] = $file_path;
+			$config['file_name'] = $time;
+			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+
+			$this->load->library('upload');
+			$this->upload->initialize($config);
+			if (!$this->upload->do_upload())
+			{
+				$this->form_validation->set_rules('userfile', 'หลักฐานการโอนเงิน', 'required');
+				$this->phxview->RenderView('transfer');
+				$this->phxview->RenderLayout('default');
+				$error = array('error' => $this->upload->display_errors());
+				print_r($error);
+				return;
+			}
+			else
+			{
+				$upload_data = $this->upload->data();
+				$img_name = $upload_data['file_name'];
+			}
+			// END new image method
+
+			$this->tranfer_model->money_tranfer($booking_id, $img_name);
+			$list = $this->tranfer_model->loadBookingContents($code);
 			foreach($list as $o){
 				$obj = array("email"=>$o["email"]
 							,"code" =>$o["code"]
@@ -86,9 +130,7 @@ class Transfer extends CI_Controller {
 							,"bank_name"=>$o["bank_name"]);
 				$this->email_model->approve_tranfer($obj);
 			}
-
-			//redirect('transfer/complete/'.$list[0]['id']);
-			redirect('transfer/complete/'.$ids);
+			redirect('transfer/complete/'.$code);
 		}
 	}
 

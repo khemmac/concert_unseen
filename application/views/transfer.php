@@ -127,7 +127,7 @@
 					'label'		=> 'ธนาคารที่โอน'
 				),
 				array(
-					'name'		=> 'slip',
+					'name'		=> 'userfile',
 					'type'		=> 'upload',
 					'class'		=> 'slip',
 					'label'		=> 'หลักฐานการโอนเงิน'

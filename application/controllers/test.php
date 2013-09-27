@@ -159,7 +159,6 @@ class Test extends CI_Controller {
     }
 }
 
-		ini_set('upload_max_filesize',41943040);
 		$config['upload_path'] = $file_path;
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
 		//$config['max_size']	= '50M';

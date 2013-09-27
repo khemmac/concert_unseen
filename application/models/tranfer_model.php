@@ -44,7 +44,7 @@ Class Tranfer_model extends CI_Model
 		return $this->db->get('booking');
 	}
 
-	function money_tranfer($img_name=""){
+	function money_tranfer($booking_id, $img_name=""){
 		/*$result = $this->loadBooking();
 		if($result->num_rows() == 0) {
 			$err = array('success'=>false,'msg'=>'code "'.$this->input->post('code').'" is tranfed or not exists.');
@@ -64,7 +64,7 @@ Class Tranfer_model extends CI_Model
 
 		$res = array('success'=>true,'msg'=>'');
 		$this->db->set('updateDate', 'NOW()', false);
-		$this->db->where('code', $this->input->post('code'));
+		$this->db->where('id', $booking_id);
 		$this->db->update('booking', $formData);
 		//return $res;
 	}
