@@ -167,7 +167,12 @@
 		$('input[name=pay_money]').numeric({ decimal: false, negative: false });
 		$('input[name=pay_money_satang]').numeric({ decimal: false, negative: false });
 
-		//common.popup.show(null, '#transfer-confirm-popup');
+		// add text to form
+		var pay_money = $('#pay_money'),
+			parent = pay_money.parent();
+		parent.removeClass('controls-row');
+		$('<span class="help-inline">:&nbsp;</span>').insertAfter(pay_money);
+		$('<span class="help-inline">บาท</span>').insertAfter($('#pay_money_satang'));
 
 	});
 </script>
