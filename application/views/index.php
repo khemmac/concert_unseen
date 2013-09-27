@@ -45,7 +45,21 @@
 		<?php endif; ?>
 	<?php endif; ?>
 	</div>
+<div style="position:absolute; bottom:5px; left:10px;">
+    <!-- hitwebcounter Code START -->
+    <a href="javascript:void(0);">
+        <img src="http://hitwebcounter.com/counter/counter.php?page=5085738&style=0025&nbdigits=5&type=ip&initCount=0" title="k-pop fastival" Alt="Counter HTML Coding"   border="0" >
+    </a>
+    <br/>
+    <!-- hitwebcounter.com -->
+    <!--
+    <a href="http://www.hitwebcounter.com/" title="Welcome Hits"
+    target="_blank" style="font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px; color: #6E6A68; text-decoration: none ;"><em>Welcome Hits</em>
+    </a>-->
 
+
+</div>
 	<?php else: ?>
 
 	<?php endif; ?>
