@@ -38,6 +38,9 @@
 	$zone_0 = zone_helper_get_zone('d1');
 	$cnt = 0;
 	foreach($zone_0['seat'] AS $row_name => $row_seat_text):
+		if($row_name=='E'):
+			echo '<tr><td colspan="3" style="height:10px;"></td></tr>';
+		endif;
 	?>
 	<tr>
 		<td align="center" style="width:20px;"><?= $row_name ?></td>
@@ -62,6 +65,9 @@
 		</td>
 	</tr>
 	<?php
+		if($row_name=='E'):
+			echo '<tr><td colspan="3" style="height:10px;"></td></tr>';
+		endif;
 		$cnt++;
 	endforeach;
 	?>

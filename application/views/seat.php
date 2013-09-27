@@ -100,5 +100,8 @@
 		$('#btn-round button').unbind('click').bind('click', function(e){
 			//e.preventDefault();
 		});
+
+		// alert warining
+		bootbox.alert('<p class="text-center">กรุณาเลือกรอบการแสดงก่อนทำการจองที่นั่ง</p>');
 	});
 </script>
