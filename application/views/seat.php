@@ -92,7 +92,6 @@
 		<?= form_close(); ?>
 	</div>
 </div>
-
 <script type="text/javascript" src="<?= base_url('js/seat.js') ?>"></script>
 <script type="text/javascript">
 	$(function(){
@@ -101,7 +100,12 @@
 			//e.preventDefault();
 		});
 
+		<?php
+			$referrer = $this->agent->referrer();
+			if(!strpos($referrer, '/seat/')):
+		?>
 		// alert warining
 		bootbox.alert('<p class="text-center">กรุณาเลือกรอบการแสดงก่อนทำการจองที่นั่ง</p>');
+		<?php endif ?>;
 	});
 </script>

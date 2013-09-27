@@ -196,6 +196,8 @@ ORDER BY seat_id ASC";
 				'status'=>2
 			));
 
+			$success = ($this->db->affected_rows()==1);
+
 			// write booking log
 			$this->load->helper('path');
 			$cache_path = set_realpath(APPPATH.'logs/booking');
@@ -211,8 +213,6 @@ ORDER BY seat_id ASC";
 				fwrite($fh, $log_str);
 				fclose($fh);
 			} catch (Exception $e) {}
-
-			$success = ($this->db->affected_rows()==1);
 
 			if($success){
 				$this->load->model('email_model','',TRUE);
