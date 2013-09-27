@@ -158,17 +158,9 @@ $tbl = '<table cellspacing="0" cellpadding="3" border="0">
 						elseif($booking_data['status']==3):
 							$tbl .= 'เจ้าหน้าที่กำลังตรวจสอบการโอนเงินของท่าน';
 						elseif($booking_data['status']==2):
-							$tbl .= 'กรุณาชำระเงิน';
-							if($booking_data['type']==3):
-								$tbl .= 'ภายในวันที่ 20/09/2013
-								<br />ก่อนเวลา 18.00';
-							elseif($booking_data['type']==2):
-								$tbl .= '<br />ภายในวันที่ '. util_helper_format_date(util_helper_add_six_hour($booking_data['booking_date'])) .'
-								<br />ก่อนเวลา '. util_helper_format_time(util_helper_add_six_hour($booking_data['booking_date']));
-							else:
-								$tbl .= '<br />ภายในวันที่ '. util_helper_format_date(util_helper_add_four_hour($booking_data['booking_date'])) .'
-								<br />ก่อนเวลา '. util_helper_format_time(util_helper_add_four_hour($booking_data['booking_date']));
-							endif;
+							$tbl .= 'กรุณาชำระเงิน<br />ภายในวันที่';
+							$tbl .= util_helper_format_date(util_helper_add_one_day($booking_data['booking_date']));
+							$tbl .= '<br />ก่อนเวลา '.util_helper_format_time(util_helper_add_one_day($booking_data['booking_date']));
 						else:
 							$tbl .= '-';
 						endif;
@@ -192,13 +184,7 @@ $tbl = '<table cellspacing="0" cellpadding="3" border="0">
 
 		if(!empty($discount) && $discount>0){
 			$tbl .= '<tr class="tbody">
-						<td style="background-color:white;" align="right" colspan="4">ส่วนลด';
-						if($booking_data['type']==2):
-							$tbl .= ' (500 บาทต่อใบ)';
-						elseif($booking_data['type']==3):
-							$tbl .= ' ('.cal_helper_get_discount_detail($booking_data['type'], $booking_list).')';
-						endif;
-				$tbl .= '</td>
+						<td style="background-color:white;" align="right" colspan="4">ส่วนลด 10%</td>
 						<td style="background-color:white;" align="center">'.number_format($discount).'</td>
 				</tr>';
 		}

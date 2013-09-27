@@ -19,6 +19,8 @@
 		margin-bottom: 10px;
 	}
 
+	span.error { color:red; padding-left:3px; }
+
 	#birth_year { width:70px; }
 
 	ul#form-button { margin:0px; padding:0px; list-style:none; }
@@ -45,8 +47,10 @@
 			$rules = $this->person_model->get_register_rules();
 			function get_label($name, $rules){
 				foreach ($rules as $key => $value) {
-					if($value['field']==$name)
-						return $value['label'];
+					if($value['field']==$name){
+						$asterisk = (strpos($value['rules'],'required')!==false)?'<span class="error">*</span>':'';
+						return $value['label'].$asterisk;
+					}
 				}
 			}
 

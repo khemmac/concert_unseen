@@ -19,7 +19,7 @@
 		<td><div class="text-center"><h5>D3</h5></div></td>
 	</tr>
 	<tr>
-		<td>VIP</td>
+		<td>AA</td>
 		<td class="row">
 			<div style="float:right;">
 			<?php for($i=1;$i<=13;$i++) echo '<div class="booked"><span></span></div>'; ?>

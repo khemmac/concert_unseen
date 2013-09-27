@@ -29,7 +29,12 @@ class Booking extends CI_Controller {
 			redirect('zone');
 
 		$result_data = $this->booking_model->prepare_print_data($user_id, $booking_id);
-		if($result_data['booking_data']['status']<=1)
+		print_r($result_data['booking_data']);
+		echo '<hr />'.count($result_data['booking_data']);
+		if(!empty($result_data)
+			&& !empty($result_data['booking_data'])
+			&& array_key_exists('booking_data', $result_data)
+			&& array_key_exists('status', $result_data['booking_data']))
 			redirect('zone');
 
 		$this->phxview->RenderView('booking', $result_data);

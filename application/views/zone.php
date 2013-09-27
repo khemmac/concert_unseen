@@ -72,33 +72,33 @@
 		<div id="remark-info">
 			<table cellpadding="2" cellspacing="0" border="0" width="100%"><tr><td>
 			<table cellpadding="2" cellspacing="0" class="table table-bordered" width="100%">
-				<tr>
+				<tr class="info">
 					<td colspan="3"><h4>Remark</h4></td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE A</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#EC2227; margin:0 auto;"></div></td>
-					<td>2,200 Baht</td>
+					<td style="text-align:right;">2,200 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE B</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#4764AF; margin:0 auto;"></div></td>
-					<td>1,800 Baht</td>
+					<td style="text-align:right;">1,800 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE C</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#62BB46; margin:0 auto;"></div></td>
-					<td>1,500 Baht</td>
+					<td style="text-align:right;">1,500 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE D</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#60489D; margin:0 auto;"></div></td>
-					<td>1,000 Baht</td>
+					<td style="text-align:right;">1,000 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE E</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#F26522; margin:0 auto;"></div></td>
-					<td>800 Baht</td>
+					<td style="text-align:right;">800 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 			</td></tr>
@@ -133,7 +133,7 @@
 
 		<div id="booking-info">
 			<table cellpadding="2" cellspacing="0" width="100%" class="table table-bordered">
-				<tr>
+				<tr class="info">
 					<td colspan="2"><h4>รายละเอียดการจอง</h4></td>
 				</tr>
 <?php
@@ -142,7 +142,13 @@
 		$zones = $r_value['zones'];
 		$seats = $r_value['seats'];
 ?>
-				<tr><td colspan="2"><h5>รอบที่ <?= $r_key ?></h5></td></tr>
+				<tr class="warning"><td colspan="2"><h5>
+				<?php if($r_key==1): ?>
+					รอบที่ 1 วันที่ 19 ตุลาคม 2556
+				<?php elseif($r_key==2): ?>
+					รอบที่ 2 วันที่ 20 ตุลาคม 2556
+				<?php endif; ?>
+				</h5></td></tr>
 				<tr>
 					<td style="width:80px; text-align:right;">โซน :</td>
 					<td>
@@ -167,7 +173,7 @@
 ?>
 				<tr>
 					<td style="text-align:right;">ราคารวม :</td>
-					<td><?= number_format($price) ?> B.-</td>
+					<td><?= number_format($price) ?> บาท</td>
 				</tr>
 			</table>
 		</div>
