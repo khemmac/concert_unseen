@@ -60,7 +60,7 @@
 				<td style="text-align:right;"><?= number_format($zone_price) ?></td>
 				<td style="text-align:right;"><?= number_format($zone_price * count($seat_list)) ?></td>
 				<?php if($key_z==0): ?>
-					<td style="text-align:center;" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" style="padding:5px;">
+					<td style="text-align:center; vertical-align:middle;" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" style="padding:5px;">
 						กรุณาชำระเงิน<br />ภายในวันที่
 						<?= util_helper_format_date(util_helper_add_one_day($booking_data['booking_date'])) ?>
 						<br />ก่อนเวลา <?= util_helper_format_time(util_helper_add_one_day($booking_data['booking_date'])) ?>
@@ -160,11 +160,11 @@
 								</tr>
 							</table>
 						</li>
-						<li>กรุณาชำระเงินภายใน 24 ชั่วโมง
-							หากไม่ชำระเงินภายในเวลาดังกล่าว มิฉะนั้นจะถือว่าท่านสละสิทธิ์ในการจองบัตร รายละเอียดการจองของท่านจะถูกลบจากระบบ
+						<li>กรุณาชำระเงินพร้อมแจ้งยืนยันการชำระเงินผ่านระบบ ภายใน 24 ชั่วโมง
+							หากไม่แจ้งยืนยันการชำระเงินภายในเวลาดังกล่าว มิฉะนั้นจะถือว่าท่านสละสิทธิ์ในการจองบัตร รายละเอียดการจองของท่านจะถูกลบจากระบบ
 							โดยทางผู้จัดจะไม่รับผิดชอบใดๆทั้งสิ้น
 						</li>
-						<li>กรุณานำหลักฐานการชำระเงินมายืนยันการแจ้งโอนเงิน ผ่านทาง <a href="http://www.boostplus.co.th" target="_blank">www.boostplus.co.th</a> ในหัวข้อแจ้งโอนเงิน
+						<li>กรุณานำหลักฐานการชำระเงินมายืนยันการแจ้งโอนเงิน ผ่านทาง <a href="http://www.boostplus.co.th" target="_blank">www.boostplus.co.th</a> ในหัวยืนยันการชำระเงิน
 						</li>
 						<li>
 							หากแจ้งโอนเงินเรียบร้อยแล้ว กรุณาตรวจสอบสถานะการจอง หลังจากแจ้งโอนเงินในเวลาประมาณ 48 ชม. (ไม่นับวันหยุดราชการ)
@@ -176,7 +176,7 @@
 				<td align="center"
 					style="height:36px; width:719px; padding:10px 0px 10px 0px;" class="text-error">
 					<?= language_helper_is_th($this)?
-						'* หมายเหตุ สามารถตรวจสอบสถานะการโอนเงินได้ผ่านทางหัวข้อ &quot;ตรวจสอบสถานะบัตร&quot;'
+						'* หมายเหตุ สามารถตรวจสอบสถานะการโอนเงินได้ผ่านทางหัวข้อ &quot;ตรวจสอบสถานะ&quot;'
 						:'* Your booking status can be tracking at "Payment status" / "Booking status"'
 					?>
 				</td>

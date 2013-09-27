@@ -58,7 +58,7 @@
 				<td style="text-align:right;"><?= number_format($zone_price) ?></td>
 				<td style="text-align:right;"><?= number_format($zone_price * count($seat_list)) ?></td>
 				<?php if($key_z==0): ?>
-					<td style="text-align:center;" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" align="center" style="padding:5px;">
+					<td style="text-align:center; vertical-align:middle;" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" align="center" style="padding:5px;">
 					<?php if($booking_data['status']==4): ?>
 						ชำระเงินแล้ว
 						<br />วันที่ <?= util_helper_format_date(util_helper_parse_date($booking_data['pay_date'])) ?>
