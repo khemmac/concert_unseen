@@ -7,8 +7,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<title>ขโมยซีน CONCERT - THE UNSEEN SHOW LIVE IN ท่าพระจันทร์</title>
-	<script type="text/javascript"> var __base_url = '<?= base_url() ?>'; </script>
-	<script type="text/javascript"> var __site_url = '<?= site_url('/') ?>'; </script>
+	<script type="text/javascript">
+		var __base_url = '<?= base_url() ?>',
+			__site_url = '<?= site_url('/') ?>',
+			__not_show_term = <?= (get_cookie('not_show_term_popup')==1)?'true':'false' ?>;
+	</script>
 
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery-1.8.3.min.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.bgiframe.min.js') ?>"></script>

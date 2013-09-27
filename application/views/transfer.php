@@ -31,7 +31,7 @@
 		<?= form_open_multipart('','class="form-transfer form-horizontal"'); ?>
 		<?php
 			$days = array();
-			for($i=14;$i<=21;$i++)
+			for($i=1;$i<=31;$i++)
 				$days[$i] = $i;
 
 
@@ -71,7 +71,7 @@
 							'name'		=> 'transfer_month',
 							'class'		=> 'span2',
 							'type'		=> 'dropdown',
-							'options'	=> array('9'=>'กันยายน')
+							'options'	=> array('9'=>'กันยายน','10'=>'ตุลาคม')
 						),
 						array(
 							'name'		=> 'transfer_year',

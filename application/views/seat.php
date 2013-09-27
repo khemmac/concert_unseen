@@ -51,7 +51,7 @@
 	}
 
 	#btn-round {
-		position:absolute; top:120px; left:144px;
+		position:absolute; top:108px; left:106px;
 	}
 
 </style>
@@ -64,8 +64,14 @@
 		<?= form_hidden('booking_round', $booking_round) ?>
 		<?= form_hidden('zone_name', $zone_name) ?>
 		<div id="btn-round" class="btn-group" data-toggle="buttons-radio">
-			<button type="submit" value="1" name="round" class="btn btn-large <?= ($booking_round==1)?'active':'' ?>">รอบที่ 1</button>
-			<button type="submit" value="2" name="round" class="btn btn-large <?= ($booking_round==2)?'active':'' ?>">รอบที่ 2</button>
+			<button type="submit" value="1" name="round" class="btn btn-large <?= ($booking_round==1)?'active':'' ?> text-center">
+				รอบที่ 1<br />
+          		19 ตุลาคม 2556
+			</button>
+			<button type="submit" value="2" name="round" class="btn btn-large <?= ($booking_round==2)?'active':'' ?> text-center">
+				รอบที่ 2<br />
+          		20 ตุลาคม 2556
+			</button>
 		</div>
 
 		<div id="stage"></div>

@@ -24,7 +24,7 @@
 	<div id="dialog">
 		<?= form_open('',  array('class'=>'form-check')); ?>
 		<fieldset class="text-center" >
-		<legend>ตรวจสอบสถานะหลังการแจ้งโอนเงิน</legend>
+		<legend>ตรวจสอบสถานะบัตร</legend>
 		<?php
 			$forms = array(
 				array(

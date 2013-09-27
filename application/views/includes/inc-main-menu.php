@@ -20,7 +20,7 @@
 <ul id="menu-1" class="menu-main">
 	<li><a href="<?= site_url('index') ?>" class="menu-boost"></a></li>
 	<li><a href="https://www.facebook.com/boostplus" target="_blank" class="menu-facebook">FACEBOOK</a></li>
-	<li><a href="<?= site_url('condition') ?>" class="menu-1"></a></li>
+	<li><a href="#condition" class="menu-1"></a></li>
 	<li><a href="<?= site_url('plan') ?>" class="menu-2"></a></li>
 	<li><a href="<?= site_url('contact') ?>" class="menu-3"></a></li>
 </ul>

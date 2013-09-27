@@ -170,6 +170,37 @@ Common.prototype = {
 			}
 			return d <= daysInMonth[--m];
 		}
+	},
+	showConditionPopup: function(){
+		//__not_show_term
+		var btns = [{
+			label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ตกลง&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+			class: "btn-success btn-large",
+			callback: function() {
+				bootbox.hideAll();
+			}
+		}];
+		if(!__not_show_term)
+			btns.push({
+				label: "อย่าแสดงอีก",
+				class: "btn btn-not-show-term",
+				callback: function() {
+					$.ajax({
+						type: 'POST',
+						url: __site_url+'common/not_show_term_popup',
+						dataType: 'json',
+						success: function(result){
+							__not_show_term = true;
+						},
+						error: function(){
+						}
+					});
+				}
+			});
+		bootbox.dialog($('#term-condition-content').html(), btns, {
+			header:'ข้อกำหนดและเงื่อนไข',
+			animate: false
+		});
 	}
 };
 
@@ -187,6 +218,10 @@ $(function(){
 		e.preventDefault();
 
 		common.popup.show(this);
+	});
+
+	$('#menu-1 .menu-1').unbind('click').bind('click', function(){
+		common.showConditionPopup();
 	});
 
 	// disable drag image at all
