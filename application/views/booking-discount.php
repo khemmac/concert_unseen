@@ -25,7 +25,10 @@
 		<?= form_open('', array('class'=>'form-discount')); ?>
 		<?= form_hidden('booking_id', $booking_id) ?>
 		<fieldset class="text-center">
-		<legend>กรุณากรอกรหัส PTT-Bluecard</legend>
+		<legend>
+			<img src="<?= base_url('images/th/common/ptt_logo.gif') ?>" width="144" height="67" /><br />
+			กรุณากรอกรหัส PTT-Bluecard
+		</legend>
 		<?=
 			form_helper_generate_item(array(
 				'name'			=> 'discount_code',

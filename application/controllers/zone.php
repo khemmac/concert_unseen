@@ -219,7 +219,7 @@ class Zone extends CI_Controller {
 
 		// UPDATE RESERVE SEAT
 		$this->db->insert('booking', array(
-			'id'=>9999999,
+			'id'=>1,
 			'person_id'=>9999999
 		));
 		$reserve_ids_str = '25,26,27,28,29,30,31,32,33,34,35,36,37,293,294,295,296,297,298,299,300,301,302,303,304,305,551
@@ -244,7 +244,7 @@ class Zone extends CI_Controller {
 		$reserve_ids_arr = explode(',', $reserve_ids_str);
 		$this->db->where_in('id', $reserve_ids_arr);
 		$this->db->set('is_booked', 1);
-		$this->db->set('booking_id', 9999999);
+		$this->db->set('booking_id', 1);
 		$this->db->update('seat');
 
 		$this->db->trans_complete();

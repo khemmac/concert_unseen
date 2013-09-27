@@ -184,7 +184,7 @@
 	$(function(){
 		$('#submit-zone').click(function(e){
 			e.preventDefault();
-			bootbox.dialog('คุณมี PTT-Bluecard หรือไม่?', [{
+			bootbox.dialog('<p class="text-center"><img src="<?= base_url('images/th/common/ptt_logo.gif') ?>" width="144" height="67" /><br /><br /><h4 class="text-center">คุณมี PTT-Bluecard หรือไม่?</h4></p>', [{
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;มี&nbsp;&nbsp;&nbsp;&nbsp;",
 				class: "btn-success btn-large",
 				callback: function() {
