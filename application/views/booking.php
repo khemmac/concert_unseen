@@ -190,3 +190,9 @@
 
 	</div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		// show ของแถม popup
+		bootbox.alert('<h5 class="text-center">ทำรายการเสร็จสิ้น</h5><p class="text-center">ท่านสามารถตรวจสอบรายละเอียดการจองได้ในอีเมล์ของท่าน</p>');
+	});
+</script>
