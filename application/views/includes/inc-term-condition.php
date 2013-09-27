@@ -32,10 +32,3 @@
 	<a href="<?= base_url('images/th/pdf/term-condition.pdf') ?>" target="_blank" style="margin-top:10px;">ดาวน์โหลดข้อกำหนดและเงื่อนไข</a>
 </div>
 </div>
-
-<script type="text/javascript">
-	$(function(){
-		if(!__not_show_term)
-			common.showConditionPopup();
-	});
-</script>

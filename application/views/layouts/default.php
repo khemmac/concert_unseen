@@ -44,6 +44,7 @@
 		<?=$view?>
 		<span id="footer" style="position:absolute; bottom:20px; right:30px; display:block; height:16px; font-size:14px; color:#808184;">ติดต่อสอบถาม 02-938-5959</span>
 	</div>
+	<?=$this->load->view('includes/inc-term-condition','', TRUE)?>
 
 <?php
 	$popup = $this->input->get('popup');

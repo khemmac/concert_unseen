@@ -206,5 +206,8 @@
 					$('form#form-clear').submit();
 			});
 		});
+
+		// show ของแถม popup
+		bootbox.alert('<p class="text-center">สิทธิพิเศษสำหรับผู้ซื้อบัตรราคา 2,200 บาท<br />ท่านจะได้รับผ้าพันคอที่ระลึก Limited Edition ไปเลย ฟรี!! <br /><img src="<?= base_url('images/th/zone/premium-item.gif') ?>" width="300" height="300" /></p>');
 	});
 </script>

@@ -21,4 +21,9 @@
 	</div>
 </div>
 
-<?=$this->load->view('includes/inc-term-condition','', TRUE)?>
+<script type="text/javascript">
+	$(function(){
+		if(!__not_show_term)
+			common.showConditionPopup();
+	});
+</script>
