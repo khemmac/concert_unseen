@@ -41,7 +41,7 @@ form input { font: 12px; }
 .bootbox .modal-header h4,
 .bootbox .modal-header h5 { text-align:center; font-family:'thaisans_neuebold'; }
 .bootbox .modal-footer { text-align:center; }
-.term-condition-modal { width:650px !important; }
+.term-condition-modal { width:650px !important; margin-left:-322px !important; }
 
 /* end common/global */
 
