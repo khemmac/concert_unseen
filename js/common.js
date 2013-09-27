@@ -221,7 +221,7 @@ $(function(){
 		common.popup.show(this);
 	});
 
-	$('#menu-1 .menu-1').unbind('click').bind('click', function(e){
+	$('#menu-1 .menu-1, #menu-2 .menu-4').unbind('click').bind('click', function(e){
 		e.preventDefault();
 		common.showConditionPopup();
 	});

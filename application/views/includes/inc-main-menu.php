@@ -8,7 +8,7 @@
 	<li><a href="<?= site_url('zone_entrance') ?>" class="menu-1">จำหน่ายบัตร</a></li>
 	<li><a href="<?= site_url('transfer') ?>" class="menu-2">ยืนยันการชำระเงิน</a></li>
 	<li><a href="<?= site_url('booking/check') ?>" class="menu-3">ตรวจสอบสถานะ</a></li>
-	<li><a href="#common-popup" class="menu-4 show-boxes">เงื่อนไข</a></li>
+	<li><a href="#condition" class="menu-4">เงื่อนไข</a></li>
 </ul>
 <?php elseif($p=='member/register' || $p=='member/register_success'): ?>
 <ul id="menu-3" class="menu-main">
