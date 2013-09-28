@@ -51,7 +51,7 @@
 	}
 
 	#btn-round {
-		position:absolute; top:108px; left:106px;
+		position:absolute; top:98px; left:106px;
 	}
 
 </style>
@@ -66,11 +66,13 @@
 		<div id="btn-round" class="btn-group" data-toggle="buttons-radio">
 			<button type="submit" value="1" name="round" class="btn btn-large <?= ($booking_round==1)?'active':'' ?> text-center">
 				รอบที่ 1<br />
-          		19 ตุลาคม 2556
+          		19 ตุลาคม 2556<br />
+          		เวลา 19.00 น.
 			</button>
 			<button type="submit" value="2" name="round" class="btn btn-large <?= ($booking_round==2)?'active':'' ?> text-center">
 				รอบที่ 2<br />
-          		20 ตุลาคม 2556
+          		20 ตุลาคม 2556<br />
+          		เวลา 19.00 น.
 			</button>
 		</div>
 

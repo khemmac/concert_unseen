@@ -184,6 +184,7 @@
 	$(function(){
 		$('#submit-zone').click(function(e){
 			e.preventDefault();
+			<?php if(count($rounds)>0): ?>
 			bootbox.dialog('<p class="text-center"><img src="<?= base_url('images/th/common/ptt_logo.gif') ?>" width="144" height="67" /><br /><br /><h4 class="text-center">คุณมี PTT-Bluecard หรือไม่?</h4></p>', [{
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;มี&nbsp;&nbsp;&nbsp;&nbsp;",
 				class: "btn-success btn-large",
@@ -197,6 +198,9 @@
 					$('form#form-zone').submit();
 				}
 			}]);
+			<?php else: ?>
+			bootbox.alert('<p class="text-center">ท่านไม่ได้จองที่นั่งใดๆ<br />กรุณาเลือกที่นั่งอย่างน้อย 1 ที่นั่ง ก่อนทำการจองบัตร</p>');
+			<?php endif; ?>
 		});
 
 		$('#submit-clear').click(function(e){
@@ -207,7 +211,13 @@
 			});
 		});
 
+		<?php
+			$referrer = $this->agent->referrer();
+			if(!strpos($referrer, '/seat/') && !strpos($referrer, '/zone')
+				&& !strpos($referrer, '/booking_discount')):
+		?>
 		// show ของแถม popup
 		bootbox.alert('<p class="text-center">สิทธิพิเศษสำหรับผู้ซื้อบัตรราคา 2,200 บาท<br />ท่านจะได้รับผ้าพันคอที่ระลึก Limited Edition ไปเลย ฟรี!! <br /><img src="<?= base_url('images/th/zone/premium-item.gif') ?>" width="300" height="300" /></p>');
+		<?php endif ?>;
 	});
 </script>

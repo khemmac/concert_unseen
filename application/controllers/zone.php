@@ -130,7 +130,7 @@ class Zone extends CI_Controller {
 		redirect($r_url);
 	}
 
-
+	/*
 	// development only
 	function generate(){
 		function split_seat($s){
@@ -231,7 +231,7 @@ class Zone extends CI_Controller {
 
 		$this->db->trans_complete();
 	}
-
+	*/
 
 
 }

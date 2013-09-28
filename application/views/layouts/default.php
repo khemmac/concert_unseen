@@ -53,6 +53,8 @@
 		$type = 'alert';
 		if($popup=='zone-booked-limit-popup')
 			$msg = 'ท่านสามารถจองบัตรได้เพียง 1 ครั้งเท่านั้น';
+		else if($popup=='zone-blank-seat-popup')
+			$msg = '<p class="text-center">ท่านไม่ได้จองที่นั่งใดๆ<br />กรุณาเลือกที่นั่งอย่างน้อย 1 ที่นั่ง ก่อนทำการจองบัตร</p>';
 ?>
 <script type="text/javascript"> $(function(){
 	<?php if($type=='alert'): ?>

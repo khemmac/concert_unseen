@@ -7,6 +7,7 @@ class Booking_discount extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('', '');
 
+		$this->load->model('seat_model','',TRUE);
 		$this->load->model('booking_model','',TRUE);
 
 		$this->output->set_header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
@@ -30,6 +31,9 @@ class Booking_discount extends CI_Controller {
 			redirect('index?popup=zone-booked-limit-popup');
 			return;
 		}
+		$booking_data = $this->seat_model->load_booking_seat($booking_id);
+		if(count($booking_data)<=0)
+			redirect('zone/'.$booking_id.'?popup=zone-blank-seat-popup');
 
 		$rules = array(
 			array(
@@ -48,12 +52,16 @@ class Booking_discount extends CI_Controller {
 			$this->phxview->RenderLayout('default');
 		} else {
 			// submit booking
-			$success = $this->booking_model->confirm_booking($user_id, $booking_id, $this->input->post('discount_code'));
+			if(count($booking_data)>0){
+				$success = $this->booking_model->confirm_booking($user_id, $booking_id, $this->input->post('discount_code'));
 
-			if($success)
-				redirect('booking/'.$booking_id);
+				if($success)
+					redirect('booking/'.$booking_id);
+				else
+					redirect('zone');
+			}
 			else
-				redirect('zone');
+				redirect('zone/'.$booking_id.'?popup=zone-blank-seat-popup');
 		}
 
 	}

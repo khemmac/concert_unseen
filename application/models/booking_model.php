@@ -149,10 +149,12 @@ ORDER BY seat_id ASC";
 				$round_code = 'C';
 			else{
 				if(count($rounds)==1){
-					if($rounds[0]==1)
+					if($rounds[0]=='1'){
 						$round_code = 'A';
-					else if($round_code[0]==2)
+					}
+					if($rounds[0]=='2'){
 						$round_code = 'B';
+					}
 				}
 			}
 			$trail_code = '';
