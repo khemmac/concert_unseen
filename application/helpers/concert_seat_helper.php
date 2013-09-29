@@ -66,3 +66,38 @@
 			endforeach;
 		}
 	}
+
+	function seat_helper_populate_round_data($booking_list){
+		// populate rounds data
+		$rounds = array();
+		foreach($booking_list AS $b_data){
+			$cur_round = $b_data['round'];
+
+			$exist_round = false;
+			foreach($rounds AS $r_key => $r_value){
+				if($cur_round==$r_key){
+					$exist_round = true; break;
+				}
+			}
+			if(!$exist_round)
+				$rounds[$cur_round] = array();
+
+			// add zone
+			if($b_data['round']==$cur_round){
+				$cur_zone = $b_data['zone_name'];
+				$exist = false;
+				foreach($rounds[$cur_round] AS $r_zone_key => $r_zone_val){
+					if($cur_zone==$r_zone_key){
+						$exist = true; break;
+					}
+				}
+				if(!$exist)
+					$rounds[$cur_round][$cur_zone] = array();
+
+				if($b_data['zone_name']==$cur_zone){
+					array_push($rounds[$cur_round][$cur_zone], $b_data['seat_name']);
+				}
+			}
+		}
+		return $rounds;
+	}

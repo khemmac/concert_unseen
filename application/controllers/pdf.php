@@ -274,7 +274,10 @@ $tbl = '<table cellspacing="0" cellpadding="3" border="0">
 
 		foreach($rounds AS $r_key => $r_val){
 			$zone_list = array();
-			$tbl .= '<h3 style="text-align:center;">รอบที่ '.$r_key.'</h3>';
+			if ($r_key==1)
+				$tbl .= '<h3 style="text-align:center;">รอบที่ 1 วันที่ 19 ตุลาคม 2556 เวลา 19.00 น.</h3>';
+			elseif ($r_key==2)
+				$tbl .= '<h3 style="text-align:center;">รอบที่ 2 วันที่ 20 ตุลาคม 2556 เวลา 19.00 น.</h3>';
 			$tbl .= '<table cellpadding="4" cellspacing="0" width="100%" border="1">
 					<tr>
 						<td style="color:white; font-weight: bold; background-color:#18171c;" align="center">โซนที่นั่ง</td>

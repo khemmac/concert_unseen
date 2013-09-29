@@ -94,6 +94,38 @@
 			</tr>
 		</table>
 
+		<table cellpadding="3" cellspacing="0" class="table table-bordered" style="width:850px; margin:0 auto; margin-top:15px;">
+		<?php
+			$rounds = seat_helper_populate_round_data($booking_list);
+			foreach($rounds AS $r_key => $r_val):
+				$zone_list = array();
+		?>
+				<tr class="success"><td colspan="2"><h4 style="text-align:center;">
+					<?php
+						if($r_key==1)
+							echo 'รอบที่ 1 วันที่ 19 ตุลาคม 2556 เวลา 19.00 น.';
+						elseif($r_key==2)
+							echo 'รอบที่ 2 วันที่ 20 ตุลาคม 2556 เวลา 19.00 น.';
+					?>
+				</h4></td></tr>
+				<tr>
+					<th style="text-align:center;">โซนที่นั่ง</th>
+					<th style="text-align:center;">เลขที่นั่ง</th>
+				</tr>
+		<?php
+				foreach($r_val AS $zone_key => $zone_val):
+					$seat_list = array();
+		?>
+					<tr>
+						<td  style="text-align:center;"><?= strtoupper($zone_key) ?></td>
+						<td style="text-align:center;"><?= strtoupper(implode(', ', $zone_val)) ?></td>
+					</tr>
+		<?php
+				endforeach;
+			endforeach;
+		?>
+		</table>
+
 		<table cellpadding="0" cellspacing="0" border="0" style="width:850px; margin:0 auto;">
 			<tr class="tfoot-text">
 				<td>
