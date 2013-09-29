@@ -103,6 +103,38 @@
 				<td style="text-align:right;"><strong><?= number_format($total) ?>.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></strong></td>
 			</tr>
 		</table>
+		<br /><br />
+		<table cellpadding="3" cellspacing="0" border="1">
+		<?php
+			$rounds = seat_helper_populate_round_data($booking_list);
+			foreach($rounds AS $r_key => $r_val):
+				$zone_list = array();
+		?>
+				<tr><td colspan="2" align="center"><strong>
+					<?php
+						if($r_key==1)
+							echo 'รอบที่ 1 วันที่ 19 ตุลาคม 2556 เวลา 19.00 น.';
+						elseif($r_key==2)
+							echo 'รอบที่ 2 วันที่ 20 ตุลาคม 2556 เวลา 19.00 น.';
+					?>
+				</strong></td></tr>
+				<tr>
+					<th style="text-align:center;">โซนที่นั่ง</th>
+					<th style="text-align:center;">เลขที่นั่ง</th>
+				</tr>
+		<?php
+				foreach($r_val AS $zone_key => $zone_val):
+					$seat_list = array();
+		?>
+					<tr>
+						<td  style="text-align:center;"><?= strtoupper($zone_key) ?></td>
+						<td style="text-align:center;"><?= strtoupper(implode(', ', $zone_val)) ?></td>
+					</tr>
+		<?php
+				endforeach;
+			endforeach;
+		?>
+		</table>
 
 		<table cellpadding="0" cellspacing="0" border="0" style="width:850px; margin:0 auto;">
 			<tr class="tfoot-text">

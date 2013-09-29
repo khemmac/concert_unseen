@@ -60,9 +60,11 @@ class Test extends CI_Controller {
 	}
 
 	function render_mail(){
-		//$data = $this->booking_model->prepare_print_data(1, 1);
+		$data = $this->booking_model->prepare_print_data(1, 10000000);
 
-		$this->load->view('email/forgot-success');
+		$this->load->view('email/booking-submit-success', $data);
+
+		//$this->load->view('email/forgot-success');
 	}
 
 	function booking_prepare(){
