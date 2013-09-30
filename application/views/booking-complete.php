@@ -1,27 +1,27 @@
+<style type="text/css">
+	#content-body { padding:220px 0px 50px 0px; min-height:400px; }
+</style>
 <div id="content-body" class="page-booking-complete">
 	<?=$this->load->view('includes/inc-main-menu','', TRUE)?>
 
 	<div id="content">
 		<div class="header">
-			<span class="name"><?= $person['thName'] ?></span>
-			<span class="code"><?= $person['code'] ?></span>
-			<?php if(language_helper_is_en($this)): ?>
-				<div style="position:absolute; top:179px; left:650px; background-color:#f4f6f5; width:171px; height:22px;"></div>
-			<?php endif; ?>
-			<span class="booking-code"><?= $booking_data['code'] ?></span>
-
+			<h4 style="position:absolute; top:120px; left:80px;">คุณ <?= $person['thName'] ?></h4>
+			<h4 style="position:absolute; top:160px; left:80px;">เลขที่บัตรประชาชน <?= $person['code'] ?></h4>
+			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered"
+				style="width:200px; position:absolute; right:80px; top:120px;">
+				<tr class="warning"><td class="text-error" style="text-align:center;"><strong>รหัสการจอง</strong></td></tr>
+				<tr><td style="text-align:center;"><?= $booking_data['code'] ?></td></tr>
+			</table>
 		</div>
-		<table class="list" cellpadding="0" cellspacing="0" border="0">
-			<tr class="thead">
-				<td style="width:19px;" class="bg-left"></td>
-				<td style="width:81px;" class="no">รายการ</td>
-				<td style="width:127px;" class="zone">โซนที่นั่ง</td>
-				<!--td style="width:133px;" class="seat-no">เลขที่นั่ง</td-->
-				<td style="width:133px;" class="seat-count">จำนวนที่นั่ง</td>
-				<td style="width:133px;" class="item-price">ราคาต่อหน่วย</td>
-				<td style="width:80px;" class="price">ราคา</td>
-				<td style="width:133px;" class="status">สถานะ</td>
-				<td style="width:17px;" class="bg-right"></td>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" style="width:850px; margin:0 auto;">
+			<tr class="info">
+				<td style="width:70px; text-align: center;" class="no"><strong>รายการ</strong></td>
+				<td style="width:127px; text-align: center;" class="zone"><strong>โซนที่นั่ง</strong></td>
+				<td style="width:133px; text-align: center;" class="seat-count"><strong>จำนวนที่นั่ง</strong></td>
+				<td style="width:133px; text-align: center;" class="item-price"><strong>ราคาต่อหน่วย</strong></td>
+				<td style="width:80px; text-align: center;" class="price"><strong>ราคา</strong></td>
+				<td style="width:133px; text-align: center;" class="status"><strong>สถานะ</strong></td>
 			</tr>
 <?php
 	function get_seat_by_zone($seat_list, $z_name){
@@ -39,123 +39,90 @@
 		}
 		return 0;
 	}
+
+	$has_discount = cal_helper_valid_discount_code($booking_data['discount_code']);
+
+	$sum_price = cal_helper_get_sum_price($booking_list);
 	$card_fee = cal_helper_get_card_fee($booking_list);
-	$discount = cal_helper_get_discount($booking_data['type'], $booking_list);
-	$total = cal_helper_get_total_price($booking_data['type'], $booking_list);
+	$discount = cal_helper_get_discount($booking_list, $has_discount);
+	$total = cal_helper_get_total_price($booking_list, $has_discount);
 	foreach($zone_list AS $key_z => $z):
 		$seat_list = get_seat_by_zone($booking_list, $z);
 		$zone_price = get_zone_price($booking_list, $z);
 ?>
 			<tr class="tbody <?= ($key_z==0)?'first':'' ?>">
-				<td class="bg-left"></td>
-				<td class="no"><?= $key_z+1 ?></td>
-				<td class="zone"><?= strtoupper($z) ?></td>
+				<td style="text-align:center;"><?= $key_z+1 ?></td>
+				<td style="text-align:center;"><?= strtoupper($z) ?></td>
 				<!--td class="seat-no"><?= strtoupper(implode(', ', $seat_list)) ?></td-->
-				<td class="seat-count"><?= count($seat_list) ?></td>
-				<td class="item-price"><?= number_format($zone_price) ?></td>
-				<td class="price"><?= number_format($zone_price * count($seat_list)) ?></td>
+				<td style="text-align:center;"><?= count($seat_list) ?></td>
+				<td style="text-align:right;"><?= number_format($zone_price) ?></td>
+				<td style="text-align:right;"><?= number_format($zone_price * count($seat_list)) ?></td>
 				<?php if($key_z==0): ?>
-					<td class="status" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" align="center" style="padding:5px;">
+					<td style="text-align:center; vertical-align:middle;" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" align="center" style="padding:5px;">
 					<?php if($booking_data['status']==4): ?>
-						<?= language_helper_is_th($this)?'ชำระเงินแล้ว':'Paid' ?>
-						<?= language_helper_is_th($this)?'วันที่':'Date' ?> <?= util_helper_format_date(util_helper_parse_date($booking_data['pay_date'])) ?>
-						<?= language_helper_is_th($this)?'เวลา':'Time' ?> <?= util_helper_format_time(util_helper_parse_date($booking_data['pay_date'])) ?>
+						ชำระเงินแล้ว
+						<br />วันที่ <?= util_helper_format_date(util_helper_parse_date($booking_data['pay_date'])) ?>
+						<br />เวลา <?= util_helper_format_time(util_helper_parse_date($booking_data['pay_date'])) ?>
 					<?php elseif($booking_data['status']==3): ?>
-						<?= language_helper_is_th($this)?'เจ้าหน้าที่กำลังตรวจสอบการโอนเงินของท่าน':'Awaiting Status' ?>
+						เจ้าหน้าที่กำลังตรวจสอบการโอนเงินของท่าน
 					<?php elseif($booking_data['status']==2): ?>
-						<?= language_helper_is_th($this)?'กรุณาชำระเงิน<br />ภายในวันที่':'Please made your transfer<br />within' ?>
-						<?php if($booking_data['type']==3): ?>
-						20/09/2013
-						<br /><?= language_helper_is_th($this)?'ก่อนเวลา':'before' ?> 18.00
-						<?php elseif($booking_data['type']==2): ?>
-						<?= util_helper_format_date(util_helper_add_six_hour($booking_data['booking_date'])) ?>
-						<br /><?= language_helper_is_th($this)?'ก่อนเวลา':'before' ?> <?= util_helper_format_time(util_helper_add_six_hour($booking_data['booking_date'])) ?>
-						<?php else: ?>
-						<?= util_helper_format_date(util_helper_add_four_hour($booking_data['booking_date'])) ?>
-						<br /><?= language_helper_is_th($this)?'ก่อนเวลา':'before' ?> <?= util_helper_format_time(util_helper_add_four_hour($booking_data['booking_date'])) ?>
-						<?php endif; ?>
+						กรุณาชำระเงิน<br />ภายในวันที่
+						<?= util_helper_format_date(util_helper_add_one_day($booking_data['booking_date'])) ?>
+						<br />ก่อนเวลา <?= util_helper_format_time(util_helper_add_one_day($booking_data['booking_date'])) ?>
 					<?php else: ?>
 						-
 					<?php endif; ?>
 					</td>
 				<?php endif; ?>
-				<td class="bg-right"></td>
 			</tr>
 <?php endforeach; ?>
-			<tr class="tbody">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'ราคารวม':'Total Price' ?></td>
-				<td class="price"><?= number_format(cal_helper_get_sum_price($booking_list)) ?></td>
-				<td class="bg-right"></td>
+			<tr>
+				<td colspan="4" style="text-align:right;">ราคารวม</td>
+				<td style="text-align:right;"><?= number_format($sum_price) ?></td>
 			</tr>
-			<tr class="tbody">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'เงินตรวจสอบโอน':'Check for transfer' ?></td>
-				<td class="price">0.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></td>
-				<td class="bg-right"></td>
+			<tr>
+				<td colspan="4" style="text-align:right;">เงินตรวจสอบโอน</td>
+				<td style="text-align:right;">0.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></td>
 			</tr>
-			<tr class="tbody">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'ค่าธรรมเนียมการออกบัตร (20 บาทต่อใบ)':'Which includes a charge (20 Baht/ticket)' ?></td>
-				<td class="price"><?= number_format($card_fee) ?></td>
-				<td class="bg-right"></td>
+			<tr>
+				<td colspan="4" style="text-align:right;">ค่าธรรมเนียมการออกบัตร (20 บาทต่อใบ)</td>
+				<td style="text-align:right;"><?= number_format($card_fee) ?></td>
 			</tr>
 			<?php if(!empty($discount) && $discount>0): ?>
-				<tr class="tbody">
-					<td class="bg-left"></td>
-					<td colspan="4" class="sum-price" align="right">
-						<?= language_helper_is_th($this)?'ส่วนลด':'Special Discount' ?>
-						<?php if($booking_data['type']==1): ?>
-							(<?= cal_helper_get_discount_detail($booking_data['type'], $booking_list) ?><?= language_helper_is_th($this)?'':' off' ?>)
-						<?php endif; ?>
+				<tr>
+					<td colspan="4" style="text-align:right;">
+						ส่วนลด 10%
 					</td>
-					<td class="price"><?= number_format($discount) ?></td>
-					<td class="bg-right"></td>
+					<td style="text-align:right;"><?= number_format($discount) ?></td>
 				</tr>
 			<?php endif; ?>
 			<tr class="tbody last">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'ราคารวมทั้งหมด':'Grand Total' ?></td>
-				<td class="price"><strong><?= number_format($total) ?>.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></strong></td>
-				<td class="bg-right"></td>
+				<td colspan="4" style="text-align:right;">ราคารวมทั้งหมด</td>
+				<td style="text-align:right;"><strong><?= number_format($total) ?>.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></strong></td>
 			</tr>
-			<tr class="tfoot">
-				<td colspan="8"></td>
-			</tr>
-<?php if($booking_data['status']==4): ?>
-			<tr class="tfoot-text">
-				<td colspan="8" valign="top" align="center">
-					<div style="margin-top:124px; height:100px; color:red; text-indent: -10000px;">
-						กรุณาพิมพ์หลักฐานฉบับนี้ไว้ พร้อมบัตรประชาชนตัวจริง เพื่อนำมารับบัตรจริงรุ่น Limited Edition
-						เฉพาะ 2,000 ใบแรกเท่านั้นในวันที่ xx/xx/xxxx เวลา 00:00 น. ณ xxxxxxxxxxxxxx
-						และส่วนที่เหลือกรุณาเก็บหลักฐานนี้ไว้เพื่อนำมารับบัตรจริง
-						โดยวันและสถานที่จะแจ้งให้ทราบอีกครั้ง
-					</div>
-				</td>
-			</tr>
-			<tr class="tfoot-buttons">
-				<td colspan="9" align="center">
-<?= form_open('controller/form_booking/booking-complete'); ?>
-					<ul>
-						<li>
-							<a href="<?= site_url('pdf/print_booking_complete/'.$booking_data['id']).'?print=1' ?>" class="submit" id="submit" target="_blank"></a>
-						</li>
-						<li>
-							<a href="<?= site_url('pdf/print_booking_complete/'.$booking_data['id']) ?>" class="cancel"></a>
-						</li>
-					</ul>
-<?= form_close() ?>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="9" style="height:10px;"></td>
-			</tr>
-<?php else: ?>
-			<tr>
-				<td colspan="9" style="height:300px;"></td>
-			</tr>
-<?php endif; ?>
 		</table>
+
+<?php if($booking_data['status']==4): ?>
+		<table cellpadding="4" cellspacing="0" border="0" style="width:850px; margin:0 auto;">
+			<tr>
+				<td><h4 class="text-center">การชำระเงินเสร็จสิ้น ขอบคุณที่ใช้บริการ</h4>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+						กรุณาพิมพ์หลักฐานฉบับนี้ไว้ พร้อมบัตรประชาชนตัวจริง เพื่อนำมารับบัตร
+						<br />ในวันงานคอนเสิร์ตขโมยซีนวันที่ 19/10/2013
+						<br />เวลาและสถานที่จะแจ้งให้ทราบอีกครั้ง
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="bottom" style="height:60px;">
+					<a href="<?= site_url('pdf/print_booking_complete/'.$booking_data['id']).'?print=1' ?>" class="btn btn-primary" target="_blank">PRINT</a>
+					<a href="<?= site_url('pdf/print_booking_complete/'.$booking_data['id']) ?>" class="btn btn-primary">SAVE</a>
+				</td>
+			</tr>
+		</table>
+<?php endif; ?>
 
 	</div>
 </div>

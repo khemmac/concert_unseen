@@ -1,5 +1,5 @@
 <?php
-	$sv = '?v=1.5';
+	$sv = '?v=1.4';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,22 +7,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<title>ขโมยซีน CONCERT - THE UNSEEN SHOW LIVE IN ท่าพระจันทร์</title>
-	<script type="text/javascript"> var __base_url = '<?= base_url() ?>'; </script>
-	<script type="text/javascript"> var __site_url = '<?= site_url('/') ?>'; </script>
+	<script type="text/javascript">
+		var __base_url = '<?= base_url() ?>',
+			__site_url = '<?= site_url('/') ?>',
+			__not_show_term = <?= (get_cookie('not_show_term_popup')==1)?'true':'false' ?>;
+	</script>
 
-	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.js') ?>"></script>
+	<script type="text/javascript" src="<?= base_url('/js/lib/jquery-1.8.3.min.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.bgiframe.min.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.numeric.js') ?>"></script>
 
 	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.qtip/jquery.qtip.min.js') ?>"></script>
 	<link href="<?= base_url('/js/lib/jquery.qtip/jquery.qtip.min.css') ?>" type="text/css" rel="stylesheet" />
-<!--
-	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.tipsy/jquery.tipsy.js') ?>"></script>
-	<link href="<?= base_url('/js/lib/jquery.tipsy/tipsy.css') ?>" type="text/css" rel="stylesheet" />
--->
-	<script type="text/javascript" src="<?= base_url('/js/lib/jquery.sexy-combo/jquery.sexy-combo-2.1.2.pack.js') ?>"></script>
-	<link href="<?= base_url('/js/lib/jquery.sexy-combo/sexy-combo.css') ?>" type="text/css" rel="stylesheet" />
-	<link href="<?= base_url('/js/lib/jquery.sexy-combo/skins/custom/custom.css') ?>" type="text/css" rel="stylesheet" />
 
 	<link href="<?= base_url('/css/fonts/ThaiSansNeue/font.css'.$sv) ?>" type="text/css" charset="utf-8" rel="stylesheet" />
 	<link href="<?= base_url('/css/fonts/THKrub/font.css'.$sv) ?>" type="text/css" charset="utf-8" rel="stylesheet" />
@@ -48,12 +44,24 @@
 		<?=$view?>
 		<span id="footer" style="position:absolute; bottom:20px; right:30px; display:block; height:16px; font-size:14px; color:#808184;">ติดต่อสอบถาม 02-938-5959</span>
 	</div>
+	<?=$this->load->view('includes/inc-term-condition','', TRUE)?>
 
 <?php
 	$popup = $this->input->get('popup');
 	if(!empty($popup)):
+		$msg = '';
+		$type = 'alert';
+		if($popup=='zone-booked-limit-popup')
+			$msg = 'ท่านสามารถจองบัตรได้เพียง 1 ครั้งเท่านั้น';
+		else if($popup=='zone-blank-seat-popup')
+			$msg = '<p class="text-center">ท่านไม่ได้จองที่นั่งใดๆ<br />กรุณาเลือกที่นั่งอย่างน้อย 1 ที่นั่ง ก่อนทำการจองบัตร</p>';
 ?>
-<script type="text/javascript"> $(function(){ common.popup.show(null, '#<?= $popup ?>'); }); </script>
+<script type="text/javascript"> $(function(){
+	<?php if($type=='alert'): ?>
+	bootbox.alert('<?= $msg ?>');
+	<?php endif; ?>
+	});
+</script>
 <?php endif; ?>
 </body>
 </html>

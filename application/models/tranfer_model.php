@@ -44,7 +44,7 @@ Class Tranfer_model extends CI_Model
 		return $this->db->get('booking');
 	}
 
-	function money_tranfer($img_name=""){
+	function money_tranfer($booking_id, $img_name=""){
 		/*$result = $this->loadBooking();
 		if($result->num_rows() == 0) {
 			$err = array('success'=>false,'msg'=>'code "'.$this->input->post('code').'" is tranfed or not exists.');
@@ -58,38 +58,40 @@ Class Tranfer_model extends CI_Model
 			'pay_date' => $this->input->post('transfer_year').'-'.$this->input->post('transfer_month').'-'.$this->input->post('transfer_date').' '.$this->input->post('transfer_hh').':'.$this->input->post('transfer_mm').':00',
 			'pay_money' => $this->input->post('pay_money').'.'.$this->input->post('pay_money_satang'),
 			'bank_name' => $this->input->post('bank_name'),
-			'bank_ref_id' => null,
-			'payment_type' => '1', //0=Credit ,1=Tranfer
 			'status' => '3', //1=ระหว่าจอง ,2=ยืนยันการจอง ,3=แจ้งโอนเงินแล้ว ,4=ยืนยันการโอนเงิน ,99=เลยเวลา
 			'slip' =>  $img_name
 		);
 
 		$res = array('success'=>true,'msg'=>'');
 		$this->db->set('updateDate', 'NOW()', false);
-		$this->db->where('code', $this->input->post('code'));
+		$this->db->where('id', $booking_id);
 		$this->db->update('booking', $formData);
 		//return $res;
 	}
 
 	function loadBookingContents($ids=""){
-		$query = $this->db->Query("select b.*,p.thName person_name,p.email,p.tel from booking b inner join person p on b.person_id=p.id where b.code in('".$ids."')");
+		$tb_booking = $this->db->dbprefix('booking');
+		$query = $this->db->Query("select b.*,p.thName person_name,p.email,p.tel
+from ".$tb_booking." b
+inner join person p on b.person_id=p.id where b.code in(".$this->db->escape($ids).")");
 		return $query->result_array();
 	}
 
 	function clearBookingData(){
-		$sql="select 
+		/*
+		$sql="select
 				*
 				from
-				booking 
-				where 
+				booking
+				where
 				(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(createDate) >= 8*60*60 and type=2 and status in(1,2))
 				OR
 				(UNIX_TIMESTAMP(NOW()) >= UNIX_TIMESTAMP('2013-09-20 18:00:00') and type=3 and status in(1,2))
 				";
-				
-				/*(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(createDate) >= 6*60*60 and type=1 and status in(1,2))
-				OR*/
-				
+
+				//(UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(createDate) >= 6*60*60 and type=1 and status in(1,2))
+				//OR
+
 		$query = $this->db->Query($sql);
 		$list = $query->result_array();
 		$results = array();
@@ -99,8 +101,9 @@ Class Tranfer_model extends CI_Model
 			$queryDelete = $this->db->Query("delete from booking where id = $ids");
 			array_push($results,$o);
 		}
-		
+
 		return $results;
+		*/
 	}
 
 }

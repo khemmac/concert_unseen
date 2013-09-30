@@ -35,8 +35,13 @@ form input { font: 12px; }
 	min-height: 750px;
 }
 
+.bootbox .modal-header h1,
+.bootbox .modal-header h2,
+.bootbox .modal-header h3,
+.bootbox .modal-header h4,
+.bootbox .modal-header h5 { text-align:center; font-family:'thaisans_neuebold'; }
+.bootbox .modal-footer { text-align:center; }
+.term-condition-modal { width:650px !important; margin-left:-322px !important; }
+
 /* end common/global */
 
-.page-index {
-	background:transparent url('../../images/th/home/bg.jpg') no-repeat center 100px;
-}

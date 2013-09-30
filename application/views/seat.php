@@ -12,13 +12,46 @@
 	}
 	.row a:hover { text-decoration:none; }
 
+	.row a.loader {
+		text-indent:-3000px;
+		background:#ffffff url('<?= base_url('images/th/seat/ajax-loader.gif') ?>') no-repeat center center !important;
+	}
+
+	.row a span {
+		display: block; width:18px; height:15px;
+		background:transparent url('<?= base_url('images/th/seat/ico-tick.png') ?>') no-repeat center 0px;
+	}
+	.row div.booked span {
+		display: block; width:18px; height:15px;
+		background:transparent url('<?= base_url('images/th/seat/ico-man.png') ?>') no-repeat center 0px;
+	}
+
+	.zone-b .row a,
+	.zone-b .row div {
+		margin-right:1px;
+		background:transparent url('<?= base_url('images/th/seat/seat_b.gif') ?>') no-repeat;
+	}
+	.zone-c .row a,
+	.zone-c .row div {
+		margin-right:1px;
+		background:transparent url('<?= base_url('images/th/seat/seat_c.gif') ?>') no-repeat;
+	}
+	.zone-d .row a,
+	.zone-d .row div {
+		background:transparent url('<?= base_url('images/th/seat/seat_d.gif') ?>') no-repeat;
+	}
+	.zone-e .row a,
+	.zone-e .row div {
+		background:transparent url('<?= base_url('images/th/seat/seat_e.gif') ?>') no-repeat;
+	}
+
 	#stage {
-		position: absolute; top:172px; left:50px; width:872px; height:72px;
+		position: absolute; top:172px; left:74px; width:872px; height:72px;
 		background:transparent url('<?= base_url('images/th/seat/stage.png'); ?>') no-repeat;
 	}
 
 	#btn-round {
-		position:absolute; top:120px; left:144px;
+		position:absolute; top:98px; left:106px;
 	}
 
 </style>
@@ -28,18 +61,32 @@
 	<div id="content">
 		<?= form_open(); ?>
 		<?= form_hidden('booking_id', $booking_id) ?>
+		<?= form_hidden('booking_round', $booking_round) ?>
+		<?= form_hidden('zone_name', $zone_name) ?>
 		<div id="btn-round" class="btn-group" data-toggle="buttons-radio">
-			<button type="submit" value="1" name="round" class="btn btn-large <?= ($booking_round==1)?'active':'btn-primary' ?>">รอบที่ 1</button>
-			<button type="submit" value="2" name="round" class="btn btn-large <?= ($booking_round==2)?'active':'btn-primary' ?>">รอบที่ 2</button>
+			<button type="submit" value="1" name="round" class="btn btn-large <?= ($booking_round==1)?'active':'' ?> text-center">
+				รอบที่ 1<br />
+          		19 ตุลาคม 2556<br />
+          		เวลา 19.00 น.
+			</button>
+			<button type="submit" value="2" name="round" class="btn btn-large <?= ($booking_round==2)?'active':'' ?> text-center">
+				รอบที่ 2<br />
+          		20 ตุลาคม 2556<br />
+          		เวลา 19.00 น.
+			</button>
 		</div>
 
 		<div id="stage"></div>
 
-		<?=
-			$this->load->view('includes/seat/a',array(
-				'booking_round'=>$booking_round
-			), TRUE)
-		?>
+		<div id="seat-container">
+			<?=
+				$this->load->view('includes/seat/'.$zone_name,array(
+					'booking_id'=>$booking_id,
+					'booking_round'=>$booking_round
+				), TRUE)
+			?>
+		</div>
+
 		<p class="text-center" style="margin-top:30px;">
 			<a href="<?= site_url('zone') ?>" id="b-continue" class="btn btn-primary">ทำรายการต่อ</a>
 			<a href="<?= site_url('zone') ?>" id="b-back" class="btn">ย้อนกลับ</a>
@@ -47,66 +94,20 @@
 		<?= form_close(); ?>
 	</div>
 </div>
-
-<?php
-	/*$zone_name = $zone['name'];
-?>
-<div id="content-body" class="page-seat">
-	<?=$this->load->view('includes/inc-main-menu','', TRUE)?>
-
-	<div id="content">
-		<div id="zone-info">
-			<ul>
-				<li>Zone&nbsp;&nbsp;&nbsp;&nbsp;<?= strtoupper($zone['zone']) ?></li>
-				<li>Class&nbsp;&nbsp;&nbsp;<?= strtoupper($zone['class']) ?></li>
-				<li>Blog&nbsp;&nbsp;&nbsp;&nbsp;<?= strtoupper($zone['blog']) ?></li>
-			</ul>
-		</div>
-
-		<?= form_open('seat/submit'); ?>
-		<?= form_hidden('booking_id', $booking_id) ?>
-		<?= form_hidden('zone_id', $zone['id']) ?>
-		<?= form_hidden('zone_name', $zone['name']) ?>
-			<div id="seat-container" style="background-image: url('<?= base_url('images/seat/plan/'.$zone_name.'.png'); ?>')">
-				<div id="chair-container">
-					<?=$this->load->view('includes/partials/seat-chair','', TRUE)?>
-				</div>
-			</div>
-			<ul class="submit-container">
-				<li><?= form_submit(array(
-						'id'		=> 'submit',
-						'value'		=> '',
-						'class'		=> 'submit'
-					)); ?></li>
-			</ul>
-		<?= form_close() ?>
-
-		<ul class="b-back-ctnr">
-			<li><a href="<?= site_url('zone') ?>" title="เลือกโซนที่นั่งอื่นๆ" class="b-back-zone"></a></li>
-		</ul>
-
-		<div id="stage"></div>
-	</div>
-</div>
-<?=$this->load->view('includes/seat/'.$zone_name,'', TRUE)?>
-
-<script type="text/javascript" src="<?= base_url('js/seat.js') ?>"></script>
-<script type="text/javascript">
-	$(function(){
-		var seat = new Seat({
-			limit:<?= $zone['limit'] ?>,
-			current:<?= $zone['current_booking_count'] ?>
-		});
-	});
-</script>
-<?php */ ?>
 <script type="text/javascript" src="<?= base_url('js/seat.js') ?>"></script>
 <script type="text/javascript">
 	$(function(){
 		var seat = new Seat();
 		$('#btn-round button').unbind('click').bind('click', function(e){
 			//e.preventDefault();
-
 		});
+
+		<?php
+			$referrer = $this->agent->referrer();
+			if(!strpos($referrer, '/seat/')):
+		?>
+		// alert warining
+		bootbox.alert('<p class="text-center">กรุณาเลือกรอบการแสดงก่อนทำการจองที่นั่ง</p>');
+		<?php endif ?>;
 	});
 </script>

@@ -8,7 +8,7 @@
 	<li><a href="<?= site_url('zone_entrance') ?>" class="menu-1">จำหน่ายบัตร</a></li>
 	<li><a href="<?= site_url('transfer') ?>" class="menu-2">ยืนยันการชำระเงิน</a></li>
 	<li><a href="<?= site_url('booking/check') ?>" class="menu-3">ตรวจสอบสถานะ</a></li>
-	<li><a href="#common-popup" class="menu-4 show-boxes">เงื่อนไข</a></li>
+	<li><a href="#condition" class="menu-4">เงื่อนไข</a></li>
 </ul>
 <?php elseif($p=='member/register' || $p=='member/register_success'): ?>
 <ul id="menu-3" class="menu-main">
@@ -20,7 +20,7 @@
 <ul id="menu-1" class="menu-main">
 	<li><a href="<?= site_url('index') ?>" class="menu-boost"></a></li>
 	<li><a href="https://www.facebook.com/boostplus" target="_blank" class="menu-facebook">FACEBOOK</a></li>
-	<li><a href="<?= site_url('condition') ?>" class="menu-1"></a></li>
+	<li><a href="#condition" class="menu-1"></a></li>
 	<li><a href="<?= site_url('plan') ?>" class="menu-2"></a></li>
 	<li><a href="<?= site_url('contact') ?>" class="menu-3"></a></li>
 </ul>

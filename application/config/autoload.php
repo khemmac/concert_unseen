@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('PHXView','session','upload','email','database');
+$autoload['libraries'] = array('PHXView','session','upload','email','database','user_agent');
 
 
 /*
@@ -69,6 +69,7 @@ $autoload['helper'] = array('url','date','file','cookie','form'
 			,'concert_form_helper'
 			,'concert_util_helper'
 			,'concert_zone_helper'
+			,'concert_seat_helper'
 			,'concert_language_helper'
 			,'concert_period_helper'
 			,'concert_cal_helper');

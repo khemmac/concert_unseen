@@ -1,31 +1,6 @@
 <?php
 Class Booking_model extends CI_Model
 {
-	function get_booking_round(){
-		return 1;
-	}
-
-	function get_booking_limit(){
-		$round = $this->get_booking_round();
-		if($round==1)
-			return 6;
-		else if($round==2)
-			return 20;
-		else
-			return 0;
-	}
-
-	function can_book($user_id, $seat_id){
-		// ดึง config ที่บอกว่ารอบจองนี้จองได้สูงสุดกี่ที่นั่ง
-		$limit = $this->get_booking_limit();
-
-		$count_all = $this->count_book($user_id);
-
-		if($count_all + (!empty($seat_id)?1:0) > $limit)
-			return false;
-		else
-			return true;
-	}
 
 	function has_booked($user_id){
 		$this->db->select('count(id) AS cnt');
@@ -38,37 +13,6 @@ Class Booking_model extends CI_Model
 		return ($cnt>=1);
 	}
 
-	function reach_limit($user_id){
-		// config ที่บอกว่ารอบจองนี้เป็นรอบที่เท่าไหร่
-		$round = $this->get_booking_round();
-
-		// ดึง config ที่บอกว่ารอบจองนี้จองได้สูงสุดกี่ที่นั่ง
-		$limit = $this->get_booking_limit();
-
-		$this->db->select('count(id) AS cnt');
-		$this->db->where('booking_id IN (
-				SELECT b.id FROM booking b WHERE b.person_id='.$this->db->escape($user_id)
-				.' AND b.round='.$this->db->escape($round).' AND b.status>1)');
-		$query = $this->db->get('seat');
-
-		$cnt = $query->first_row()->cnt;
-
-		return ($cnt>=$limit);
-	}
-
-	function count_book($user_id){
-		// config ที่บอกว่ารอบจองนี้เป็นรอบที่เท่าไหร่
-		$round = $this->get_booking_round();
-
-		$this->db->select('count(id) AS cnt');
-		$this->db->where('booking_id IN (
-				SELECT b.id FROM booking b WHERE b.person_id='.$this->db->escape($user_id)
-				.' AND b.round='.$this->db->escape($round).')');
-		$query = $this->db->get('seat');
-		//echo $this->db->last_query();
-		return $query->first_row()->cnt;
-	}
-
 	function do_book($user_id, $booking_id, $seat_id){
 		$tb_seat = $this->db->dbprefix('seat');
 		$tb_booking = $this->db->dbprefix('seat');
@@ -79,7 +23,7 @@ Class Booking_model extends CI_Model
 
 	function undo_book($user_id, $booking_id, $seat_id){
 		$tb_seat = $this->db->dbprefix('seat');
-		$tb_booking = $this->db->dbprefix('seat');
+		$tb_booking = $this->db->dbprefix('booking');
 		$sql = "UPDATE ".$tb_seat." SET booking_id=NULL, is_booked=0
 WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=? AND b.status=1 AND b.id=? LIMIT 1)";
 		$query = $this->db->query($sql, array($seat_id, $user_id, $booking_id));
@@ -136,12 +80,14 @@ WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=
 	// data
 	function prepare_print_data($user_id, $booking_id){
 		// load profile data
+		$this->db->set_dbprefix('');
 		$this->db->select('thName,code,email,tel');
 		$this->db->where('id', $user_id);
 		$this->db->limit(1);
 		$query = $this->db->get('person');
 		$person_data = $query->first_row('array');
 
+		$this->db->set_dbprefix('unseen_');
 		// load booking data
 		$this->db->where('id', $booking_id);
 		$this->db->limit(1);
@@ -151,14 +97,18 @@ WHERE id=? AND booking_id=(SELECT b.id FROM ".$tb_booking." b WHERE b.person_id=
 		//print_r($booking_data);
 
 		// seat data
+		$tb_zone = $this->db->dbprefix('zone');
+		$tb_seat = $this->db->dbprefix('seat');
+		$tb_booking = $this->db->dbprefix('booking');
 		$sql = "SELECT
 s.zone_id, z.name AS zone_name
+, s.round
 , s.id AS seat_id, s.name AS seat_name
 , s.booking_id, b.person_id, b.status
 , z.price
-FROM seat s
-JOIN zone z ON s.zone_id=z.id
-JOIN booking b ON s.booking_id=b.id AND b.person_id=?
+FROM ".$tb_seat." s
+JOIN ".$tb_zone." z ON s.zone_id=z.id
+JOIN ".$tb_booking." b ON s.booking_id=b.id AND b.person_id=?
 WHERE  s.booking_id=?
 ORDER BY seat_id ASC";
 		$query = $this->db->query($sql, array($user_id, $booking_id));
@@ -181,6 +131,103 @@ ORDER BY seat_id ASC";
 			'booking_data'=>$booking_data,
 			'booking_list'=>$booking_list
 		);
+	}
+
+	function confirm_booking($user_id, $booking_id, $discount_code = null){
+		$data = $this->prepare_print_data($user_id, $booking_id);
+
+		// check round count
+		$rounds = array();
+		foreach($data['booking_list'] AS $seat){
+			if(!in_array($seat['round'], $rounds))
+				array_push($rounds, $seat['round']);
+		}
+
+		function generate_code($booking_id, $rounds){
+			$round_code = 'A';
+			if(count($rounds)==2)
+				$round_code = 'C';
+			else{
+				if(count($rounds)==1){
+					if($rounds[0]=='1'){
+						$round_code = 'A';
+					}
+					if($rounds[0]=='2'){
+						$round_code = 'B';
+					}
+				}
+			}
+			$trail_code = '';
+			for($i=0;$i<4;$i++)
+				$trail_code.=substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 1);
+
+			return date('d') . $round_code . $trail_code;
+		}
+
+		$code_result = '';
+		while(empty($code_result)){
+			$code_result = generate_code($booking_id, $rounds);
+			$sql = "SELECT id FROM ".$this->db->dbprefix('booking')." WHERE code=?";
+			$query = $this->db->query($sql, array($code_result));
+
+			if($query->num_rows()>0)
+				$code_result = '';
+		}
+
+		if(count($data['booking_data'])>0){
+
+			$has_discount = cal_helper_valid_discount_code($discount_code);
+
+			$card_fee = cal_helper_get_card_fee($data['booking_list']);
+			$discount = cal_helper_get_discount($data['booking_list'], $has_discount);
+			$total = cal_helper_get_total_price($data['booking_list'], $has_discount);
+
+			// check limit
+			$booking_id=$this->input->post('booking_id');
+			$this->db->where('id', $booking_id);
+			$this->db->where('person_id', $user_id);
+			$this->db->set('code',$code_result);
+			$this->db->set('booking_date','NOW()',false);
+			$this->db->set('updateDate','NOW()',false);
+			if($has_discount)
+				$this->db->set('discount_code',$discount_code);
+			else
+				$this->db->set('discount_code','NULL',false);
+			$this->db->set('total_money',$total.'.'.str_pad(substr($booking_id, -2), 2, '0', STR_PAD_LEFT));
+			$this->db->update('booking', array(
+				'status'=>2
+			));
+
+			$success = ($this->db->affected_rows()==1);
+
+			// write booking log
+			$this->load->helper('path');
+			$cache_path = set_realpath(APPPATH.'logs/booking');
+
+			try {
+				$fname =  date('m-d').'.txt';
+				$fh = fopen($cache_path . $fname, 'a+');
+				$log_str = '------ BOOKING SUBMIT ------'.PHP_EOL;
+				$time_str = date('H-i-s');
+				$log_str .= $time_str.' - id : '.$booking_id.PHP_EOL;
+				$log_str .= $time_str.' - user : '.$user_id.PHP_EOL;
+				$log_str .= $time_str.' - sql : '.$this->db->last_query().PHP_EOL;
+				fwrite($fh, $log_str);
+				fclose($fh);
+			} catch (Exception $e) {}
+
+			if($success){
+				$this->load->model('email_model','',TRUE);
+				// send mail
+				try {
+					$this->email_model->send_booking_submit($user_id, $booking_id);
+				} catch (Exception $e) {}
+			}
+
+			return $success;
+		}else
+			return false;
+
 	}
 
 }

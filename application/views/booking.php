@@ -1,26 +1,28 @@
+<style type="text/css">
+	#content-body { padding:220px 0px 50px 0px; min-height:400px; }
+</style>
+
 <div id="content-body" class="page-booking">
 	<?=$this->load->view('includes/inc-main-menu','', TRUE)?>
 
 	<div id="content">
 		<div class="header">
-			<span class="name"><?= $person['thName'] ?></span>
-			<span class="code"><?= $person['code'] ?></span>
-			<?php if(language_helper_is_en($this)): ?>
-				<div style="position:absolute; top:179px; left:650px; background-color:#f4f6f5; width:171px; height:22px;"></div>
-			<?php endif; ?>
-			<span class="booking-code"><?= $booking_data['code'] ?></span>
+			<h4 style="position:absolute; top:120px; left:80px;">คุณ <?= $person['thName'] ?></h4>
+			<h4 style="position:absolute; top:160px; left:80px;">เลขที่บัตรประชาชน <?= $person['code'] ?></h4>
+			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered"
+				style="width:200px; position:absolute; right:80px; top:120px;">
+				<tr class="warning"><td class="text-error" style="text-align:center;"><strong>รหัสการจอง</strong></td></tr>
+				<tr><td style="text-align:center;"><?= $booking_data['code'] ?></td></tr>
+			</table>
 		</div>
-		<table class="list" cellpadding="0" cellspacing="0" border="0">
-			<tr class="thead">
-				<td style="width:19px;" class="bg-left"></td>
-				<td style="width:81px;" class="no">รายการ</td>
-				<td style="width:127px;" class="zone">โซนที่นั่ง</td>
-				<!--td style="width:133px;" class="seat-no">เลขที่นั่ง</td-->
-				<td style="width:133px;" class="seat-count">จำนวนที่นั่ง</td>
-				<td style="width:133px;" class="item-price">ราคาต่อหน่วย</td>
-				<td style="width:80px;" class="price">ราคา</td>
-				<td style="width:133px;" class="status">สถานะ</td>
-				<td style="width:17px;" class="bg-right"></td>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" style="width:850px; margin:0 auto;">
+			<tr class="info">
+				<td style="width:70px; text-align: center;" class="no"><strong>รายการ</strong></td>
+				<td style="width:127px; text-align: center;" class="zone"><strong>โซนที่นั่ง</strong></td>
+				<td style="width:133px; text-align: center;" class="seat-count"><strong>จำนวนที่นั่ง</strong></td>
+				<td style="width:133px; text-align: center;" class="item-price"><strong>ราคาต่อหน่วย</strong></td>
+				<td style="width:80px; text-align: center;" class="price"><strong>ราคา</strong></td>
+				<td style="width:133px; text-align: center;" class="status"><strong>สถานะ</strong></td>
 			</tr>
 <?php
 	function get_seat_by_zone($seat_list, $z_name){
@@ -39,99 +41,101 @@
 		return 0;
 	}
 
+	$has_discount = cal_helper_valid_discount_code($booking_data['discount_code']);
+
 	$sum_price = cal_helper_get_sum_price($booking_list);
 	$card_fee = cal_helper_get_card_fee($booking_list);
-	$discount = cal_helper_get_discount($booking_data['type'], $booking_list);
-	$total = cal_helper_get_total_price($booking_data['type'], $booking_list);
+	$discount = cal_helper_get_discount($booking_list, $has_discount);
+	$total = cal_helper_get_total_price($booking_list, $has_discount);
 	foreach($zone_list AS $key_z => $z):
 		$seat_list = get_seat_by_zone($booking_list, $z);
 		$zone_price = get_zone_price($booking_list, $z);
 
 ?>
 			<tr class="tbody <?= ($key_z==0)?'first':'' ?>">
-				<td class="bg-left"></td>
-				<td class="no"><?= $key_z+1 ?></td>
-				<td class="zone"><?= strtoupper($z) ?></td>
+				<td style="text-align:center;"><?= $key_z+1 ?></td>
+				<td style="text-align:center;"><?= strtoupper($z) ?></td>
 				<!--td class="seat-no"><?= strtoupper(implode(', ', $seat_list)) ?></td-->
-				<td class="seat-count"><?= count($seat_list) ?></td>
-				<td class="item-price"><?= number_format($zone_price) ?></td>
-				<td class="price"><?= number_format($zone_price * count($seat_list)) ?></td>
+				<td style="text-align:center;"><?= count($seat_list) ?></td>
+				<td style="text-align:right;"><?= number_format($zone_price) ?></td>
+				<td style="text-align:right;"><?= number_format($zone_price * count($seat_list)) ?></td>
 				<?php if($key_z==0): ?>
-					<td class="status" align="center" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" style="padding:5px;">
-						<?= language_helper_is_th($this)?'กรุณาชำระเงิน<br />ภายในวันที่':'Please made your transfer<br />within' ?>
-						<?php if($booking_data['type']==3): ?>
-						20/09/2013
-						<br /><?= language_helper_is_th($this)?'ก่อนเวลา':'before' ?> 18.00
-						<?php elseif($booking_data['type']==2): ?>
-						<?= util_helper_format_date(util_helper_add_six_hour(new DateTime())) ?>
-						<br /><?= language_helper_is_th($this)?'ก่อนเวลา':'before' ?> <?= util_helper_format_time(util_helper_add_six_hour(new DateTime())) ?>
-						<?php else: ?>
-						<?= util_helper_format_date(util_helper_add_four_hour(new DateTime())) ?>
-						<br /><?= language_helper_is_th($this)?'ก่อนเวลา':'before' ?> <?= util_helper_format_time(util_helper_add_four_hour(new DateTime())) ?>
-						<?php endif; ?>
+					<td style="text-align:center; vertical-align:middle;" rowspan="<?= count($zone_list) + (4+((!empty($discount) && $discount>0)?1:0)) ?>" valign="middle" style="padding:5px;">
+						กรุณาชำระเงิน<br />ภายในวันที่
+						<?= util_helper_format_date(util_helper_add_one_day($booking_data['booking_date'])) ?>
+						<br />ก่อนเวลา <?= util_helper_format_time(util_helper_add_one_day($booking_data['booking_date'])) ?>
 					</td>
 				<?php endif; ?>
-				<td class="bg-right"></td>
 			</tr>
 <?php endforeach; ?>
-			<tr class="tbody">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'ราคารวม':'Total Price' ?></td>
-				<td class="price"><?= number_format($sum_price) ?></td>
-				<td class="bg-right"></td>
+			<tr>
+				<td colspan="4" style="text-align:right;">ราคารวม</td>
+				<td style="text-align:right;"><?= number_format($sum_price) ?></td>
 			</tr>
-			<tr class="tbody">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'เงินตรวจสอบโอน':'Check for transfer' ?></td>
-				<td class="price">0.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></td>
-				<td class="bg-right"></td>
+			<tr>
+				<td colspan="4" style="text-align:right;">เงินตรวจสอบโอน</td>
+				<td style="text-align:right;">0.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></td>
 			</tr>
-			<tr class="tbody">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'ค่าธรรมเนียมการออกบัตร (20 บาทต่อใบ)':'Which includes a charge (20 Baht/ticket)' ?></td>
-				<td class="price"><?= number_format($card_fee) ?></td>
-				<td class="bg-right"></td>
+			<tr>
+				<td colspan="4" style="text-align:right;">ค่าธรรมเนียมการออกบัตร (20 บาทต่อใบ)</td>
+				<td style="text-align:right;"><?= number_format($card_fee) ?></td>
 			</tr>
 			<?php if(!empty($discount) && $discount>0): ?>
-				<tr class="tbody">
-					<td class="bg-left"></td>
-					<td colspan="4" class="sum-price" align="right">
-						<?= language_helper_is_th($this)?'ส่วนลด':'Special Discount' ?>
-						<?php if($booking_data['type']==2): ?>
-							(500 <?= language_helper_is_th($this)?'บาทต่อใบ':'Baht/ticket'?>)
-						<?php elseif($booking_data['type']==3): ?>
-							(<?= cal_helper_get_discount_detail($booking_data['type'], $booking_list) ?><?= language_helper_is_th($this)?'':' off' ?>)
-						<?php endif; ?>
+				<tr>
+					<td colspan="4" style="text-align:right;">
+						ส่วนลด 10%
 					</td>
-					<td class="price"><?= number_format($discount) ?></td>
-					<td class="bg-right"></td>
+					<td style="text-align:right;"><?= number_format($discount) ?></td>
 				</tr>
 			<?php endif; ?>
 			<tr class="tbody last">
-				<td class="bg-left"></td>
-				<td colspan="4" class="sum-price" align="right"><?= language_helper_is_th($this)?'ราคารวมทั้งหมด':'Grand Total' ?></td>
-				<td class="price"><strong><?= number_format($total) ?>.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></strong></td>
-				<td class="bg-right"></td>
+				<td colspan="4" style="text-align:right;">ราคารวมทั้งหมด</td>
+				<td style="text-align:right;"><strong><?= number_format($total) ?>.<?= str_pad(substr($booking_data['id'], -2), 2, '0', STR_PAD_LEFT) ?></strong></td>
 			</tr>
-			<tr class="tfoot">
-				<td colspan="8">footer</td>
-			</tr>
-			<?php
-				$txt_cls = 'tfoot-text-fanzone';
-				if($booking_data['type']==1)
-					$txt_cls = 'tfoot-text-early';
-				else if($booking_data['type']==2)
-					$txt_cls = 'tfoot-text-presale';
-			?>
-			<tr class="tfoot-text <?= $txt_cls ?>">
-				<td colspan="8" valign="top" style="text-indent:0px; color:white; background:transparent url('<?= base_url('images/booking/table_shadow.png') ?>') no-repeat;">
-					<h3 style="margin:20px 0px 0px 20px; padding:0px;"><?= language_helper_is_th($this)?'เงื่อนไขการชำระเงิน':'Payment Terms' ?></h3>
+		</table>
+
+		<table cellpadding="3" cellspacing="0" class="table table-bordered" style="width:850px; margin:0 auto; margin-top:15px;">
+		<?php
+			$rounds = seat_helper_populate_round_data($booking_list);
+			foreach($rounds AS $r_key => $r_val):
+				$zone_list = array();
+		?>
+				<tr class="success"><td colspan="2"><h4 style="text-align:center;">
+					<?php
+						if($r_key==1)
+							echo 'รอบที่ 1 วันที่ 19 ตุลาคม 2556 เวลา 19.00 น.';
+						elseif($r_key==2)
+							echo 'รอบที่ 2 วันที่ 20 ตุลาคม 2556 เวลา 19.00 น.';
+					?>
+				</h4></td></tr>
+				<tr>
+					<th style="text-align:center;">โซนที่นั่ง</th>
+					<th style="text-align:center;">เลขที่นั่ง</th>
+				</tr>
+		<?php
+				foreach($r_val AS $zone_key => $zone_val):
+					$seat_list = array();
+		?>
+					<tr>
+						<td  style="text-align:center;"><?= strtoupper($zone_key) ?></td>
+						<td style="text-align:center;"><?= strtoupper(implode(', ', $zone_val)) ?></td>
+					</tr>
+		<?php
+				endforeach;
+			endforeach;
+		?>
+		</table>
+
+		<table cellpadding="0" cellspacing="0" border="0" style="width:850px; margin:0 auto;">
+			<tr class="tfoot-text">
+				<td>
+					<h4 style="margin:20px 0px 0px 20px; padding:0px;">เงื่อนไขการชำระเงิน</h4>
 					<ol style="margin:5px 0px 0px 70px; padding:0px;">
 						<li><?= language_helper_is_th($this)?'กรุณาชำระผ่านธนาคารดังต่อไปนี้ (ชื่อบัญชี บริษัท บูสท์ พลัส จำกัด / Boost Plus Co.,Ltd.)':'Please note that money transfers should be sent to (ชื่อบัญชี บริษัท บูสท์ พลัส จำกัด / Boost Plus Co.,Ltd.)' ?>
 							<table cellpadding="2" cellspacing="0" border="0">
 								<tr>
 									<td valign="middle">
-										&nbsp;<img src="<?= base_url('images/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/booking/bank-logo.gif') ?>') no-repeat 0px 0px;" />&nbsp;
+										&nbsp;<img src="<?= base_url('images/th/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/th/booking/bank-logo.gif') ?>') no-repeat 0px 0px;" />&nbsp;
 									</td>
 									<td><?= language_helper_is_th($this)?'
 										ธนาคารกรุงเทพ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -150,7 +154,7 @@
 								</tr>
 								<tr>
 									<td valign="middle">
-										&nbsp;<img src="<?= base_url('images/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/booking/bank-logo.gif') ?>') no-repeat 0px -17px;" />&nbsp;
+										&nbsp;<img src="<?= base_url('images/th/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/th/booking/bank-logo.gif') ?>') no-repeat 0px -17px;" />&nbsp;
 									</td>
 									<td><?= language_helper_is_th($this)?'
 										ธนาคารกสิกรไทย&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -169,7 +173,7 @@
 								</tr>
 								<tr>
 									<td valign="middle">
-										&nbsp;<img src="<?= base_url('images/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/booking/bank-logo.gif') ?>') no-repeat 0px -34px;" />&nbsp;
+										&nbsp;<img src="<?= base_url('images/th/common/blank.gif') ?>" style="width:13px; height:17px; background:transparent url('<?= base_url('images/th/booking/bank-logo.gif') ?>') no-repeat 0px -34px;" />&nbsp;
 									</td>
 									<td><?= language_helper_is_th($this)?'
 										ธนาคารไทยพาณิชย์&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -188,65 +192,39 @@
 								</tr>
 							</table>
 						</li>
-						<li><?= language_helper_is_th($this)?'กรุณาชำระเงินภายในวันที่':'The transfer must be made within'?>
-							<?php if($booking_data['type']==3): ?>
-							20/09/2013 <?= language_helper_is_th($this)?'ก่อนเวลา':'Before' ?> 18.00
-							<?php elseif($booking_data['type']==2): ?>
-							6 <?= language_helper_is_th($this)?'ชั่วโมง':'Hours' ?>
-							<?php else: ?>
-							4 <?= language_helper_is_th($this)?'ชั่วโมง':'Hours' ?>
-							<?php endif; ?>
-							<?= language_helper_is_th($this)?'หากไม่ชำระเงินภายในเวลาดังกล่าว มิฉะนั้นจะถือว่าท่านสละสิทธิ์ในการจองบัตร รายละเอียดการจองของท่านจะถูกลบจากระบบ
-							โดยทางผู้จัดจะไม่รับผิดชอบใดๆทั้งสิ้น':
-							'If not paid within that time period.
-Otherwise be deemed to have waived the right to book the tickets.
-Booking details will be deleted from the system. By the organizer will not be responsible in any way.' ?>
+						<li>กรุณาชำระเงินพร้อมแจ้งยืนยันการชำระเงินผ่านระบบ ภายใน 24 ชั่วโมง
+							หากไม่แจ้งยืนยันการชำระเงินภายในเวลาดังกล่าว มิฉะนั้นจะถือว่าท่านสละสิทธิ์ในการจองบัตร รายละเอียดการจองของท่านจะถูกลบจากระบบ
+							โดยทางผู้จัดจะไม่รับผิดชอบใดๆทั้งสิ้น
 						</li>
-						<li><?= language_helper_is_th($this)?
-								'กรุณานำหลักฐานการชำระเงินมายืนยันการแจ้งโอนเงิน ผ่านทาง <a href="http://www.boostplus.co.th" target="_blank">www.boostplus.co.th</a> ในหัวข้อแจ้งโอนเงิน'
-								:'Please submit you proof of transfer at <a href="http://www.boostplus.co.th" target="_blank">www.boostplus.co.th</a> in Payment Confirmation section'
-							?>
+						<li>กรุณานำหลักฐานการชำระเงินมายืนยันการแจ้งโอนเงิน ผ่านทาง <a href="http://www.boostplus.co.th" target="_blank">www.boostplus.co.th</a> ในหัวยืนยันการชำระเงิน
 						</li>
-						<li><?= language_helper_is_th($this)?
-								'หากแจ้งโอนเงินเรียบร้อยแล้ว กรุณาตรวจสอบสถานะการจอง หลังจากแจ้งโอนเงินในเวลาประมาณ 48 ชม. (ไม่นับวันหยุดราชการ)'
-								:'If you transfer successfully. Please check the booking status. After you transfer in about 48 hours (Public holiday excluded)'
-							?></li>
+						<li>
+							หากแจ้งโอนเงินเรียบร้อยแล้ว กรุณาตรวจสอบสถานะการจอง หลังจากแจ้งโอนเงินในเวลาประมาณ 48 ชม. (ไม่นับวันหยุดราชการ)
+						</li>
 					</ol>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="8" align="center"
-					style="height:36px; width:719px; padding:10px 0px 10px 0px; background:transparent url('<?= base_url('images/booking/booking-footer-text-hilight.png') ?>') no-repeat center center; color:#2A3F00;">
+				<td align="center"
+					style="height:36px; width:719px; padding:10px 0px 10px 0px;" class="text-error">
 					<?= language_helper_is_th($this)?
-						'* หมายเหตุ สามารถตรวจสอบสถานะการโอนเงินได้ผ่านทางหัวข้อ &quot;ตรวจสอบสถานะบัตร&quot;'
+						'* หมายเหตุ สามารถตรวจสอบสถานะการโอนเงินได้ผ่านทางหัวข้อ &quot;ตรวจสอบสถานะ&quot;'
 						:'* Your booking status can be tracking at "Payment status" / "Booking status"'
 					?>
 				</td>
 			</tr>
-			<tr class="tfoot-buttons" align="center">
-				<td colspan="8">
-<?= form_open('booking/booking_submit'); ?>
-	<?= form_hidden('booking_id', $booking_data['id']) ?>
-					<ul>
-						<li class="submit-ctnr">
-							<?= form_submit(array(
-									'id'		=> 'submit',
-									'value'		=> '',
-									'class'		=> 'submit'
-								));
-							?>
-						</li>
-						<!--li class="pdf-ctnr">
-							<a href="<?= site_url('pdf/print_booking/'.$booking_data['id']) ?>" class="pdf"></a>
-						</li-->
-						<li class="cancel-ctnr">
-							<a href="<?= site_url('zone_entrance') ?>" class="cancel"></a>
-						</li>
-					</ul>
-<?= form_close() ?>
+			<tr align="center">
+				<td>
+					<a href="<?= site_url('zone_entrance') ?>" class="btn">ตกลง</a>
 				</td>
 			</tr>
 		</table>
 
 	</div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		// show ของแถม popup
+		bootbox.alert('<h5 class="text-center">ทำรายการเสร็จสิ้น</h5><p class="text-center">ท่านสามารถตรวจสอบรายละเอียดการจองได้ในอีเมล์ของท่าน</p>');
+	});
+</script>

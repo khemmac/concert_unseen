@@ -29,10 +29,13 @@ class Booking extends CI_Controller {
 			redirect('zone');
 
 		$result_data = $this->booking_model->prepare_print_data($user_id, $booking_id);
-
-		$has_booked = $this->booking_model->has_booked($user_id, $result_data['booking_data']['type']);
-		if($has_booked){
-			redirect('sbs2013?popup=zone-booked-limit-popup');
+		//print_r($result_data['booking_data']);
+		//echo '<hr />'.count($result_data['booking_data']);
+		if(empty($result_data)
+			|| empty($result_data['booking_data'])
+			|| !array_key_exists('booking_data', $result_data)
+			|| !array_key_exists('status', $result_data['booking_data'])){
+			redirect('zone');
 			return;
 		}
 

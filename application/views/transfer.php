@@ -1,11 +1,37 @@
+<style type="text/css">
+	#content-body { padding-top:130px; min-height:520px; }
+
+	.form-transfer {
+	  	margin:0 auto;
+	    width: 555px;
+	    padding: 19px 29px 19px;
+	    background-color: #f5f5f5;
+	    border: 1px solid #e5e5e5;
+	    -webkit-border-radius: 5px;
+	       -moz-border-radius: 5px;
+	            border-radius: 5px;
+	    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	}
+
+	.form-horizontal .control-group {
+		margin-bottom: 10px;
+	}
+
+	#transfer_year { width:70px; }
+
+	ul#form-button { margin:0px; padding:0px; list-style:none; }
+
+</style>
 <div id="content-body" class="page-transfer">
 	<?=$this->load->view('includes/inc-main-menu','', TRUE)?>
 
 	<div id="form">
-		<?= form_open_multipart(); ?>
+		<?= form_open_multipart('','class="form-transfer form-horizontal"'); ?>
 		<?php
 			$days = array();
-			for($i=14;$i<=21;$i++)
+			for($i=1;$i<=31;$i++)
 				$days[$i] = $i;
 
 
@@ -28,47 +54,66 @@
 				array(
 					'name'		=> 'code',
 					'maxlength'	=> '7',
-					'class'		=> 'code'
+					'class'		=> 'code',
+					'label'		=> 'รหัสจอง'
 				),
 				array(
-					'name'		=> 'transfer_date',
-					'class'		=> 'transfer_date',
-					'type'		=> 'dropdown',
-					'options'	=> $days
+					'layout_type'	=> 'row',
+					'label'		=>	'วันที่โอนเงิน',
+					'items'			=> array(
+						array(
+							'name'		=> 'transfer_date',
+							'class'		=> 'span1',
+							'type'		=> 'dropdown',
+							'options'	=> $days
+						),
+						array(
+							'name'		=> 'transfer_month',
+							'class'		=> 'span2',
+							'type'		=> 'dropdown',
+							'options'	=> array('9'=>'กันยายน','10'=>'ตุลาคม')
+						),
+						array(
+							'name'		=> 'transfer_year',
+							'class'		=> 'span1',
+							'type'		=> 'dropdown',
+							'options'	=> $years
+						)
+					)
 				),
 				array(
-					'name'		=> 'transfer_month',
-					'class'		=> 'transfer_month',
-					'type'		=> 'dropdown',
-					'options'	=> array('9'=>language_helper_is_th($this)?'กันยายน':'September')
+					'layout_type'	=> 'row',
+					'label'		=>	'เวลาโอนเงิน',
+					'items'			=> array(
+						array(
+							'name'		=> 'transfer_hh',
+							'class'		=> 'span1',
+							'type'		=> 'dropdown',
+							'options'	=> $hours
+						),
+						array(
+							'name'		=> 'transfer_mm',
+							'class'		=> 'span1',
+							'type'		=> 'dropdown',
+							'options'	=> $minutes
+						)
+					)
 				),
 				array(
-					'name'		=> 'transfer_year',
-					'class'		=> 'transfer_year',
-					'type'		=> 'dropdown',
-					'options'	=> $years
-				),
-				array(
-					'name'		=> 'transfer_hh',
-					'class'		=> 'transfer_hh',
-					'type'		=> 'dropdown',
-					'options'	=> $hours
-				),
-				array(
-					'name'		=> 'transfer_mm',
-					'class'		=> 'transfer_mm',
-					'type'		=> 'dropdown',
-					'options'	=> $minutes
-				),
-				array(
-					'name'		=> 'pay_money',
-					'maxlength'	=> '50',
-					'class'		=> 'pay_money'
-				),
-				array(
-					'name'		=> 'pay_money_satang',
-					'maxlength'	=> '2',
-					'class'		=> 'pay_money_satang'
+					'layout_type'	=> 'row',
+					'label'		=>	'จำนวนเงินที่โอน',
+					'items'			=> array(
+						array(
+							'name'		=> 'pay_money',
+							'maxlength'	=> '50',
+							'class'		=> 'span2'
+						),
+						array(
+							'name'		=> 'pay_money_satang',
+							'maxlength'	=> '2',
+							'class'		=> 'span1'
+						)
+					)
 				),
 				array(
 					'name'		=> 'bank_name',
@@ -78,23 +123,25 @@
 						'ธนาคารกรุงเทพ'=>language_helper_is_th($this)?'ธนาคารกรุงเทพ':'Bangkok Bank',
 						'ธนาคารกสิกรไทย'=>language_helper_is_th($this)?'ธนาคารกสิกรไทย':'K-Bank',
 						'ธนาคารไทยพาณิชย์'=>language_helper_is_th($this)?'ธนาคารไทยพาณิชย์':'SCB'
-					)
+					),
+					'label'		=> 'ธนาคารที่โอน'
 				),
 				array(
-					'name'		=> 'slip',
+					'name'		=> 'userfile',
 					'type'		=> 'upload',
-					'class'		=> 'slip'
+					'class'		=> 'slip',
+					'label'		=> 'หลักฐานการโอนเงิน'
 				)
 			);
 
-			form_helper_generate_form($forms);
+			form_helper_generate_bootstrap($forms);
 		?>
 		<ul id="form-button">
-			<li>
+			<li class="text-center">
 				<?= form_submit(array(
 						'id'		=> 'b-submit',
-						'value'		=> '',
-						'class'		=> 'submit'
+						'value'		=> 'แจ้งการโอนเงิน',
+						'class'		=> 'btn btn-primary'
 					));
 				?>
 			</li>
@@ -106,8 +153,6 @@
 <script type="text/javascript">
 	$(function(){
 		$('#b-submit').click(function(e){
-			e.preventDefault();
-
 			var bd = $('select[name=transfer_date]').val(),
 				bm = $('select[name=transfer_month]').val(),
 				by = $('select[name=transfer_year]').val();
@@ -115,45 +160,19 @@
 				alert('วันที่ผิดพลาด กรุณาตรวจสอบอีกครั้ง');
 				return false;
 			}
-
-			var code = $.trim($('input[name=code]').val()),
-				pay_money = $.trim($('input[name=pay_money]').val()),
-				pay_money_satang = $.trim($('input[name=pay_money_satang]').val()),
-				slip = $.trim($('input[name=slip]').val());
-
-			if(code!='' && pay_money!='' && pay_money_satang!='' && slip!=''){
-				$('#transfer-confirm-popup .p-code').text(code);
-				$('#transfer-confirm-popup .p-date').text($('select[name=transfer_date]').val()+' '+$('select[name=transfer_month] option:selected').text()+' '+$('select[name=transfer_year]').val());
-				$('#transfer-confirm-popup .p-time').text($('select[name=transfer_hh]').val()+':'+$('select[name=transfer_mm]').val());
-				$('#transfer-confirm-popup .p-pay').text(pay_money+'.'+pay_money_satang);
-				$('#transfer-confirm-popup .p-bank').text($('select[name=bank_name]').val());
-
-				// show popup before submit
-				common.popup.show(null, '#transfer-confirm-popup');
-				return false;
-			}else{
-				$('#form form').submit();
-			}
-
 		});
 
-		$('#transfer-confirm-popup a.ok').unbind('click').bind('click', function(e){
-			e.preventDefault();
-			$('#form form').submit();
-		});
-
-		common.combo.create($('select[name=transfer_date]'),	'sexy-combo-transfer_date');
-		common.combo.create($('select[name=transfer_month]'),	'sexy-combo-transfer_month');
-		common.combo.create($('select[name=transfer_year]'),	'sexy-combo-transfer_year');
-		common.combo.create($('select[name=transfer_hh]'),	'sexy-combo-transfer_hh');
-		common.combo.create($('select[name=transfer_mm]'),	'sexy-combo-transfer_mm');
-		common.combo.create($('select[name=bank_name]'),		'sexy-combo-bank_name');
 
 		// number only
 		$('input[name=pay_money]').numeric({ decimal: false, negative: false });
 		$('input[name=pay_money_satang]').numeric({ decimal: false, negative: false });
 
-		//common.popup.show(null, '#transfer-confirm-popup');
+		// add text to form
+		var pay_money = $('#pay_money'),
+			parent = pay_money.parent();
+		parent.removeClass('controls-row');
+		$('<span class="help-inline">:&nbsp;</span>').insertAfter(pay_money);
+		$('<span class="help-inline">บาท</span>').insertAfter($('#pay_money_satang'));
 
 	});
 </script>

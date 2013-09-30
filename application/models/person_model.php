@@ -27,6 +27,8 @@ Class Person_model extends CI_Model
 	}
 
 	function insert(){
+		$this->db->set_dbprefix('');
+
 		$this->db->select('username');
 		$this->db->where('username', $this->input->post('username'));
 		$query = $this->db->get('person');
@@ -59,6 +61,8 @@ Class Person_model extends CI_Model
 	}
 
 	function update(){
+		$this->db->set_dbprefix('');
+
 		$user_id = get_user_session_id($this);
 		$this->db->where('id', $user_id);
 

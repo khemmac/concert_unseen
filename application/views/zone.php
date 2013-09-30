@@ -1,11 +1,12 @@
 <style type="text/css">
 	#content-body { padding:0px 0px 50px 0px; }
 
-	#remark-info { position:absolute; top:133px; left:50px; width: 250px; }
-	.page-zone h4 { text-align:center; font-family:'thaisans_neuebold'; margin:0px; }
+	#remark-info { position:absolute; top:133px; right:50px; width:260px; }
+	.page-zone h4,
+	.page-zone h5 { text-align:center; font-family:'thaisans_neuebold'; margin:0px; }
 
 	#booking-info { border:0px solid #f00;
-		position:absolute; top:133px; right:50px; width:260px;
+		position:absolute; top:133px; left:50px; width: 250px;
 	}
 
 	a.link-zone {
@@ -22,6 +23,18 @@
 	.link-zone-b1 { width:90px; height:122px; top:235px; left:344px; line-height:125px !important; }
 	.link-zone-b2 { width:85px; height:115px; top:240px; left:447px; line-height:125px !important; }
 	.link-zone-b3 { width:90px; height:122px; top:235px; left:544px; line-height:125px !important; }
+
+	.link-zone-c1 { width:90px; height:122px; top:366px; left:345px; line-height:125px !important; }
+	.link-zone-c2 { width:85px; height:121px; top:371px; left:448px; line-height:125px !important; }
+	.link-zone-c3 { width:90px; height:122px; top:366px; left:546px; line-height:125px !important; }
+
+	.link-zone-d1 { width:65px; height:105px; top:528px; left:360px; line-height:108px !important; }
+	.link-zone-d2 { width:77px; height:97px; top:535px; left:452px; line-height:108px !important; }
+	.link-zone-d3 { width:65px; height:105px; top:528px; left:556px; line-height:108px !important; }
+
+	.link-zone-e1 { width:69px; height:60px; top:639px; left:362px; line-height:61px !important; }
+	.link-zone-e2 { width:92px; height:57px; top:643px; left:445px; line-height:61px !important; }
+	.link-zone-e3 { width:69px; height:60px; top:639px; left:551px; line-height:61px !important; }
 
 	ul.submit-container,
 	ul.submit-clear-container { margin:0px; padding:0px; list-style:none; }
@@ -40,87 +53,62 @@
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b1">B1</a>
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b2">B2</a>
 		<a href="<?= site_url('seat/b') ?>" class="link-zone link-zone-b3">B3</a>
-		<map name="zone-map">
+
+		<a href="<?= site_url('seat/c') ?>" class="link-zone link-zone-c1">C1</a>
+		<a href="<?= site_url('seat/c') ?>" class="link-zone link-zone-c2">C2</a>
+		<a href="<?= site_url('seat/c') ?>" class="link-zone link-zone-c3">C3</a>
+
+		<a href="<?= site_url('seat/d') ?>" class="link-zone link-zone-d1">D1</a>
+		<a href="<?= site_url('seat/d') ?>" class="link-zone link-zone-d2">D2</a>
+		<a href="<?= site_url('seat/d') ?>" class="link-zone link-zone-d3">D3</a>
+
+		<a href="<?= site_url('seat/e') ?>" class="link-zone link-zone-e1">E1</a>
+		<a href="<?= site_url('seat/e') ?>" class="link-zone link-zone-e2">E2</a>
+		<a href="<?= site_url('seat/e') ?>" class="link-zone link-zone-e3">E3</a>
+		<!--map name="zone-map">
 			<area shape="polygon" coords="165,234,217,234,217,286,166,285" href="<?= site_url('seat_a') ?>" title="A">
-		</map>
+		</map-->
 
 		<div id="remark-info">
-
+			<table cellpadding="2" cellspacing="0" border="0" width="100%"><tr><td>
 			<table cellpadding="2" cellspacing="0" class="table table-bordered" width="100%">
-				<tr>
+				<tr class="info">
 					<td colspan="3"><h4>Remark</h4></td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE A</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#EC2227; margin:0 auto;"></div></td>
-					<td>2,200 Baht</td>
+					<td style="text-align:right;">2,200 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE B</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#4764AF; margin:0 auto;"></div></td>
-					<td>1,800 Baht</td>
+					<td style="text-align:right;">1,800 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE C</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#62BB46; margin:0 auto;"></div></td>
-					<td>1,500 Baht</td>
+					<td style="text-align:right;">1,500 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE D</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#60489D; margin:0 auto;"></div></td>
-					<td>1,000 Baht</td>
+					<td style="text-align:right;">1,000 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="text-align:center;">ZONE E</td>
 					<td style="width:32px;"><div style="width:28px; height:20px; background-color:#F26522; margin:0 auto;"></div></td>
-					<td>800 Baht</td>
-				</tr>
-			</table>
-		</div>
-
-		<div id="booking-info">
-			<table cellpadding="2" cellspacing="0" border="0" width="100%"><tr><td>
-			<table cellpadding="2" cellspacing="0" width="100%" class="table table-bordered">
-				<tr>
-					<td colspan="2"><h4>รายละเอียดการจอง</h4></td>
-				</tr>
-				<tr>
-					<td style="width:80px; text-align:right;">โซน :</td>
-					<td>
-<?php
-	if(count($zones)>0):
-		$zones_arr = array();
-		foreach($zones AS $z):
-			$zone_data = zone_helper_get_zone($z);
-			if($z=='a3')
-				array_push($zones_arr, anchor('seat_early/'.$booking_id, strtoupper($z), 'title="'.$z.'"'));
-			else if($zone_data['type']=='u')
-				array_push($zones_arr, anchor('seat_u/'.$z.'/'.$booking_id, strtoupper($z), 'title="'.$z.'"'));
-			else
-				array_push($zones_arr, anchor('seat/'.$z.'/'.$booking_id, strtoupper($z), 'title="'.$z.'"'));
-		endforeach;
-		echo implode(', ', $zones_arr);
-	endif;
-?>
-					</td>
-				</tr>
-				<tr>
-					<td style="text-align:right;">ที่นั่ง :</td>
-					<td><?= (count($seats)>0)?strtoupper(implode(', ', $seats)):'-' ?></td>
-				</tr>
-				<tr>
-					<td style="text-align:right;">ราคารวม :</td>
-					<td><?= number_format($price) ?> B.-</td>
+					<td style="text-align:right;">800 Baht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 			</td></tr>
 			<tr>
 				<td style="text-align: center;">
-					<?= form_open('zone/submit'); ?>
+					<?= form_open('zone/submit', array('id'=>'form-zone')); ?>
 					<?= form_hidden('booking_id', $booking_id) ?>
 					<ul class="submit-container">
 						<li><?= form_submit(array(
-							'id'		=> 'submit',
+							'id'		=> 'submit-zone',
 							'value'		=> 'ซื้อบัตร',
 							'class'		=> 'submit btn btn-large btn-primary btn-block'
 						)); ?></li>
@@ -133,7 +121,7 @@
 					<ul class="submit-clear-container">
 						<li><?= form_submit(array(
 							'id'		=> 'submit-clear',
-							'value'		=> 'ล้างการจอง',
+							'value'		=> 'ยกเลิกการจอง',
 							'class'		=> 'submit-clear btn btn-block'
 						)); ?></li>
 					</ul>
@@ -142,10 +130,79 @@
 			</tr>
 			</table>
 		</div>
+
+		<div id="booking-info">
+			<table cellpadding="2" cellspacing="0" width="100%" class="table table-bordered">
+				<tr class="info">
+					<td colspan="2"><h4>รายละเอียดการจอง</h4></td>
+				</tr>
+<?php
+	if(count($rounds)>0):
+	foreach($rounds AS $r_key=>$r_value):
+		$zones = $r_value['zones'];
+		$seats = $r_value['seats'];
+?>
+				<tr class="warning"><td colspan="2"><h5>
+				<?php if($r_key==1): ?>
+					รอบที่ 1 วันที่ 19 ตุลาคม 2556
+				<?php elseif($r_key==2): ?>
+					รอบที่ 2 วันที่ 20 ตุลาคม 2556
+				<?php endif; ?>
+				</h5></td></tr>
+				<tr>
+					<td style="width:80px; text-align:right;">โซน :</td>
+					<td>
+<?php
+	if(count($zones)>0):
+		$zones_arr = array();
+		foreach($zones AS $z):
+			array_push($zones_arr, anchor('seat/'.substr($z, 0, 1), strtoupper($z), 'title="'.$z.'"'));
+		endforeach;
+		echo implode(', ', $zones_arr);
+	endif;
+?>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">ที่นั่ง :</td>
+					<td><?= (count($seats)>0)?strtoupper(implode(', ', $seats)):'-' ?></td>
+				</tr>
+<?php
+	endforeach;
+	endif;
+?>
+				<tr>
+					<td style="text-align:right;">ราคารวม :</td>
+					<td><?= number_format($price) ?> บาท</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 	$(function(){
+		$('#submit-zone').click(function(e){
+			e.preventDefault();
+			<?php if(count($rounds)>0): ?>
+			bootbox.dialog('<p class="text-center"><img src="<?= base_url('images/th/common/ptt_logo.gif') ?>" width="144" height="67" /><br /><br /><h4 class="text-center">คุณมี PTT-Bluecard หรือไม่?</h4></p>', [{
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;มี&nbsp;&nbsp;&nbsp;&nbsp;",
+				class: "btn-success btn-large",
+				callback: function() {
+					window.location.href = '<?= site_url('booking_discount/'.$booking_id) ?>';
+				}
+			},{
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไม่มี&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+				class: "btn",
+				callback: function() {
+					$('form#form-zone').submit();
+				}
+			}]);
+			<?php else: ?>
+			bootbox.alert('<p class="text-center">ท่านไม่ได้จองที่นั่งใดๆ<br />กรุณาเลือกที่นั่งอย่างน้อย 1 ที่นั่ง ก่อนทำการจองบัตร</p>');
+			<?php endif; ?>
+		});
+
 		$('#submit-clear').click(function(e){
 			e.preventDefault();
 			bootbox.confirm("ท่านต้องการยกเลิกการจองหรือไม่", function(result) {
@@ -153,5 +210,14 @@
 					$('form#form-clear').submit();
 			});
 		});
+
+		<?php
+			$referrer = $this->agent->referrer();
+			if(!strpos($referrer, '/seat/') && !strpos($referrer, '/zone')
+				&& !strpos($referrer, '/booking_discount')):
+		?>
+		// show ของแถม popup
+		bootbox.alert('<p class="text-center">สิทธิพิเศษสำหรับผู้ซื้อบัตรราคา 2,200 บาท<br />ท่านจะได้รับผ้าพันคอที่ระลึก Limited Edition ไปเลย ฟรี!! <br /><img src="<?= base_url('images/th/zone/premium-item.gif') ?>" width="300" height="300" /></p>');
+		<?php endif ?>;
 	});
 </script>
