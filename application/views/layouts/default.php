@@ -37,9 +37,6 @@
 
 <body>
 	<div id="container">
-		<!--
-		<?=$this->load->view('includes/inc-language-menu','', TRUE)?>
-		-->
 		<?=$this->load->view('includes/inc-member-menu','', TRUE)?>
 		<?=$view?>
 		<span id="footer" style="position:absolute; bottom:20px; right:30px; display:block; height:16px; font-size:14px; color:#808184;">ติดต่อสอบถาม 02-938-5959</span>
