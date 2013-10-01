@@ -12,8 +12,10 @@
 		<?= language_helper_is_th($this)?$user_session_obj['thName']:$user_session_obj['enName'] ?>
 	</li>
 	<?php else: ?>
+		<?php if(!period_helper_close_booking()): ?>
 	<li><a class="menu-register" href="<?= site_url('member/register') ?>">Register</a></li>
 	<li class="menu-sep">|</li>
+		<?php endif; ?>
 	<li><a class="menu-login" href="<?= site_url('member/login') ?>">Login</a></li>
 	<?php endif; ?>
 </ul>

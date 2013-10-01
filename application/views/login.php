@@ -49,8 +49,10 @@
 		<div class="control-group">
 			<div class="controls">
 				<ul id="sub-menu">
+					<?php if(!period_helper_close_booking()): ?>
 					<li><a href="<?= site_url('member/register') ?>" class="sub-menu-1">Register</a></li>
 					<li>|</li>
+					<?php endif; ?>
 					<li><a href="<?= site_url('forgot') ?>" class="sub-menu-2">Forgot password</a></li>
 				</ul>
 			</div>

@@ -5,7 +5,11 @@
 <ul id="menu-2" class="menu-main">
 	<li><a href="<?= site_url('index') ?>" class="menu-boost">BOOST PLUS</a></li>
 	<li><a href="https://www.facebook.com/boostplus" target="_blank" class="menu-facebook">FACEBOOK</a></li>
+		<?php if(!period_helper_close_booking()): ?>
 	<li><a href="<?= site_url('zone_entrance') ?>" class="menu-1">จำหน่ายบัตร</a></li>
+		<?php else: ?>
+	<li><a href="<?= site_url('zone/close') ?>" class="menu-1">จำหน่ายบัตร</a></li>
+		<?php endif; ?>
 	<li><a href="<?= site_url('transfer') ?>" class="menu-2">ยืนยันการชำระเงิน</a></li>
 	<li><a href="<?= site_url('booking/check') ?>" class="menu-3">ตรวจสอบสถานะ</a></li>
 	<li><a href="#condition" class="menu-4">เงื่อนไข</a></li>

@@ -26,6 +26,11 @@ class Zone extends CI_Controller {
 
 	function index(){
 		if(period_helper_close_booking()){
+			redirect('index');
+			return;
+		}
+
+		if(period_helper_close_booking()){
 			redirect('zone/close');
 			return;
 		}

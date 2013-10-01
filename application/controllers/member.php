@@ -80,6 +80,11 @@ class Member extends CI_Controller {
 	}
 
 	function register(){
+		if(period_helper_close_booking()){
+			redirect('index');
+			return;
+		}
+
 		if(is_user_session_exist($this))
 			redirect('member/profile');
 
