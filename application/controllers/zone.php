@@ -135,7 +135,7 @@ class Zone extends CI_Controller {
 		redirect($r_url);
 	}
 
-	/*
+
 	// development only
 	function generate(){
 		function split_seat($s){
@@ -234,9 +234,17 @@ class Zone extends CI_Controller {
 		$this->db->set('booking_id', 1);
 		$this->db->update('seat');
 
+		/*
+		update unseen_seat set booking_id=1, is_booked=1 where name IN (
+'ก5','ก6','m11','m12','m13','m14'
+,'s1','s2','s3','s4','s5','s6'
+)
+and round=2
+		*/
+
 		$this->db->trans_complete();
 	}
-	*/
+
 
 
 }

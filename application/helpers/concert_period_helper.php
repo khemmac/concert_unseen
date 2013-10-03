@@ -3,7 +3,7 @@
 
 	function period_helper_close_booking() {
 		$cur_time = strtotime("now");
-		return ($cur_time >= strtotime('2013-10-02 12:00:00'));
+		return ($cur_time >= strtotime('2013-10-05 12:00:00'));
 	}
 
 	function period_helper_close_system() {
