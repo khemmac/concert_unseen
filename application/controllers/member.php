@@ -36,7 +36,7 @@ class Member extends CI_Controller {
 					array(
 						'field'		=> 'username',
 						'label'		=> 'Username',
-						'rules'		=> 'trim|required|min_length[5]|max_length[12]|xss_clean'
+						'rules'		=> 'trim|required|min_length[5]|max_length[12]|xss_clean|callback_check_login_error_count'
 					),
 					array(
 						'field'		=> 'password',
@@ -200,6 +200,21 @@ class Member extends CI_Controller {
 			$this->form_validation->set_message('check_login_user_pass', '&quot;Username&quot; หรือ &quot;รหัสผ่าน&quot; ไม่ถูกต้อง');
 			return false;
 		}
+	}
+
+	public function check_login_error_count($username)
+	{
+		$this->db->set_dbprefix('');
+		$this->db->limit(1);
+		$this->db->select('login_error_count');
+		$query = $this->db->get_where('person', array('username'=>$username));
+
+		$res = $query->first_row('array');
+		if(count($res)>0 && $res['login_error_count']>=3){
+			$this->form_validation->set_message('check_login_error_count', 'ท่านกรอกรหัสผิดเกิน 3 ครั้ง กรุณาติดต่อเจ้าหน้าที่');
+			return false;
+		}else
+			return true;
 	}
 
 	public function check_profile_pass_old($password)

@@ -14,6 +14,7 @@ Class Person_model extends CI_Model
 		$this->db->select('id, username, thName, enName, type');
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
+		$this->db->where('login_error_count<', 3, false);
 		$this->db->limit(1);
 
 		$query = $this->db->get('person');
@@ -22,6 +23,11 @@ Class Person_model extends CI_Model
 			set_user_session($this, $query->first_row('array'));
 			return $query->result();
 		} else {
+			$this->db->set_dbprefix('');
+			$this->db->where('username', $username);
+			$this->db->set('login_error_count', 'login_error_count+1', false);
+			$this->db->update('person');
+
 			return false;
 		}
 	}

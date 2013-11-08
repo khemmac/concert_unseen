@@ -2,7 +2,8 @@
 	#content-body { padding-top:40px; }
 	<?php if(!is_user_session_exist($this)): ?>
 	.page-index {
-		background:transparent url('<?= base_url('images/th/home/bg_prelogin.jpg') ?>') no-repeat 15px 72px;
+		height:1875px;
+		background:transparent url('<?= base_url('images/th/home/login_thaiticket.gif') ?>') no-repeat 15px 72px;
 	}
 	<?php else: ?>
 	.page-index {
@@ -19,7 +20,47 @@
 		if(!is_user_session_exist($this)):
 	?>
 	<div id="content">
-		<object width="354" height="284" style="position:absolute; top:201px; left:594px;">
+		<object width="354" height="284" style="position:absolute; top:215px; left:597px;">
+            <param name="movie" value="http://www.youtube.com/v/GGHF7i0Pi48?>?autoplay=1&version=3&amp;hl=en_US&amp;rel=0">
+            </param>
+            <param name="allowFullScreen" value="true">
+            </param>
+            <param name="allowscriptaccess" value="always">
+            </param>
+            <param name="wmode" value="transparent">
+            </param>
+            <embed width="354" height="284" src="http://www.youtube.com/v/GGHF7i0Pi48?autoplay=1&version=3&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent">
+            </embed>
+        </object>
+
+		<object width="354" height="284" style="position:absolute; top:957px; left:81px;">
+            <param name="movie" value="http://www.youtube.com/v/GGHF7i0Pi48?>?autoplay=1&version=3&amp;hl=en_US&amp;rel=0">
+            </param>
+            <param name="allowFullScreen" value="true">
+            </param>
+            <param name="allowscriptaccess" value="always">
+            </param>
+            <param name="wmode" value="transparent">
+            </param>
+            <embed width="354" height="284" src="http://www.youtube.com/v/GGHF7i0Pi48?autoplay=1&version=3&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent">
+            </embed>
+        </object>
+
+		<object width="354" height="284" style="position:absolute; top:1259px; left:597px;">
+            <param name="movie" value="http://www.youtube.com/v/GGHF7i0Pi48?>?autoplay=1&version=3&amp;hl=en_US&amp;rel=0">
+            </param>
+            <param name="allowFullScreen" value="true">
+            </param>
+            <param name="allowscriptaccess" value="always">
+            </param>
+            <param name="wmode" value="transparent">
+            </param>
+            <embed width="354" height="284" src="http://www.youtube.com/v/GGHF7i0Pi48?autoplay=1&version=3&amp;hl=en_US&amp;rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent">
+            </embed>
+        </object>
+
+
+		<object width="354" height="284" style="position:absolute; top:1561px; left:133px;">
             <param name="movie" value="http://www.youtube.com/v/GGHF7i0Pi48?>?autoplay=1&version=3&amp;hl=en_US&amp;rel=0">
             </param>
             <param name="allowFullScreen" value="true">
@@ -34,15 +75,9 @@
 	<?php
 		if(!is_user_session_exist($this)):
 	?>
-		<?php if(false)://(!period_helper_close_booking()): // ถ้ายังไม่ปิด ?>
-		<a href="<?= site_url('member/login') ?>"
-			style="position:absolute; bottom:50px; left:264px; display:block; text-indent:-3000px; background:transparent url('<?= base_url('images/'.(language_helper_is_en($this)?'en':'th').'/home/buttons.gif') ?>') no-repeat 0px -104px; width:482px; height:53px;"
-			>ซื้อบัตร Presale</a>
-		<?php else: // ถ้ายังไม่ปิด ?>
-		<a href="<?= site_url('member/login') ?>"
-			style="position:absolute; bottom:218px; left:440px; display:block; text-indent:-3000px; background:transparent url('<?= base_url('images/th/home/b-login.png') ?>') no-repeat 0px 0px; width:140px; height:55px;"
+		<a href="http://www.thaiticketmajor.com/"
+			style="position:absolute; top:781px; left:339px; display:block; text-indent:-3000px; background:transparent url('<?= base_url('images/th/home/b-thaiticket.gif') ?>') no-repeat 0px 0px; width:333px; height:55px;"
 			>LOGIN</a>
-		<?php endif; ?>
 	<?php endif; ?>
 	</div>
 <div style="position:absolute; bottom:5px; left:10px;">
